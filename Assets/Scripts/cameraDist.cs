@@ -8,10 +8,8 @@ using UnityEngine.UI;
 //This File shoulbe attach to Camera
 public class cameraDist : MonoBehaviour
 {
-    [Header("**Below Parameters should find by themsleves at the Start()**\n")]
+    [Header("Need Assign in Inspector\n")]
     [SerializeField] private Volume postProcessVolume;
-
-
     [SerializeField] Transform playerKernel;
     [SerializeField] float disdance; //for postProcessVolume Depth od Field use
     [SerializeField] float playerRadius;

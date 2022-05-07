@@ -17,22 +17,27 @@ public class CenterRotate : MonoBehaviour
         PlayerKernel = this.transform.parent.GetComponent<CharacterCtrl>().PlayerKernel;
         StartCoroutine(GenerateRandomVector());
     }
-    private void Update()
-    {
-        // if (Vector3.Distance(PlayerKernel.transform.position, this.transform.position) <= myCollider.radius)
-        // {
-        //     // Debug.Log("PlayerKernel.transform.position == this.transform.position");
-        //     transform.rotation = Quaternion.Lerp(this.transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime);
-        //     // transform.RotateAround(this.transform.position, randomVector, selfRotateSpeed * Time.deltaTime);
-        // }
-        //if (is_Charging) { transform.rotation = Quaternion.Lerp(this.transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime); }
-    }
+    // private void Update()
+    // {
+
+    // }
     private void OnTriggerStay(Collider other)
     {
         if (other.name == "PlayerKernel")
         {
-            transform.rotation = Quaternion.Lerp(this.transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime);
             is_Charging = true;
+            if (Input.GetMouseButton(1))
+            {
+
+                //   randomTransform.transform.forward = PlayerKernel.transform.forward;
+                transform.RotateAround(transform.position, PlayerKernel.transform.forward, 100 * Time.deltaTime);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime);
+            }
+
+
         }
     }
     private void OnTriggerExit(Collider other)
@@ -43,9 +48,11 @@ public class CenterRotate : MonoBehaviour
     {
         while (true)
         {
+
+
             randomVector = new Vector3(UnityEngine.Random.Range(min, max), UnityEngine.Random.Range(min, max), UnityEngine.Random.Range(min, max));
             if (randomVector.magnitude == 0) { yield return new WaitForSeconds(0); }
-            randomTransform.transform.Rotate(randomVector.x, randomVector.y, randomVector.z, Space.World);
+            randomTransform.transform.forward = randomVector;
 
             yield return new WaitForSeconds(3f);
         }

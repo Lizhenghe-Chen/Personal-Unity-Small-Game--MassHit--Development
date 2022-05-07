@@ -136,15 +136,21 @@ public class CharacterCtrl : MonoBehaviour
 
     void Break()
     {
-        if (Input.GetKey(KeyCode.Tab) || Input.GetMouseButton(1))
+       if(Input.GetKey(KeyCode.Tab)) { rb.angularVelocity = Vector3.zero; }
+        if (Input.GetMouseButton(1))
         {
             rb.angularVelocity = Vector3.zero;
-            foreach (var item in TransparentChangeList)
+            if (CenterRotate.is_Charging)
             {
-                item.GetComponent<MeshRenderer>().material = TramsparentMaterial;
+                foreach (var item in TransparentChangeList)
+                {
+                    item.GetComponent<MeshRenderer>().material = TramsparentMaterial;
+                }
             }
+
         }
-        else { 
+        else
+        {
             foreach (var item in TransparentChangeList)
             {
                 item.GetComponent<MeshRenderer>().material = OriginalMaterialList[TransparentChangeList.IndexOf(item)];
