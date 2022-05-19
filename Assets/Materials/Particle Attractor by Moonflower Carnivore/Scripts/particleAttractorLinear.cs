@@ -13,8 +13,9 @@ public class particleAttractorLinear : MonoBehaviour {
 			GetComponent<Transform>();
 		}
 	}
-	void Update () {
-		m_Particles = new ParticleSystem.Particle[ps.main.maxParticles];
+	void FixedUpdate () {
+       // transform.RotateAround(transform.position, transform.forward, speed * Time.deltaTime);
+        m_Particles = new ParticleSystem.Particle[ps.main.maxParticles];
 		numParticlesAlive = ps.GetParticles(m_Particles);
 		float step = speed * Time.deltaTime;
 		for (int i = 0; i < numParticlesAlive; i++) {

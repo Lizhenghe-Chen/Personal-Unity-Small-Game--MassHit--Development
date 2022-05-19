@@ -17,7 +17,7 @@ public class BlackHoleDestory : MonoBehaviour
         }
         else
         {
-            if (other.tag == "Player") { other.transform.localScale -= playerDestory; }
+            if (other.tag == "Player") { other.transform.localScale -= objectDestory; }
             else
                 other.transform.localScale -= objectDestory;
         }

@@ -7,21 +7,20 @@ public class CharacterCtrl : MonoBehaviour
 {
     public static CharacterCtrl _CharacterCtrl;
     public Transform Camera;
+    public Transform PlayerKernelTarget;
     public bool towardWithCamera = true;
     public float initial_torque, speedUp_torque, jumpForce, rushForce, sliteForce = 5f;
-    private const float torque_multiplier = 3;
-    float horizontalInput, verticalInput;
-    public bool ableToJump = false;
-    public GameObject PlayerKernel;
-    [HideInInspector] public Transform PlayerCenterTarget;
-    // public Transform playerAim;
-    public float PlayerKernelSpeed = 3f;
-    public Material hittedObjectMaterial;
-    public List<GameObject> HitObjects = new List<GameObject>();
     public Material TramsparentMaterial;
-    public List<GameObject> TransparentChangeList = new List<GameObject>();
-    public List<Material> OriginalMaterialList = new List<Material>();
+    public GameObject PlayerKernel;
+    public float PlayerKernelSpeed = 3f;
+    public List<GameObject> HitObjects = new();
+    public Queue<GameObject> HitObjectsQueue = new();
+    public static bool isAming;
+    [SerializeField] bool ableToJump = false;
+    [SerializeField] List<GameObject> TransparentChangeList = new();
+    [SerializeField] List<Material> OriginalMaterialList = new();
     Rigidbody rb; // player
+    float horizontalInput, verticalInput;
     void Awake()
     {
         _CharacterCtrl = this;
@@ -30,7 +29,7 @@ public class CharacterCtrl : MonoBehaviour
     {
         StartCoroutine(CheckDestory(100));
         rb = GetComponent<Rigidbody>();
-        PlayerCenterTarget = this.transform;
+        //PlayerCenterTarget = this.transform;
         PlayerKernel.transform.parent = this.transform.parent.parent;
         foreach (var item in TransparentChangeList)
         {
@@ -54,51 +53,46 @@ public class CharacterCtrl : MonoBehaviour
         JumpCommand(); RushCommand();
         DestroyCommand();
     }
-    private void OnCollisionEnter(Collision other)
-    {
-        OnGravityCubeHitted(other.gameObject, hittedObjectMaterial);
-    }
     public void OnGravityCubeHitted(GameObject other, Material hittedObjectMaterial)
     {
-        if (other.tag == "GravityCube")
+        if (other.CompareTag("GravityCube"))
         {
             other.GetComponent<MeshRenderer>().material = hittedObjectMaterial;
             other.GetComponent<Light>().enabled = true;
             other.GetComponent<Rigidbody>().useGravity = false;
-            if (HitObjects.Contains(other.gameObject)) { return; }
-            HitObjects.Add(other.gameObject);
+            if (HitObjects.Contains(other)) { return; }
+            HitObjects.Add(other);
+
         }
     }
     void TurningTorque()
     {
-        // angularVelocity = rb.angularVelocity.magnitude;
-
-
         rb.maxAngularVelocity = (Input.GetKey(KeyCode.LeftShift) ? speedUp_torque : initial_torque);
         if (towardWithCamera)
         {
-            rb.AddTorque(Camera.transform.right * rb.maxAngularVelocity * verticalInput);
-            rb.AddTorque(-Camera.transform.forward * rb.maxAngularVelocity * horizontalInput);
+
+            rb.AddTorque(rb.maxAngularVelocity * verticalInput * Camera.transform.right);       //foward and back, rotate around Camera's red axis
+            rb.AddTorque(rb.maxAngularVelocity * horizontalInput * -Camera.transform.forward);  //left and right,rotate around Camera's blue axis
         }
         else
         {
-            rb.AddTorque(Vector3.zero * rb.maxAngularVelocity * verticalInput);
-            rb.AddTorque(Vector3.zero * rb.maxAngularVelocity * horizontalInput);
+            rb.AddTorque(rb.maxAngularVelocity * verticalInput * Vector3.right);
+            rb.AddTorque(rb.maxAngularVelocity * horizontalInput * -Vector3.forward);
         }
     }
     private void OnCollisionStay(Collision other)
     {
-        if (other.gameObject.name == "Terrain") { ableToJump = true; }
+        if (other.gameObject.layer == 0) { ableToJump = true; }
     }
     private void OnCollisionExit(Collision other)
     {
-        if (other.gameObject.name == "Terrain") { ableToJump = false; }
+        if (other.gameObject.layer == 0) { ableToJump = false; }
     }
     void GiveForce()
     {
         var force = (Input.GetKey(KeyCode.LeftShift) ? sliteForce * 2 : sliteForce);
-        rb.AddForce(Camera.transform.forward * force * verticalInput);
-        rb.AddForce(Camera.transform.right * force * horizontalInput);
+        rb.AddForce(force * verticalInput * Camera.transform.forward);
+        rb.AddForce(force * horizontalInput * Camera.transform.right);
     }
     void JumpCommand()
     {
@@ -136,10 +130,10 @@ public class CharacterCtrl : MonoBehaviour
 
     void Break()
     {
-       if(Input.GetKey(KeyCode.Tab)) { rb.angularVelocity = Vector3.zero; }
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1)) { rb.angularVelocity = Vector3.zero; }
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-            rb.angularVelocity = Vector3.zero;
+            isAming = true;
             if (CenterRotate.is_Charging)
             {
                 foreach (var item in TransparentChangeList)
@@ -151,6 +145,7 @@ public class CharacterCtrl : MonoBehaviour
         }
         else
         {
+            isAming = false;
             foreach (var item in TransparentChangeList)
             {
                 item.GetComponent<MeshRenderer>().material = OriginalMaterialList[TransparentChangeList.IndexOf(item)];
@@ -170,7 +165,7 @@ public class CharacterCtrl : MonoBehaviour
     }
     void MovePlayerKernel()
     {
-        PlayerKernel.transform.position = Vector3.Lerp(PlayerKernel.transform.position, PlayerCenterTarget.position, PlayerKernelSpeed * Time.deltaTime);
+        PlayerKernel.transform.position = Vector3.Lerp(PlayerKernel.transform.position, PlayerKernelTarget.position, PlayerKernelSpeed * Time.deltaTime);
     }
     IEnumerator CheckDestory(int distance)
     {
@@ -201,7 +196,9 @@ public class CharacterCtrl : MonoBehaviour
         foreach (var item in HitObjects)
         {
             Destroy(item);
+
         }
         HitObjects.Clear();
+        // Destroy(Test.Dequeue());
     }
 }

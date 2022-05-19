@@ -22,6 +22,7 @@ public class GunScript : MonoBehaviour
     [SerializeField] GameObject GreenAim, RedAim;
     void Start()
     {
+        Physics.IgnoreLayerCollision(3, 3);
         Camera = Player.GetComponent<CharacterCtrl>().Camera;
         GreenAim = AimPoint.transform.Find("GreenAim").gameObject;
         RedAim = AimPoint.transform.Find("RedAim").gameObject;
@@ -35,20 +36,24 @@ public class GunScript : MonoBehaviour
     {
         if (Player == null) { return; }
         Aim();
-        var position = new Vector3(Player.position.x + cameraOffset, Player.position.y, Player.position.z);
-        this.transform.forward = Camera.transform.forward;
-        this.transform.position = Vector3.Lerp(this.transform.position, position, 1f * Time.deltaTime);
+        // var position = new Vector3(Player.position.x + cameraOffset, Player.position.y, Player.position.z);
+
+        // this.transform.position = Vector3.Lerp(this.transform.position, position, 1f * Time.deltaTime);
     }
     void Shoot()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Instantiate(bullet, muzzle.position, muzzle.rotation).GetComponent<Rigidbody>().AddForce(muzzle.forward * bulletSpeed);
+            //  Instantiate(bullet, muzzle.position, muzzle.rotation).GetComponent<Rigidbody>().AddForce(muzzle.forward * bulletSpeed);
+            var temp = Instantiate(bullet, muzzle.position, muzzle.rotation);
+            Physics.IgnoreCollision(temp.GetComponent<Collider>(), Player.GetComponent<Collider>(),true);
+            temp.GetComponent<Rigidbody>().velocity = muzzle.forward * bulletSpeed;
         }
     }
     void Aim()
     {
-        if (Input.GetMouseButton(1))
+        // this.transform.forward = Camera.transform.forward;
+        if (CharacterCtrl.isAming)
         {
             AimPoint.SetActive(true);
 
@@ -56,19 +61,19 @@ public class GunScript : MonoBehaviour
             {
                 //BuckyBall.selfRotateSpeed = 10f;
                 GreenAim.SetActive(true);
-                RedAim.SetActive(true);
+                RedAim.SetActive(false);
                 Shoot();
             }
             else
             {
-               // BuckyBall.selfRotateSpeed = 1f;
+                // BuckyBall.selfRotateSpeed = 1f;
                 GreenAim.SetActive(false);
                 RedAim.SetActive(true);
             }
         }
         else
         {
-           // BuckyBall.selfRotateSpeed = 1f;
+            // BuckyBall.selfRotateSpeed = 1f;
             AimPoint.SetActive(false);
         }
 
