@@ -12,9 +12,9 @@ public class GravityCubeAction : MonoBehaviour
         {
             GetComponent<MeshRenderer>().material = hittedObjectMaterial;
             GetComponent<Light>().enabled = true;
-            GetComponent<Rigidbody>().useGravity = false;
-            if (CharacterCtrl._CharacterCtrl.HitObjects.Contains(gameObject)) { return; }
-            CharacterCtrl._CharacterCtrl.HitObjects.Add(gameObject);
+            //  GetComponent<Rigidbody>().useGravity = false;
+            if (CharacterCtrl._CharacterCtrl.HitObjectsQueue.Contains(gameObject)) { return; }
+            CharacterCtrl._CharacterCtrl.HitObjectsQueue.Enqueue(gameObject);
             // CharacterCtrl._CharacterCtrl.Test.Enqueue(gameObject);
         }
 

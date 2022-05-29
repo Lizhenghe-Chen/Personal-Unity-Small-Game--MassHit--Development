@@ -149,6 +149,7 @@ Library: lib_burst_generated
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.Internal.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.Burst.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
+--root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.Polybrush.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Cinemachine.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.RenderPipeline.Universal.ShaderLibrary.dll
@@ -331,6 +332,7 @@ Library: lib_burst_generated
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.Internal.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.Burst.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
+--root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.Polybrush.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Cinemachine.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.RenderPipeline.Universal.ShaderLibrary.dll

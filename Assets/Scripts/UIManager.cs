@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public GameObject InGameUI;
+    public Image KernelState;
+    public Color chargedColor, unchargedColor;
+    private float value = 0f;
     void Start()
     {
         InGameMenu();//set menu off when start
@@ -18,6 +22,14 @@ public class UIManager : MonoBehaviour
             InGameMenu();
         }
 
+
+    }
+    private void FixedUpdate()
+    {
+        value = CenterRotate.shootEnergy / 100f;
+        KernelState.color = (value >= 1) ? chargedColor : unchargedColor;
+
+        KernelState.fillAmount = value;
     }
     public void InGameMenu()
     {
@@ -36,5 +48,9 @@ public class UIManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

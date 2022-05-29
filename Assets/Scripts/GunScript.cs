@@ -14,6 +14,7 @@ public class GunScript : MonoBehaviour
     [Header("\n")]
     public float cameraOffset;
     public Transform Camera;
+    public bool isLookAt;
 
     public float bulletSpeed;
     public GameObject bullet;
@@ -22,7 +23,7 @@ public class GunScript : MonoBehaviour
     [SerializeField] GameObject GreenAim, RedAim;
     void Start()
     {
-        Physics.IgnoreLayerCollision(3, 3);
+        Physics.IgnoreLayerCollision(6, 6);
         Camera = Player.GetComponent<CharacterCtrl>().Camera;
         GreenAim = AimPoint.transform.Find("GreenAim").gameObject;
         RedAim = AimPoint.transform.Find("RedAim").gameObject;
@@ -44,10 +45,11 @@ public class GunScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            CenterRotate.shootEnergy = 0;
             //  Instantiate(bullet, muzzle.position, muzzle.rotation).GetComponent<Rigidbody>().AddForce(muzzle.forward * bulletSpeed);
-            var temp = Instantiate(bullet, muzzle.position, muzzle.rotation);
-            Physics.IgnoreCollision(temp.GetComponent<Collider>(), Player.GetComponent<Collider>(),true);
-            temp.GetComponent<Rigidbody>().velocity = muzzle.forward * bulletSpeed;
+            var temp = Instantiate(bullet, transform.position, transform.rotation);
+            Physics.IgnoreCollision(temp.GetComponent<Collider>(), Player.GetComponent<Collider>(), true);
+            temp.GetComponent<Rigidbody>().velocity = -transform.forward * bulletSpeed;
         }
     }
     void Aim()
@@ -55,9 +57,10 @@ public class GunScript : MonoBehaviour
         // this.transform.forward = Camera.transform.forward;
         if (CharacterCtrl.isAming)
         {
+            if (isLookAt) { transform.LookAt(Camera); } else { transform.forward = new(-Camera.forward.x, 0, -Camera.forward.z); }
             AimPoint.SetActive(true);
 
-            if (CenterRotate.is_Charging)
+            if (CenterRotate.is_Charging && CenterRotate.shootEnergy >= 100)
             {
                 //BuckyBall.selfRotateSpeed = 10f;
                 GreenAim.SetActive(true);

@@ -10,24 +10,39 @@ public class CenterRotate : MonoBehaviour
     public float selfRotateSpeed = 1f;
     public Vector3 randomVector;
     public Transform randomTransform;
+    public float chargeSpeed = 0.01f;
+    public static float shootEnergy = 0;
+
+    [Header("charge actions:")]
+    public GameObject BuckyBallAtoms;
+    public Material chargedMaterial, un_ChargedMaterial;
     // [SerializeField] SphereCollider myCollider;
-    int min = -90, max = 90;
+    private int min = -90, max = 90;
     float chargingRange;
     private void Start()
     {
         // myCollider = GetComponent<SphereCollider>();
         PlayerKernel = Player.GetComponent<CharacterCtrl>().PlayerKernel;
-        chargingRange = GetComponent<SphereCollider>().radius-0.1f;
+        chargingRange = GetComponent<SphereCollider>().radius - 0.1f;
         StartCoroutine(GenerateRandomVector());
     }
-    private void FixedUpdate()
+    private void Update()
     {
-      //  transform.position = Player.position;
-      //  Debug.Log(Vector3.Distance(transform.position, PlayerKernel.transform.position));
+        //  transform.position = Player.position;
+        //  Debug.Log(Vector3.Distance(transform.position, PlayerKernel.transform.position));
         if (Vector3.Distance(transform.position, PlayerKernel.transform.position) <= chargingRange) { is_Charging = true; } else { is_Charging = false; }
         if (is_Charging)
         {
-            if (CharacterCtrl.isAming)
+            //Debug.Log(shootEnergy);
+            Mathf.Clamp(shootEnergy, 0, 101);
+            if (shootEnergy < 100)
+            {
+                shootEnergy += chargeSpeed * Time.deltaTime;
+
+            }
+            BuckyBallAtoms.GetComponent<Renderer>().material = shootEnergy < 100 ? un_ChargedMaterial : chargedMaterial;
+
+            if (CharacterCtrl.isAming && shootEnergy >= 100)
             {
                 transform.RotateAround(transform.position, PlayerKernel.transform.forward, 500 * Time.deltaTime);
             }
@@ -73,4 +88,5 @@ public class CenterRotate : MonoBehaviour
             yield return new WaitForSeconds(3f);
         }
     }
+
 }

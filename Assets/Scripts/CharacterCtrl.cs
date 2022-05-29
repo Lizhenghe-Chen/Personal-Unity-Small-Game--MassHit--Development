@@ -13,6 +13,8 @@ public class CharacterCtrl : MonoBehaviour
     public Material TramsparentMaterial;
     public GameObject PlayerKernel;
     public float PlayerKernelSpeed = 3f;
+    public GameObject Player_Camera1, Player_Camera2;
+
     public List<GameObject> HitObjects = new();
     public Queue<GameObject> HitObjectsQueue = new();
     public static bool isAming;
@@ -27,7 +29,7 @@ public class CharacterCtrl : MonoBehaviour
     }
     void Start()
     {
-        StartCoroutine(CheckDestory(100));
+        //StartCoroutine(CheckDestory(100));
         rb = GetComponent<Rigidbody>();
         //PlayerCenterTarget = this.transform;
         PlayerKernel.transform.parent = this.transform.parent.parent;
@@ -48,23 +50,25 @@ public class CharacterCtrl : MonoBehaviour
     }
     void Update()
     {
+
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         JumpCommand(); RushCommand();
         DestroyCommand();
+        ChangeCamera();
     }
-    public void OnGravityCubeHitted(GameObject other, Material hittedObjectMaterial)
-    {
-        if (other.CompareTag("GravityCube"))
-        {
-            other.GetComponent<MeshRenderer>().material = hittedObjectMaterial;
-            other.GetComponent<Light>().enabled = true;
-            other.GetComponent<Rigidbody>().useGravity = false;
-            if (HitObjects.Contains(other)) { return; }
-            HitObjects.Add(other);
+    //public void OnGravityCubeHitted(GameObject other, Material hittedObjectMaterial)
+    //{
+    //    if (other.CompareTag("GravityCube"))
+    //    {
+    //        other.GetComponent<MeshRenderer>().material = hittedObjectMaterial;
+    //        other.GetComponent<Light>().enabled = true;
+    //        other.GetComponent<Rigidbody>().useGravity = false;
+    //        if (HitObjects.Contains(other)) { return; }
+    //        HitObjects.Add(other);
 
-        }
-    }
+    //    }
+    //}
     void TurningTorque()
     {
         rb.maxAngularVelocity = (Input.GetKey(KeyCode.LeftShift) ? speedUp_torque : initial_torque);
@@ -134,11 +138,12 @@ public class CharacterCtrl : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl))
         {
             isAming = true;
+
             if (CenterRotate.is_Charging)
             {
                 foreach (var item in TransparentChangeList)
                 {
-                    item.GetComponent<MeshRenderer>().material = TramsparentMaterial;
+                    item.GetComponent<Renderer>().material = TramsparentMaterial;
                 }
             }
 
@@ -148,13 +153,13 @@ public class CharacterCtrl : MonoBehaviour
             isAming = false;
             foreach (var item in TransparentChangeList)
             {
-                item.GetComponent<MeshRenderer>().material = OriginalMaterialList[TransparentChangeList.IndexOf(item)];
+                item.GetComponent<Renderer>().material = OriginalMaterialList[TransparentChangeList.IndexOf(item)];
             }
         }
     }
     void ONBelowDeathAltitude()
     {
-        if (transform.position.y < -10)
+        if (transform.position.y < GlobalRules.instance.DeathAltitude)
         {
             LoadScene(0);
         }
@@ -167,38 +172,26 @@ public class CharacterCtrl : MonoBehaviour
     {
         PlayerKernel.transform.position = Vector3.Lerp(PlayerKernel.transform.position, PlayerKernelTarget.position, PlayerKernelSpeed * Time.deltaTime);
     }
-    IEnumerator CheckDestory(int distance)
-    {
-        while (true)
-        {
-            for (int i = 0; i < HitObjects.Count; i++)
-            {
-                if (HitObjects[i] == null) { HitObjects.Remove(HitObjects[i]); continue; }
-                if (Vector3.Distance(HitObjects[i].transform.position, this.transform.position) > distance)
-                {
-                    Destroy(HitObjects[i]);
-                    HitObjects.Remove(HitObjects[i]);
-                }
-            }
-            yield return new WaitForSeconds(3f);
-        }
-    }
+
     void MenualCheckDestory()
     {
-        // for (int i = 0; i < HitObjects.Count; i++)
-        // {
-        //     // if (HitObjects[i] == null) { HitObjects.Remove(HitObjects[i]); continue; }
+        Destroy(HitObjectsQueue.Dequeue());
 
-        //     Destroy(HitObjects[i]);
-        //     HitObjects.Remove(HitObjects[i]);
+        //foreach (var item in HitObjects)
+        //{
+        //    Destroy(item);
 
-        // }
-        foreach (var item in HitObjects)
-        {
-            Destroy(item);
-
-        }
-        HitObjects.Clear();
+        //}
+        //HitObjects.Clear();
         // Destroy(Test.Dequeue());
+    }
+    private void ChangeCamera()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if (Player_Camera1.activeSelf == true) { Player_Camera1.SetActive(false); Player_Camera2.SetActive(true); Camera = Player_Camera2.transform.Find("Main Camera").GetComponent<Transform>(); }
+            else { Player_Camera1.SetActive(true); Player_Camera2.SetActive(false); Camera = Player_Camera1.transform.Find("Main Camera").GetComponent<Transform>(); }
+        }
+
     }
 }

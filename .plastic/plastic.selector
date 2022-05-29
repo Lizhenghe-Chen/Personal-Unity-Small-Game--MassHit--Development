@@ -1,4 +1,0 @@
-repository "SmashHit (Lizhenghe.Chen)@LizhengheChen@cloud"
-  path "/"
-    br "/main"
-    co "/main"

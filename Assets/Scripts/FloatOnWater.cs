@@ -11,7 +11,7 @@ namespace Bitgem.VFX.StylisedWater
         public float radius;
         public float initialdrag;
         Rigidbody rb;
-     float test;
+        float test;
 
         // Start is called before the first frame update
         void Start()
@@ -41,10 +41,10 @@ namespace Bitgem.VFX.StylisedWater
         }
         void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.layer == 4)
+            if (other.gameObject.layer == GlobalRules.instance.waterLayerID)
             {
                 //Debug.Log("In Water" + other.gameObject.layer + " " + other.gameObject.name);
-                rb.drag = 5;
+                rb.drag = 3;
                 //rb.angularDrag = 2;
                 var instance = WaterVolumeHelper ? WaterVolumeHelper : WaterVolumeHelper.Instance;
                 if (!instance)
@@ -52,24 +52,25 @@ namespace Bitgem.VFX.StylisedWater
                     return;
                 }
                 test = instance.GetHeight(transform.position) ?? transform.position.y;
-                Vector3 floatTarget = new Vector3(transform.position.x, test, transform.position.z);
-                if (transform.position.y < test&&(test-transform.position.y)<= radius)
+                //  Vector3 floatTarget = new Vector3(transform.position.x, test, transform.position.z);
+                if (transform.position.y < test && (test - transform.position.y) <= radius)
                 {
                     // Debug.Log(transform.position.y - test);
-                    rb.AddForce(Vector3.up * globalGravity * flotage * Mathf.PI*Mathf.Pow(test - transform.position.y,3));
+                    rb.AddForce(flotage * globalGravity * Mathf.PI * Mathf.Pow(test - transform.position.y, 3) * Vector3.up);
                     //  transform.position = Vector3.Lerp(transform.position, floatTarget, flotage * Time.deltaTime);
                 }
-                else if(transform.position.y < test) { 
-                     rb.AddForce(Vector3.up * globalGravity * flotage * Mathf.PI*Mathf.Pow(radius,3));
-                   // transform.position = Vector3.Lerp(transform.position, floatTarget, Time.deltaTime * 10);
-                     }
+                else if (transform.position.y < test)
+                {
+                    rb.AddForce(flotage * globalGravity * Mathf.PI * Mathf.Pow(radius, 3) * Vector3.up);
+                    // transform.position = Vector3.Lerp(transform.position, floatTarget, Time.deltaTime * 10);
+                }
 
             }
         }
         void OnTriggerExit(Collider other)
         {
-           // Debug.Log("Out Water");
-            if (other.gameObject.layer == 4)
+            // Debug.Log("Out Water");
+            if (other.gameObject.layer == GlobalRules.instance.waterLayerID)
             {
                 while (rb.drag != initialdrag) { rb.drag = initialdrag; }
             }
