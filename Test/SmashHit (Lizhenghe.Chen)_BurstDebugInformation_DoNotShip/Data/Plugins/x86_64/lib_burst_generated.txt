@@ -135,6 +135,11 @@ Library: lib_burst_generated
 --compilation-defines=CINEMACHINE_UNITY_ANIMATION
 --compilation-defines=CINEMACHINE_UNITY_IMGUI
 --compilation-defines=TIMELINE_FRAMEACCURATE
+--compilation-defines=URP
+--compilation-defines=URP_9_0_0_OR_NEWER
+--compilation-defines=URP_10_0_OR_NEWER
+--compilation-defines=URP_11_0_OR_NEWER
+--compilation-defines=URP_12_0_OR_NEWER
 --linker-options=PdbAltPath="SmashHit (Lizhenghe.Chen)_Data/Plugins/x86_64"
 --generate-link-xml=Temp\burst.link.xml
 --output=F:\Unity\MassHit\Temp\StagingArea\Data\Plugins\x86_64\lib_burst_generated
@@ -167,6 +172,7 @@ Library: lib_burst_generated
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.Services.Core.Configuration.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Universal.Shaders.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
+--root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\StylizedGrass.Runtime.dll
 --assembly-folder=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\
 --pdb-search-paths=Temp/ManagedSymbols/
 --method=Unity.Burst.Intrinsics.X86, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::DoGetCSRTrampoline()--89425a97f3f500fa810ad03f0c382542
@@ -318,6 +324,11 @@ Library: lib_burst_generated
 --compilation-defines=CINEMACHINE_UNITY_ANIMATION
 --compilation-defines=CINEMACHINE_UNITY_IMGUI
 --compilation-defines=TIMELINE_FRAMEACCURATE
+--compilation-defines=URP
+--compilation-defines=URP_9_0_0_OR_NEWER
+--compilation-defines=URP_10_0_OR_NEWER
+--compilation-defines=URP_11_0_OR_NEWER
+--compilation-defines=URP_12_0_OR_NEWER
 --linker-options=PdbAltPath="SmashHit (Lizhenghe.Chen)_Data/Plugins/x86_64"
 --generate-link-xml=Temp\burst.link.xml
 --output=F:\Unity\MassHit\Temp\StagingArea\Data\Plugins\x86_64\lib_burst_generated
@@ -350,6 +361,7 @@ Library: lib_burst_generated
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.Services.Core.Configuration.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Universal.Shaders.dll
 --root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
+--root-assembly=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\StylizedGrass.Runtime.dll
 --assembly-folder=F:\Unity\MassHit\Temp\StagingArea\Data\Managed\
 --pdb-search-paths=Temp/ManagedSymbols/
 --method=Unity.Jobs.IJobForExtensions+ForJobStruct`1[[UnityEngine.Rendering.Universal.ReorderJob`1[[UnityEngine.Rendering.Universal.LightMinMaxZ, Unity.RenderPipelines.Universal.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], Unity.RenderPipelines.Universal.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(UnityEngine.Rendering.Universal.ReorderJob`1[[UnityEngine.Rendering.Universal.LightMinMaxZ, Unity.RenderPipelines.Universal.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]&, Unity.RenderPipelines.Universal.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--e943843acfb78f5f2f3716a6553740d9

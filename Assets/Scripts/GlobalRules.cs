@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cinemachine;
 public class GlobalRules : MonoBehaviour
 {
     public static GlobalRules instance;
@@ -10,14 +10,21 @@ public class GlobalRules : MonoBehaviour
     public float recoverTimeSpeed = .2f;
     public List<Transform> checkParentLists = new();
     public WaitForSeconds waitTime = new(5);
+
+    [SerializeField] CinemachineFreeLook cam1;
+    [SerializeField] CinemachineVirtualCamera cam2;
+
     Transform Player;
     // Start is called before the first frame update
     void Awake()
     {
+
         if (instance == null)
         {
             instance = this;
         }
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
     void Start()
     {
@@ -30,9 +37,10 @@ public class GlobalRules : MonoBehaviour
     void Update()
     {
         //Debug.Log(Time.fixedDeltaTime);
+        if (Time.timeScale >= 1) { return; }
         Time.timeScale += recoverTimeSpeed * Time.unscaledDeltaTime;
 
-        Time.timeScale = Mathf.Clamp(Time.timeScale, 0, 1);
+
     }
     IEnumerator CheckDestoryByDistanceFromPlayer(int maxDistance, Queue<GameObject> checkLists)
     {
@@ -80,5 +88,25 @@ public class GlobalRules : MonoBehaviour
 
             yield return waitTime;
         }
+    }
+    public void FitCameraDirection(bool isCam1ToCam2)
+    {
+        var (A, B) = GetCamerasDetails();
+        if (isCam1ToCam2)
+        {
+            A.m_XAxis.Value = B.m_XAxis.Value;
+        }
+        else
+        {
+            B.m_XAxis.Value = A.m_XAxis.Value;
+        }
+
+    }
+    public (CinemachineFreeLook, CinemachineOrbitalTransposer) GetCamerasDetails()
+    {
+        //cam1 = Player.GetComponent<CharacterCtrl>().Player_Camera1.GetComponent<CinemachineFreeLook>();
+        //cam2 = Player.GetComponent<CharacterCtrl>().Player_Camera2.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineOrbitalTransposer>();
+
+        return (cam1, cam2.GetCinemachineComponent<CinemachineOrbitalTransposer>());
     }
 }

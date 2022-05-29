@@ -25,7 +25,7 @@ public class BulletDestory : MonoBehaviour
         if (!other.gameObject.CompareTag("GravityCube")) { return; }
         this.GetComponent<MeshRenderer>().enabled = false;
         Time.timeScale = scaleOfTime;
-        Time.fixedDeltaTime = Time.timeScale * 0.01f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
         explosion.SetActive(true);
         //   if (damageRange.radius > explodeRadius) { damageRange.radius = explodeRadius; }
         // GetComponent<SphereCollider>().isTrigger = false;

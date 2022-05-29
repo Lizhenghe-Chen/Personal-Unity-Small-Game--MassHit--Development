@@ -29,7 +29,7 @@ public class CameraDistMain : MonoBehaviour
     void Start()
     {
         //  postProcessVolume = GameObject.Find("Global Volume").GetComponent<Volume>();
-        // virtualCamera = this.GetComponent<CinemachineFreeLook>();
+        virtualCamera = this.GetComponent<CinemachineFreeLook>();
         postProcessVolume.profile.TryGet<DepthOfField>(out dof);
         // player = transform.parent;
 

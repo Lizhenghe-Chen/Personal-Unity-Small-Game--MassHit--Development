@@ -12,12 +12,12 @@ public class BlackHoleDestory : MonoBehaviour
         if (!rigidbody || rigidbody.tag == "BlackHole") { return; }
         if (other.transform.localScale.x <= 0.01f)
         {
-            if (other.tag == "Player") { CharacterCtrl._CharacterCtrl.LoadScene(0); CenterRotate.shootEnergy = 0; return; }
+            if (other.CompareTag("Player")) { CharacterCtrl._CharacterCtrl.LoadScene(0); CenterRotate.shootEnergy = 0; return; }
             Destroy(other.gameObject);
         }
         else
         {
-            if (other.tag == "Player") { other.transform.localScale -= objectDestory; }
+            if (other.CompareTag("Player")) { other.transform.localScale -= objectDestory; }
             else
                 other.transform.localScale -= objectDestory;
         }

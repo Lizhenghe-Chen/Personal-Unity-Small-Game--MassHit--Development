@@ -13,7 +13,7 @@ public class CharacterCtrl : MonoBehaviour
     public Material TramsparentMaterial;
     public GameObject PlayerKernel;
     public float PlayerKernelSpeed = 3f;
-    public GameObject Player_Camera1, Player_Camera2;
+    public GameObject Player_Camera1, Player_Camera2;// cam1 is CinemachineFreeLook with Orbits, cam2 is CinemachineVirtualCamera with CinemachineTransposer
 
     public List<GameObject> HitObjects = new();
     public Queue<GameObject> HitObjectsQueue = new();
@@ -166,6 +166,8 @@ public class CharacterCtrl : MonoBehaviour
     }
     public void LoadScene(int sceneIndex)
     {
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
         SceneManager.LoadScene(sceneIndex);
     }
     void MovePlayerKernel()
@@ -185,12 +187,25 @@ public class CharacterCtrl : MonoBehaviour
         //HitObjects.Clear();
         // Destroy(Test.Dequeue());
     }
-    private void ChangeCamera()
+    private void ChangeCamera()//cam1 is CinemachineFreeLook, cam2 is CinemachineTransposer
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            if (Player_Camera1.activeSelf == true) { Player_Camera1.SetActive(false); Player_Camera2.SetActive(true); Camera = Player_Camera2.transform.Find("Main Camera").GetComponent<Transform>(); }
-            else { Player_Camera1.SetActive(true); Player_Camera2.SetActive(false); Camera = Player_Camera1.transform.Find("Main Camera").GetComponent<Transform>(); }
+            if (Player_Camera1.activeSelf == true)//cam1 to cam2
+            {
+                Player_Camera2.SetActive(true);
+                Camera = Player_Camera2.transform.parent.Find("Main Camera").GetComponent<Transform>();
+                GlobalRules.instance.FitCameraDirection(true);
+                Player_Camera1.SetActive(false);
+
+            }
+            else//cam2 to cam1
+            {
+                Player_Camera1.SetActive(true);
+                Camera = Player_Camera2.transform.parent.Find("Main Camera").GetComponent<Transform>();
+                GlobalRules.instance.FitCameraDirection(false);
+                Player_Camera2.SetActive(false);
+            }
         }
 
     }
