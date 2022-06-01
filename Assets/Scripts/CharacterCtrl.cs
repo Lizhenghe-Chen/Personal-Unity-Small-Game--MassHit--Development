@@ -14,6 +14,8 @@ public class CharacterCtrl : MonoBehaviour
     public GameObject PlayerKernel;
     public float PlayerKernelSpeed = 3f;
     public GameObject Player_Camera1, Player_Camera2;// cam1 is CinemachineFreeLook with Orbits, cam2 is CinemachineVirtualCamera with CinemachineTransposer
+    public ParticleSystem landBendEffect;
+
 
     public List<GameObject> HitObjects = new();
     public Queue<GameObject> HitObjectsQueue = new();
@@ -71,7 +73,7 @@ public class CharacterCtrl : MonoBehaviour
     //}
     void TurningTorque()
     {
-        rb.maxAngularVelocity = (Input.GetKey(KeyCode.LeftShift) ? speedUp_torque : initial_torque);
+        rb.maxAngularVelocity = (Input.GetKey(GlobalRules.instance.SpeedUp) ? speedUp_torque : initial_torque);
         if (towardWithCamera)
         {
 
@@ -84,8 +86,9 @@ public class CharacterCtrl : MonoBehaviour
             rb.AddTorque(rb.maxAngularVelocity * horizontalInput * -Vector3.forward);
         }
     }
-    private void OnCollisionStay(Collision other)
+    private void OnCollisionEnter(Collision other)
     {
+        if (landBendEffect) landBendEffect.Emit(1);
         if (other.gameObject.layer == 0) { ableToJump = true; }
     }
     private void OnCollisionExit(Collision other)
@@ -94,27 +97,28 @@ public class CharacterCtrl : MonoBehaviour
     }
     void GiveForce()
     {
-        var force = (Input.GetKey(KeyCode.LeftShift) ? sliteForce * 2 : sliteForce);
+        var force = (Input.GetKey(GlobalRules.instance.SpeedUp) ? sliteForce * 2 : sliteForce);
         rb.AddForce(force * verticalInput * Camera.transform.forward);
         rb.AddForce(force * horizontalInput * Camera.transform.right);
     }
     void JumpCommand()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(GlobalRules.instance.Jump))
         {
             if (!ableToJump) { return; }
 
             rb.AddForce(Vector3.up * jumpForce);
         }
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(GlobalRules.instance.Jump) && CenterRotate.shootEnergy >= 1)
         {
+            CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.flyCosume;
             rb.useGravity = false;
         }
         else { rb.useGravity = true; }
     }
     void RushCommand()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(GlobalRules.instance.Rush))
         {
             if (towardWithCamera)
             { rb.AddForce(Camera.transform.forward * rushForce); }
@@ -126,7 +130,7 @@ public class CharacterCtrl : MonoBehaviour
     }
     void DestroyCommand()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(GlobalRules.instance.DestoryHittedObj))
         {
             MenualCheckDestory();
         }
@@ -135,26 +139,32 @@ public class CharacterCtrl : MonoBehaviour
     void Break()
     {
         if (Input.GetMouseButton(1)) { rb.angularVelocity = Vector3.zero; }
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(GlobalRules.instance.Aim) || Input.GetKey(GlobalRules.instance.HoldObject))
         {
-            isAming = true;
-
-            if (CenterRotate.is_Charging)
-            {
-                foreach (var item in TransparentChangeList)
-                {
-                    item.GetComponent<Renderer>().material = TramsparentMaterial;
-                }
-            }
-
+            ChangeMaterialsToTransparent();
         }
         else
         {
-            isAming = false;
+            ChangeMaterialsToOriginal();
+        }
+    }
+    public void ChangeMaterialsToTransparent()
+    {
+        if (CenterRotate.is_Charging)
+        {
+            isAming = true;
             foreach (var item in TransparentChangeList)
             {
-                item.GetComponent<Renderer>().material = OriginalMaterialList[TransparentChangeList.IndexOf(item)];
+                item.GetComponent<Renderer>().material = TramsparentMaterial;
             }
+        }
+    }
+    public void ChangeMaterialsToOriginal()
+    {
+        isAming = false;
+        foreach (var item in TransparentChangeList)
+        {
+            item.GetComponent<Renderer>().material = OriginalMaterialList[TransparentChangeList.IndexOf(item)];
         }
     }
     void ONBelowDeathAltitude()
@@ -189,7 +199,7 @@ public class CharacterCtrl : MonoBehaviour
     }
     private void ChangeCamera()//cam1 is CinemachineFreeLook, cam2 is CinemachineTransposer
     {
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(GlobalRules.instance.SwitchCamera))
         {
             if (Player_Camera1.activeSelf == true)//cam1 to cam2
             {

@@ -37,10 +37,11 @@ public class CenterRotate : MonoBehaviour
             Mathf.Clamp(shootEnergy, 0, 101);
             if (shootEnergy < 100)
             {
-                shootEnergy += chargeSpeed * Time.deltaTime;
+                shootEnergy += GlobalRules.instance.energyChargeSpeed * Time.deltaTime;
 
             }
-            BuckyBallAtoms.GetComponent<Renderer>().material = shootEnergy < 100 ? un_ChargedMaterial : chargedMaterial;
+            if (!(Input.GetKey(GlobalRules.instance.Aim) || Input.GetKey(GlobalRules.instance.HoldObject))) { BuckyBallAtoms.GetComponent<Renderer>().material = shootEnergy < 100 ? un_ChargedMaterial : chargedMaterial; }
+
 
             if (CharacterCtrl.isAming && shootEnergy >= 100)
             {

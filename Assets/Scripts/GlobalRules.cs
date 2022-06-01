@@ -10,11 +10,13 @@ public class GlobalRules : MonoBehaviour
     public float recoverTimeSpeed = .2f;
     public List<Transform> checkParentLists = new();
     public WaitForSeconds waitTime = new(5);
-
+    public KeyCode Break, Jump, SpeedUp, Rush, Aim, Shoot,
+        HoldObject, ExtemdHoldObjectDist, CloseHoldObjectDist, SwitchCamera, DestoryHittedObj;
+    public float energyChargeSpeed, holdConsume, flyCosume;
     [SerializeField] CinemachineFreeLook cam1;
     [SerializeField] CinemachineVirtualCamera cam2;
 
-    Transform Player;
+    [SerializeField] Transform Player;
     // Start is called before the first frame update
     void Awake()
     {
@@ -29,8 +31,12 @@ public class GlobalRules : MonoBehaviour
     void Start()
     {
         Player = GameObject.Find("Player").transform;
+        cam1 = Player.GetComponent<CharacterCtrl>().Player_Camera1.GetComponent<CinemachineFreeLook>();
+        cam2 = Player.GetComponent<CharacterCtrl>().Player_Camera2.GetComponent<CinemachineVirtualCamera>();
+        Debug.Log(Player.GetComponent<CharacterCtrl>().Player_Camera1);
         StartCoroutine(CheckDestoryByDistanceFromPlayer(100, CharacterCtrl._CharacterCtrl.HitObjectsQueue));
-        StartCoroutine(CheckDestoryByDeathAltitude(checkParentLists));
+        if (checkParentLists.Count > 0) { StartCoroutine(CheckDestoryByDeathAltitude(checkParentLists)); }
+
     }
 
     // Update is called once per frame
@@ -94,11 +100,11 @@ public class GlobalRules : MonoBehaviour
         var (A, B) = GetCamerasDetails();
         if (isCam1ToCam2)
         {
-            A.m_XAxis.Value = B.m_XAxis.Value;
+            B.m_XAxis.Value = A.m_XAxis.Value;
         }
         else
         {
-            B.m_XAxis.Value = A.m_XAxis.Value;
+            A.m_XAxis.Value = B.m_XAxis.Value;
         }
 
     }

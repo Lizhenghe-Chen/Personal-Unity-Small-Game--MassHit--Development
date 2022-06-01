@@ -15,14 +15,18 @@ MonoBehaviour:
   version: 1
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SGS_SpruceBranch
   m_Shader: {fileID: 4800000, guid: d7dd1c3f4cba1d441a7d295a168bac0d, type: 3}
-  m_ShaderKeywords: _ADVANCED_LIGHTING
+  m_ValidKeywords:
+  - _ANGLE_FADING
+  - _SIMPLE_LIGHTING
+  m_InvalidKeywords:
+  - _ANGLEFADING_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
@@ -85,7 +89,7 @@ Material:
     - Vector1_F87146A1: 1.38
     - _AlphaClip: 1
     - _AlphaToCoverage: 0
-    - _AngleFading: 0
+    - _AngleFading: 1
     - _BendFlattenStrength: 0
     - _BendMode: 0
     - _BendPushStrength: 0
@@ -107,7 +111,7 @@ Material:
     - _GlossinessSource: 0
     - _GlossyReflections: 0
     - _HueVariationKwToggle: 0
-    - _LightingMode: 2
+    - _LightingMode: 1
     - _Metallic: 0
     - _NormalMapKwToggle: 0
     - _OcclusionIndirectStrength: 0.25
@@ -128,6 +132,9 @@ Material:
     - _SubsurfaceKwToggle: 0
     - _Surface: 0
     - _Translucency: 0.145
+    - _TranslucencyFalloff: 4
+    - _TranslucencyIndirect: 0
+    - _TranslucencyOffset: 0
     - _TwoSided: 2
     - _VertexDarkening: 0.1
     - _WindAmbientStrength: 0.2
@@ -150,9 +157,10 @@ Material:
     - _BendTint: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FadeParams: {r: 50, g: 100, b: 0, a: 0}
+    - _FadeParams: {r: 50, g: 400, b: 1, a: 0}
     - _HueVariation: {r: 1, g: 0.53988457, b: 0.050980367, a: 0.16862746}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}
+    - _LODDebugColor: {r: 1, g: 1, b: 1, a: 1}
     - _NormalParams: {r: 0, g: 0, b: 0, a: 0}
     - _ScalemapInfluence: {r: 0, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
