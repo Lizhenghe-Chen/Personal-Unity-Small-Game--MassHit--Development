@@ -7,7 +7,7 @@ Library: lib_burst_generated
 --float-precision=Standard
 --format=Coff
 --disable-warnings=BC1370
---compilation-defines=UNITY_2021_3_2
+--compilation-defines=UNITY_2021_3_3
 --compilation-defines=UNITY_2021_3
 --compilation-defines=UNITY_2021
 --compilation-defines=UNITY_5_3_OR_NEWER
@@ -196,7 +196,7 @@ Library: lib_burst_generated
 --float-precision=Standard
 --format=Coff
 --disable-warnings=BC1370
---compilation-defines=UNITY_2021_3_2
+--compilation-defines=UNITY_2021_3_3
 --compilation-defines=UNITY_2021_3
 --compilation-defines=UNITY_2021
 --compilation-defines=UNITY_5_3_OR_NEWER

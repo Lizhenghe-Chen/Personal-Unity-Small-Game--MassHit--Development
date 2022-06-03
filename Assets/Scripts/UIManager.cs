@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Rigidbody holdingObject;
     [SerializeField] private float value = 0f;
     [SerializeField] private bool isHoldKeyPressing = false;
-    readonly int IgnorLayer = 1 << 6;
+    public LayerMask HoldRaycastIgnore;
     void Start()
     {
         holdAim.enabled = false;
@@ -70,14 +70,15 @@ public class UIManager : MonoBehaviour
 
     public void HoldObjectCommand()
     {
-        if (CenterRotate.shootEnergy <= 1) { return; }
+        if (CenterRotate.shootEnergy <= 0) { return; }
+
         if (Input.GetKeyDown(GlobalRules.instance.HoldObject))
         {
             holdAim.enabled = true;
             isHoldKeyPressing = holdAim.enabled;
 
         }
-        else if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || CenterRotate.shootEnergy <= 2)
+        else if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || CenterRotate.shootEnergy <= 1)
         {
             holdAim.enabled = false;
             isHoldKeyPressing = holdAim.enabled;
@@ -99,13 +100,14 @@ public class UIManager : MonoBehaviour
         if (Input.GetKey(GlobalRules.instance.ExtemdHoldObjectDist) && (holdDistance <= holdRange.max)) { holdDistance += Time.deltaTime * 5f; }
         else if (Input.GetKey(GlobalRules.instance.CloseHoldObjectDist) && (holdDistance >= holdRange.min)) { holdDistance -= Time.deltaTime * 5f; }
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(MainCamera.position, MainCamera.TransformDirection(Vector3.forward), out RaycastHit hit, holdRange.max, ~IgnorLayer))
+        if (Physics.Raycast(MainCamera.position, MainCamera.TransformDirection(Vector3.forward), out RaycastHit hit, holdRange.max, ~HoldRaycastIgnore))
         {
             if (hit.rigidbody && holdingObject == null)
             {
+                holdAim.enabled = false;
                 HoldTarget.position = hit.point;
                 HoldTarget.LookAt(MainCamera);
-                holdDistance = Vector3.Distance(Player.position, hit.point);
+                holdDistance = Vector3.Distance(MainCamera.position, hit.point);
                 holdingObject = hit.collider.gameObject.GetComponent<Rigidbody>();
 
                 originalDrag = holdingObject.drag;
@@ -126,8 +128,8 @@ public class UIManager : MonoBehaviour
         {
             CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
             //holdingObject.transform.position = Vector3.Lerp(holdingObject.transform.position, HoldTarget.position, Time.deltaTime * 1000f);
-            HoldTarget.position = Vector3.Lerp(HoldTarget.position, ((-HoldTarget.forward).normalized * holdDistance + Player.position), Time.deltaTime * 1000f);
-            holdingObject.AddForce(50f * holdingObject.mass * Vector3.Distance(holdingObject.position, HoldTarget.position) * (HoldTarget.position - holdingObject.position));
+            HoldTarget.position = ((MainCamera.forward).normalized * holdDistance + MainCamera.position);
+            holdingObject.AddForce(50f * holdingObject.mass * (HoldTarget.position - holdingObject.position));
             //holdingObject.MovePosition((HoldTarget.position - holdingObject.position) * 50f * Time.deltaTime + holdingObject.position);
 
         }

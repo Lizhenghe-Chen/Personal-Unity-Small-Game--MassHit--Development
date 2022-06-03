@@ -4720,7 +4720,7 @@ GameObject:
   m_TagString: GravityCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &8017765011325014469
 Transform:

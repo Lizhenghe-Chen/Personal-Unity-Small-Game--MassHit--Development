@@ -5,7 +5,7 @@ using Cinemachine;
 public class GlobalRules : MonoBehaviour
 {
     public static GlobalRules instance;
-    public int waterLayerID, playerLayerID, bulletLayerID;
+    public int waterLayerID, playerLayerID, bulletLayerID, groundLayerID;
     public int DeathAltitude;
     public float recoverTimeSpeed = .2f;
     public List<Transform> checkParentLists = new();

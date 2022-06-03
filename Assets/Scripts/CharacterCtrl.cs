@@ -46,7 +46,7 @@ public class CharacterCtrl : MonoBehaviour
     {
         ONBelowDeathAltitude();
         TurningTorque();
-        GiveForce();
+
         MovePlayerKernel();
         Break();
     }
@@ -89,11 +89,51 @@ public class CharacterCtrl : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (landBendEffect) landBendEffect.Emit(1);
-        if (other.gameObject.layer == 0) { ableToJump = true; }
+        if (other.gameObject.layer == GlobalRules.instance.groundLayerID) { ableToJump = true; }
+
     }
     private void OnCollisionExit(Collision other)
     {
-        if (other.gameObject.layer == 0) { ableToJump = false; }
+        if (other.gameObject.layer == GlobalRules.instance.groundLayerID) { ableToJump = false; }
+        if (other.gameObject.layer != GlobalRules.instance.groundLayerID) { isCliming = false; }
+    }
+
+
+    private void OnCollisionStay(Collision collision)
+    {
+        ClimbWall(collision);
+
+
+    }
+    float doubleClickTime = 1, lastClickTime; bool isDoubleClick, isCliming;
+    private bool IsDoubleClick(KeyCode keyCode)
+    {
+        if (Input.GetKeyDown(keyCode))
+        {
+            isDoubleClick = ((Time.time - lastClickTime) <= doubleClickTime);
+            lastClickTime = Time.time;
+        }
+        else { isDoubleClick = false; }
+
+        return isDoubleClick;
+    }
+    private void ClimbWall(Collision collision)
+    {
+        if (collision.gameObject.layer == GlobalRules.instance.groundLayerID) { isCliming = false; return; }
+
+        if (Input.GetKeyUp(GlobalRules.instance.Jump))
+        {
+            isCliming = false;
+            rb.AddForce((transform.position - collision.GetContact(0).point).normalized * jumpForce);
+
+        }
+        else if (Input.GetKey(GlobalRules.instance.Jump) && CenterRotate.shootEnergy > 0)
+        {
+            isCliming = true;
+            CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
+            rb.AddForce((collision.GetContact(0).point - transform.position).normalized * -Physics.gravity.y);
+            rb.AddForce(-Physics.gravity);// print("First point that collided: " + collision.contacts[0].point);
+        }
     }
     void GiveForce()
     {
@@ -105,14 +145,24 @@ public class CharacterCtrl : MonoBehaviour
     {
         if (Input.GetKeyDown(GlobalRules.instance.Jump))
         {
-            if (!ableToJump) { return; }
+            if (ableToJump)
+            {
+                Debug.Log("Jump");
+                rb.AddForce(Vector3.up * jumpForce);
+            }
 
-            rb.AddForce(Vector3.up * jumpForce);
         }
-        if (Input.GetKey(GlobalRules.instance.Jump) && CenterRotate.shootEnergy >= 1)
+        else if (Input.GetKey(GlobalRules.instance.Jump) && !isCliming)
         {
-            CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.flyCosume;
-            rb.useGravity = false;
+            GiveForce();
+            if (CenterRotate.shootEnergy > 0)
+            {
+                rb.useGravity = false;
+                CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.flyCosume;
+
+                Debug.Log("Fly");
+            }
+
         }
         else { rb.useGravity = true; }
     }
@@ -150,9 +200,10 @@ public class CharacterCtrl : MonoBehaviour
     }
     public void ChangeMaterialsToTransparent()
     {
+        isAming = true;
         if (CenterRotate.is_Charging)
         {
-            isAming = true;
+
             foreach (var item in TransparentChangeList)
             {
                 item.GetComponent<Renderer>().material = TramsparentMaterial;

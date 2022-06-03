@@ -34,16 +34,13 @@ public class CenterRotate : MonoBehaviour
         if (is_Charging)
         {
             //Debug.Log(shootEnergy);
-            Mathf.Clamp(shootEnergy, 0, 101);
+
             if (shootEnergy < 100)
             {
                 shootEnergy += GlobalRules.instance.energyChargeSpeed * Time.deltaTime;
 
             }
-            if (!(Input.GetKey(GlobalRules.instance.Aim) || Input.GetKey(GlobalRules.instance.HoldObject))) { BuckyBallAtoms.GetComponent<Renderer>().material = shootEnergy < 100 ? un_ChargedMaterial : chargedMaterial; }
-
-
-            if (CharacterCtrl.isAming && shootEnergy >= 100)
+            else if (CharacterCtrl.isAming && shootEnergy >= 100)
             {
                 transform.RotateAround(transform.position, PlayerKernel.transform.forward, 500 * Time.deltaTime);
             }
@@ -51,7 +48,10 @@ public class CenterRotate : MonoBehaviour
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime);
             }
+            if (!(Input.GetKey(GlobalRules.instance.Aim) || Input.GetKey(GlobalRules.instance.HoldObject))) { BuckyBallAtoms.GetComponent<Renderer>().material = shootEnergy < 100 ? un_ChargedMaterial : chargedMaterial; }
         }
+        //   Debug.Log(shootEnergy);
+
     }
     // private void OnTriggerStay(Collider other)
     // {
