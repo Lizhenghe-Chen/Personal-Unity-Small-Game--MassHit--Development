@@ -23,8 +23,10 @@ Material:
   m_Name: GrassThick
   m_Shader: {fileID: 4800000, guid: d7dd1c3f4cba1d441a7d295a168bac0d, type: 3}
   m_ValidKeywords:
-  - _ADVANCED_LIGHTING
-  m_InvalidKeywords: []
+  - _ANGLE_FADING
+  - _SIMPLE_LIGHTING
+  m_InvalidKeywords:
+  - _ANGLEFADING_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -75,7 +77,7 @@ Material:
     - _AdvancedLighting: 1
     - _AlphaClip: 0
     - _AlphaToCoverage: 0
-    - _AngleFading: 0
+    - _AngleFading: 1
     - _BendFlattenStrength: 1
     - _BendMode: 0
     - _BendPushStrength: 1
@@ -94,7 +96,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _LightingMode: 2
+    - _LightingMode: 1
     - _Metallic: 0
     - _OcclusionStrength: 0.422
     - _PerspectiveCorrection: 0
@@ -108,7 +110,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _Translucency: 0.791
+    - _Translucency: 0.1
     - _TranslucencyFalloff: 4
     - _TranslucencyIndirect: 0
     - _TranslucencyOffset: 0

@@ -16,14 +16,14 @@ public class CameraDistMain : MonoBehaviour
     [SerializeField] float disdance; //for postProcessVolume Depth od Field use
     [SerializeField] float playerRadius;
 
-    float maxRadius = 10; //should >0
-    float minRadius = -2; //should <0
+    int maxRadius = 30; //should >0
+    int minRadius = -2; //should <0
     int offset_Value = 1; //offset when Mouse ScrollWheel
 
     private DepthOfField dof;
 
-    [SerializeField] float total_Offset, smoothSpeed = 2f;//distance between player and camera
-    [SerializeField] float[] currentRadius = { 0, 0, 0 }, currentHeight = { 0, 0, 0 };//the size should same as virtualCamera.m_Orbits.Length
+    [SerializeField] int total_Offset, smoothSpeed = 2;//distance between player and camera
+    [SerializeField] int[] currentRadius = { 0, 0, 0 }, currentHeight = { 0, 0, 0 };//the size should same as virtualCamera.m_Orbits.Length
 
 
     void Start()
@@ -36,14 +36,14 @@ public class CameraDistMain : MonoBehaviour
         // playerRadius = player.GetComponent<SphereCollider>().radius;
         for (int i = 0; i < virtualCamera.m_Orbits.Length; i++)
         {
-            currentRadius[i] = virtualCamera.m_Orbits[i].m_Radius;
-            currentHeight[i] = virtualCamera.m_Orbits[i].m_Height;
+            currentRadius[i] = (int)virtualCamera.m_Orbits[i].m_Radius;
+            currentHeight[i] = (int)virtualCamera.m_Orbits[i].m_Height;
         }
 
 
 
     }
-    void Update()
+    void FixedUpdate()
     {
         if (Player == null) return;
         ScrollWheeldetect();
@@ -57,7 +57,7 @@ public class CameraDistMain : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") < 0 && total_Offset < maxRadius)
         {
             //SetDistance(1);
-            currentRadius[0] += offset_Value * 0.1f;
+            currentRadius[0] += offset_Value;
             currentRadius[1] += offset_Value;
             currentRadius[2] += offset_Value;
             for (int i = 0; i < currentRadius.Length - 1; i++)
@@ -69,7 +69,7 @@ public class CameraDistMain : MonoBehaviour
         }
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && total_Offset > minRadius)
         {
-            currentRadius[0] -= offset_Value * 0.1f;
+            currentRadius[0] -= offset_Value;
             currentRadius[1] -= offset_Value;
             currentRadius[2] -= offset_Value;
             for (int i = 0; i < currentRadius.Length - 1; i++)

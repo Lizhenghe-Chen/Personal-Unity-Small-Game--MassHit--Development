@@ -23,10 +23,9 @@ Material:
   m_Name: Shrub
   m_Shader: {fileID: 4800000, guid: d7dd1c3f4cba1d441a7d295a168bac0d, type: 3}
   m_ValidKeywords:
-  - _ANGLE_FADING
+  - _ENVIRONMENTREFLECTIONS_OFF
   - _SIMPLE_LIGHTING
-  m_InvalidKeywords:
-  - _ANGLEFADING_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -72,9 +71,9 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaToCoverage: 0
-    - _AngleFading: 1
+    - _AngleFading: 0
     - _BendFlattenStrength: 0
-    - _BendMode: 1
+    - _BendMode: 0
     - _BendPushStrength: 0.088
     - _Billboard: 0
     - _Blend: 0
@@ -82,7 +81,7 @@ Material:
     - _ColorMapHeight: 0
     - _ColorMapStrength: 0
     - _Cull: 0
-    - _Cutoff: 0.51
+    - _Cutoff: 0.5
     - _DisableBending: 0
     - _DisableDecals: 0
     - _DstBlend: 0
@@ -104,10 +103,10 @@ Material:
     - _SpherifyNormals: 0
     - _SrcBlend: 1
     - _Surface: 0
-    - _Translucency: 1
+    - _Translucency: 0.1
     - _TranslucencyExp: 4
     - _TranslucencyFalloff: 4
-    - _TranslucencyIndirect: 0
+    - _TranslucencyIndirect: 0.1
     - _TranslucencyOffset: 1
     - _VertexDarkening: 0.111
     - _WindAmbientStrength: 0.088
@@ -123,13 +122,13 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BendTint: {r: 1, g: 1, b: 1, a: 1}
+    - _BendTint: {r: 1, g: 1, b: 1, a: 0.78039217}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FadeParams: {r: 50, g: 100, b: 1, a: 0}
-    - _HueVariation: {r: 0, g: 0.4339623, b: 0.028333593, a: 0.48235294}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0.5686275}
+    - _FadeParams: {r: 50, g: 100, b: 0, a: 0}
+    - _HueVariation: {r: 0, g: 0.43396226, b: 0.028333593, a: 0.43137255}
     - _LODDebugColor: {r: 1, g: 1, b: 1, a: 1}
-    - _NormalParams: {r: 0, g: 0, b: 0, a: 0}
+    - _NormalParams: {r: 0, g: 1, b: 0, a: 0}
     - _ScalemapInfluence: {r: 0, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _WindDirection: {r: 1, g: 0, b: 0, a: 0}

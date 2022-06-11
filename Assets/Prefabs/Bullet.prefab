@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3057072432001533289}
   - component: {fileID: 116174622645146083}
   - component: {fileID: -858497306686126319}
-  - component: {fileID: 2948799296024547616}
+  - component: {fileID: 4729638353243057881}
   m_Layer: 7
   m_Name: Bullet
   m_TagString: Bullet
@@ -36,7 +36,6 @@ Transform:
   m_Children:
   - {fileID: 7772609646962769014}
   - {fileID: 7735053939399533481}
-  - {fileID: 230391339300122584}
   - {fileID: 5800558805550714381}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -135,10 +134,9 @@ MonoBehaviour:
   explodeRadius: 4
   ignoreCollisionObject: {fileID: 3811683612415167881, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
     type: 3}
-  explosion: {fileID: 6394611167746994179}
   scaleOfTime: 0.3
---- !u!65 &2948799296024547616
-BoxCollider:
+--- !u!135 &4729638353243057881
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -148,7 +146,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 5}
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4455071975469440707
 GameObject:
@@ -4980,88 +4978,6 @@ MonoBehaviour:
   xRotation: 0
   yRotation: 3.33
   zRotation: 4.33
---- !u!1 &6394611167746994179
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 230391339300122584}
-  - component: {fileID: 271581278650816944}
-  - component: {fileID: 3863216239569676709}
-  - component: {fileID: 5737403401868283719}
-  m_Layer: 7
-  m_Name: ExplodeArea
-  m_TagString: Bullet
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &230391339300122584
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6394611167746994179}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5809099797139111219}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &271581278650816944
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6394611167746994179}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 6
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &3863216239569676709
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6394611167746994179}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 2
---- !u!1818360608 &5737403401868283719
-PositionConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6394611167746994179}
-  m_Enabled: 1
-  m_Weight: 1
-  m_TranslationAtRest: {x: 0, y: 0, z: 0}
-  m_TranslationOffset: {x: 0, y: 0, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 1
-  m_AffectTranslationZ: 1
-  m_IsContraintActive: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 5809099797139111219}
-    weight: 1
 --- !u!1 &7662571752478045247
 GameObject:
   m_ObjectHideFlags: 0
@@ -5094,7 +5010,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5809099797139111219}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &7130843300264058078
 TrailRenderer:

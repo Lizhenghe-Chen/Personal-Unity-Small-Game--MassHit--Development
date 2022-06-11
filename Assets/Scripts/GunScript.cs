@@ -45,7 +45,7 @@ public class GunScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            CenterRotate.shootEnergy = 0;
+            CenterRotate.shootEnergy -= 25;
             //  Instantiate(bullet, muzzle.position, muzzle.rotation).GetComponent<Rigidbody>().AddForce(muzzle.forward * bulletSpeed);
             var temp = Instantiate(bullet, transform.position, transform.rotation);
             Physics.IgnoreCollision(temp.GetComponent<Collider>(), Player.GetComponent<Collider>(), true);
@@ -61,7 +61,7 @@ public class GunScript : MonoBehaviour
             if (isLookAt) { transform.LookAt(Camera); } else { transform.forward = new(-Camera.forward.x, 0, -Camera.forward.z); }
             AimPoint.SetActive(true);
 
-            if (CenterRotate.is_Charging && CenterRotate.shootEnergy >= 100)
+            if (CenterRotate.is_Charging && CenterRotate.shootEnergy > 25)
             {
                 //BuckyBall.selfRotateSpeed = 10f;
                 GreenAim.SetActive(true);

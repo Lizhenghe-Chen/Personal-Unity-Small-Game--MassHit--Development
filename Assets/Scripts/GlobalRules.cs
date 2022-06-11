@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 public class GlobalRules : MonoBehaviour
 {
     public static GlobalRules instance;
     public int waterLayerID, playerLayerID, bulletLayerID, groundLayerID;
     public int DeathAltitude;
-    public float recoverTimeSpeed = .2f;
+    public Menu escMenu;
+
     public List<Transform> checkParentLists = new();
     public WaitForSeconds waitTime = new(5);
     public KeyCode Break, Jump, SpeedUp, Rush, Aim, Shoot,
         HoldObject, ExtemdHoldObjectDist, CloseHoldObjectDist, SwitchCamera, DestoryHittedObj;
     public float energyChargeSpeed, holdConsume, flyCosume;
-    [SerializeField] CinemachineFreeLook cam1;
-    [SerializeField] CinemachineVirtualCamera cam2;
-
+    [Tooltip("CharacterCtrl.cs will allocate below camera")]
+    public CinemachineFreeLook cam1;
+    public CinemachineVirtualCamera cam2;
+    float recoverTimeSpeed = 2f;
     [SerializeField] Transform Player;
     // Start is called before the first frame update
     void Awake()
@@ -25,26 +28,48 @@ public class GlobalRules : MonoBehaviour
         {
             instance = this;
         }
-        Time.timeScale = 1f;
-        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
     }
     void Start()
     {
         Player = GameObject.Find("Player").transform;
-        cam1 = Player.GetComponent<CharacterCtrl>().Player_Camera1.GetComponent<CinemachineFreeLook>();
-        cam2 = Player.GetComponent<CharacterCtrl>().Player_Camera2.GetComponent<CinemachineVirtualCamera>();
-        Debug.Log(Player.GetComponent<CharacterCtrl>().Player_Camera1);
+        // cam1 = Player.GetComponent<CharacterCtrl>().Player_Camera1.GetComponent<CinemachineFreeLook>();
+        // cam2 = Player.GetComponent<CharacterCtrl>().Player_Camera2.GetComponent<CinemachineVirtualCamera>();
+        // Debug.Log(Player.GetComponent<CharacterCtrl>().Player_Camera1);
         StartCoroutine(CheckDestoryByDistanceFromPlayer(100, CharacterCtrl._CharacterCtrl.HitObjectsQueue));
-        if (checkParentLists.Count > 0) { StartCoroutine(CheckDestoryByDeathAltitude(checkParentLists)); }
+
 
     }
+    void OnEnable()
+    {
+        Debug.Log("OnEnable called");
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
+    // called second
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        checkParentLists.Clear();
+        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("GravityCubeList"))
+        {
+            checkParentLists.Add(temp.transform);
+        }
+        if (checkParentLists.Count > 0) { StartCoroutine(CheckDestoryByDeathAltitude(checkParentLists)); }
+        Debug.Log("OnSceneLoaded: " + scene.name);
+        // Debug.Log(mode);
+    }
     // Update is called once per frame
     void Update()
     {
         //Debug.Log(Time.fixedDeltaTime);
-        if (Time.timeScale >= 1) { return; }
-        Time.timeScale += recoverTimeSpeed * Time.unscaledDeltaTime;
+        Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+        if (!escMenu.escUI.activeSelf)
+        {
+            Time.timeScale += (1 / recoverTimeSpeed) * Time.unscaledDeltaTime;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        }
+
+
 
 
     }

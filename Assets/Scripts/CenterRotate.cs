@@ -33,6 +33,7 @@ public class CenterRotate : MonoBehaviour
         if (Vector3.Distance(transform.position, PlayerKernel.transform.position) <= chargingRange) { is_Charging = true; } else { is_Charging = false; }
         if (is_Charging)
         {
+            transform.rotation = Quaternion.Lerp(transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime);
             //Debug.Log(shootEnergy);
 
             if (shootEnergy < 100)
@@ -44,10 +45,7 @@ public class CenterRotate : MonoBehaviour
             {
                 transform.RotateAround(transform.position, PlayerKernel.transform.forward, 500 * Time.deltaTime);
             }
-            else
-            {
-                transform.rotation = Quaternion.Lerp(transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime);
-            }
+
             if (!(Input.GetKey(GlobalRules.instance.Aim) || Input.GetKey(GlobalRules.instance.HoldObject))) { BuckyBallAtoms.GetComponent<Renderer>().material = shootEnergy < 100 ? un_ChargedMaterial : chargedMaterial; }
         }
         //   Debug.Log(shootEnergy);

@@ -10,7 +10,7 @@ public class BlackHoleAttraction : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         var rigidbody = other.gameObject.GetComponent<Rigidbody>();
-        if (!rigidbody) { return; }
+        if (!rigidbody || rigidbody.CompareTag("BlackHole") || rigidbody.gameObject.layer == 1) { return; }
         //var distace = Mathf.Pow(Vector3.Distance(transform.position, other.gameObject.transform.position), 2);
         float gravitation = -Physics.gravity.y * (rigidbody.mass * _Mass / Mathf.Pow(Vector3.Distance(transform.position, other.gameObject.transform.position), 2));
         other.gameObject.GetComponent<Rigidbody>().AddForce((this.transform.position - other.transform.position) * gravitation);

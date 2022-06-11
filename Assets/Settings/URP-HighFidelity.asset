@@ -22,11 +22,11 @@ MonoBehaviour:
   m_DefaultRendererIndex: 0
   m_RequireDepthTexture: 1
   m_RequireOpaqueTexture: 1
-  m_OpaqueDownsampling: 1
+  m_OpaqueDownsampling: 3
   m_SupportsTerrainHoles: 1
   m_StoreActionsOptimization: 0
   m_SupportsHDR: 1
-  m_MSAA: 4
+  m_MSAA: 8
   m_RenderScale: 1
   m_UpscalingFilter: 0
   m_FsrOverrideSharpness: 0
@@ -49,12 +49,12 @@ MonoBehaviour:
   m_Cascade3Split: {x: 0.1, y: 0.3}
   m_Cascade4Split: {x: 0.1, y: 0.2, z: 0.4}
   m_CascadeBorder: 0.11111111
-  m_ShadowDepthBias: 0
-  m_ShadowNormalBias: 1
+  m_ShadowDepthBias: 1
+  m_ShadowNormalBias: 0
   m_SoftShadowsSupported: 1
   m_ConservativeEnclosingSphere: 0
   m_NumIterationsEnclosingSphere: 64
-  m_AdditionalLightsCookieResolution: 1024
+  m_AdditionalLightsCookieResolution: 512
   m_AdditionalLightsCookieFormat: 4
   m_UseSRPBatcher: 1
   m_SupportsDynamicBatching: 0

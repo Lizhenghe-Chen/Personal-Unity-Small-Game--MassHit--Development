@@ -28,12 +28,20 @@ public class CharacterCtrl : MonoBehaviour
     void Awake()
     {
         _CharacterCtrl = this;
+        if (GameObject.FindGameObjectsWithTag("Respawn").Length > 1)
+        {
+
+            Destroy(this.transform.parent.parent.gameObject);
+        }
     }
     void Start()
     {
-        //StartCoroutine(CheckDestory(100));
+
+
+        DontDestroyOnLoad(this.transform.parent.parent);
         rb = GetComponent<Rigidbody>();
-        //PlayerCenterTarget = this.transform;
+        //GlobalRules.instance.cam1 = Player_Camera1.GetComponent<Cinemachine.CinemachineFreeLook>();
+        //GlobalRules.instance.cam2 = Player_Camera2.GetComponent<Cinemachine.CinemachineVirtualCamera>();
         PlayerKernel.transform.parent = this.transform.parent.parent;
         foreach (var item in TransparentChangeList)
         {
@@ -137,9 +145,11 @@ public class CharacterCtrl : MonoBehaviour
     }
     void GiveForce()
     {
+        if (verticalInput + horizontalInput <= 0) { return; }
         var force = (Input.GetKey(GlobalRules.instance.SpeedUp) ? sliteForce * 2 : sliteForce);
         rb.AddForce(force * verticalInput * Camera.transform.forward);
         rb.AddForce(force * horizontalInput * Camera.transform.right);
+        CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
     }
     void JumpCommand()
     {
@@ -152,19 +162,21 @@ public class CharacterCtrl : MonoBehaviour
             }
 
         }
-        else if (Input.GetKey(GlobalRules.instance.Jump) && !isCliming)
+        else if (!isCliming && !ableToJump && CenterRotate.shootEnergy > 0)
         {
-            GiveForce();
-            if (CenterRotate.shootEnergy > 0)
+            GiveForce();//swimming
+            if ((Input.GetKey(GlobalRules.instance.Jump)))
             {
+
                 rb.useGravity = false;
                 CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.flyCosume;
 
-                Debug.Log("Fly");
+                // Debug.Log("Fly");
             }
-
+            else { rb.useGravity = true; }
         }
         else { rb.useGravity = true; }
+
     }
     void RushCommand()
     {
@@ -180,7 +192,7 @@ public class CharacterCtrl : MonoBehaviour
     }
     void DestroyCommand()
     {
-        if (Input.GetKeyDown(GlobalRules.instance.DestoryHittedObj))
+        if (Input.GetKey(GlobalRules.instance.DestoryHittedObj))
         {
             MenualCheckDestory();
         }
@@ -222,13 +234,13 @@ public class CharacterCtrl : MonoBehaviour
     {
         if (transform.position.y < GlobalRules.instance.DeathAltitude)
         {
-            LoadScene(0);
+            LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
     public void LoadScene(int sceneIndex)
     {
-        Time.timeScale = 1f;
-        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        //Time.timeScale = 1f;
+        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
         SceneManager.LoadScene(sceneIndex);
     }
     void MovePlayerKernel()
@@ -238,7 +250,8 @@ public class CharacterCtrl : MonoBehaviour
 
     void MenualCheckDestory()
     {
-        Destroy(HitObjectsQueue.Dequeue());
+        if (HitObjectsQueue.Count > 0) { Destroy(HitObjectsQueue.Dequeue()); }
+
 
         //foreach (var item in HitObjects)
         //{
@@ -255,7 +268,7 @@ public class CharacterCtrl : MonoBehaviour
             if (Player_Camera1.activeSelf == true)//cam1 to cam2
             {
                 Player_Camera2.SetActive(true);
-                Camera = Player_Camera2.transform.parent.Find("Main Camera").GetComponent<Transform>();
+                //  Camera = Player_Camera2.transform.parent.Find("Main Camera").GetComponent<Transform>();
                 GlobalRules.instance.FitCameraDirection(true);
                 Player_Camera1.SetActive(false);
 
@@ -263,7 +276,7 @@ public class CharacterCtrl : MonoBehaviour
             else//cam2 to cam1
             {
                 Player_Camera1.SetActive(true);
-                Camera = Player_Camera2.transform.parent.Find("Main Camera").GetComponent<Transform>();
+                //Camera = Player_Camera2.transform.parent.Find("Main Camera").GetComponent<Transform>();
                 GlobalRules.instance.FitCameraDirection(false);
                 Player_Camera2.SetActive(false);
             }
