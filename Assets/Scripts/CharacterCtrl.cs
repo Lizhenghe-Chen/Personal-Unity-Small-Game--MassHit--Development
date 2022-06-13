@@ -1,4 +1,4 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,7 +25,7 @@ public class CharacterCtrl : MonoBehaviour
     [SerializeField] List<Material> OriginalMaterialList = new();
     Rigidbody rb; // player
     float horizontalInput, verticalInput;
-    void Awake()
+    void OnEnable()
     {
         _CharacterCtrl = this;
         if (GameObject.FindGameObjectsWithTag("Respawn").Length > 1)
@@ -234,6 +234,7 @@ public class CharacterCtrl : MonoBehaviour
     {
         if (transform.position.y < GlobalRules.instance.DeathAltitude)
         {
+            Debug.LogWarning("Below Death Altitude");
             LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

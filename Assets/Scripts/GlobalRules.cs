@@ -18,7 +18,7 @@ public class GlobalRules : MonoBehaviour
     [Tooltip("CharacterCtrl.cs will allocate below camera")]
     public CinemachineFreeLook cam1;
     public CinemachineVirtualCamera cam2;
-    float recoverTimeSpeed = 2f;
+    readonly float recoverTimeSpeed = 2f;
     [SerializeField] Transform Player;
     // Start is called before the first frame update
     void Awake()
@@ -28,15 +28,16 @@ public class GlobalRules : MonoBehaviour
         {
             instance = this;
         }
+        ReallocateCheckDestoryList();
 
     }
     void Start()
     {
-        Player = GameObject.Find("Player").transform;
+        //Player = GameObject.Find("Player").transform;
         // cam1 = Player.GetComponent<CharacterCtrl>().Player_Camera1.GetComponent<CinemachineFreeLook>();
         // cam2 = Player.GetComponent<CharacterCtrl>().Player_Camera2.GetComponent<CinemachineVirtualCamera>();
         // Debug.Log(Player.GetComponent<CharacterCtrl>().Player_Camera1);
-        StartCoroutine(CheckDestoryByDistanceFromPlayer(100, CharacterCtrl._CharacterCtrl.HitObjectsQueue));
+        StartCoroutine(CheckDestoryByDistanceFromPlayer(CharacterCtrl._CharacterCtrl.HitObjectsQueue));
 
 
     }
@@ -49,12 +50,9 @@ public class GlobalRules : MonoBehaviour
     // called second
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        checkParentLists.Clear();
-        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("GravityCubeList"))
-        {
-            checkParentLists.Add(temp.transform);
-        }
-        if (checkParentLists.Count > 0) { StartCoroutine(CheckDestoryByDeathAltitude(checkParentLists)); }
+        ReallocateCheckDestoryList();
+
+
         Debug.Log("OnSceneLoaded: " + scene.name);
         // Debug.Log(mode);
     }
@@ -63,17 +61,22 @@ public class GlobalRules : MonoBehaviour
     {
         //Debug.Log(Time.fixedDeltaTime);
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
-        if (!escMenu.escUI.activeSelf)
+        if (!escMenu.escCanvas.enabled && !SpectatorUI.isPause)
         {
-            Time.timeScale += (1 / recoverTimeSpeed) * Time.unscaledDeltaTime;
+            Time.timeScale += recoverTimeSpeed * Time.unscaledDeltaTime;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log("Pressed P");
+            SpectatorUI.isPause = !SpectatorUI.isPause;
+
         }
 
 
 
-
     }
-    IEnumerator CheckDestoryByDistanceFromPlayer(int maxDistance, Queue<GameObject> checkLists)
+    IEnumerator CheckDestoryByDistanceFromPlayer(Queue<GameObject> checkLists)
     {
         while (true)
         {
@@ -139,5 +142,19 @@ public class GlobalRules : MonoBehaviour
         //cam2 = Player.GetComponent<CharacterCtrl>().Player_Camera2.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineOrbitalTransposer>();
 
         return (cam1, cam2.GetCinemachineComponent<CinemachineOrbitalTransposer>());
+    }
+    void ReallocateCheckDestoryList()
+    {
+        checkParentLists.Clear();
+        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("GravityCubeList"))
+        {
+            checkParentLists.Add(temp.transform);
+        }
+        if (checkParentLists.Count > 0)
+        {
+            try { StartCoroutine(CheckDestoryByDeathAltitude(checkParentLists)); }
+            catch (System.Exception e) { Debug.Log(e.Message); }
+
+        }
     }
 }

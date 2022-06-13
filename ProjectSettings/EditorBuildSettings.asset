@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Grass Scene.unity
     guid: 98fc6980a02c7c5469c580150499a616
+  - enabled: 1
+    path: Assets/Stylized Grass Shader/_Demo/StylizedGrassDemo.unity
+    guid: 8e1f93bc9f41c9040a419138bf1796d4
   m_configObjects: {}

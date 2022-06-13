@@ -51,7 +51,7 @@ MonoBehaviour:
   bulletLayerID: 7
   groundLayerID: 3
   DeathAltitude: -10
-  recoverTimeSpeed: 0.2
+  escMenu: {fileID: 0}
   checkParentLists:
   - {fileID: 0}
   - {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7353953060108681671
 Transform:
   m_ObjectHideFlags: 0

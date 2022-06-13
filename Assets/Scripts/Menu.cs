@@ -10,19 +10,26 @@ public class Menu : MonoBehaviour
     [SerializeField] private GameObject PlayerBunble, SpectatorBunble;
     public GameObject PlayerBunbleHUD, SpectatorBunbleHUD;
     public Transform PlayerPos, SpectatorPos;
-    public GameObject escUI;
+    //public GameObject escUI;
+    public CharacterCtrl characterCtrl;
     public Transform MainCamera;
+
+    public CinemachineVirtualCamera PlayervCam, SpectatorvCam;
+    public CinemachineFreeLook PlayerfreeLook;
+    public Canvas escCanvas;
     CinemachineBrain cameraBrain;
 
 
     // Start is called before the first frame update
     void Awake()
     {
+        escCanvas = this.GetComponent<Canvas>();
         videoDropdown.value = QualitySettings.GetQualityLevel();
-        levelDropdown.value = SceneManager.GetActiveScene().buildIndex;
+        // levelDropdown.value = SceneManager.GetActiveScene().buildIndex;
         ChangeQualityLevel();
         cameraBrain = MainCamera.GetComponent<CinemachineBrain>();
         InGameMenu();
+
     }
 
     // Update is called once per frame
@@ -35,27 +42,27 @@ public class Menu : MonoBehaviour
     }
     public void InGameMenu()
     {
-        if (escUI.activeSelf)//if menu is active, switch it inactive
+        if (escCanvas.enabled)//if menu is active, switch it inactive
         {
-            escUI.SetActive(false);
+            escCanvas.enabled = false;
 
             Cursor.visible = false;
-            cameraBrain.enabled = true;
+            // cameraBrain.enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
             SpectatorBunbleHUD.SetActive(false);
-            PlayerBunbleHUD.SetActive(false);
+            //PlayerBunbleHUD.SetActive(false);
             //Time.timeScale = 1f;
             // Time.fixedDeltaTime = Time.timeScale * 0.02f;
         }
         else// if menu is inactive, switch it active,open the menu
         {
-            escUI.SetActive(true);
-            cameraBrain.enabled = false;
+            escCanvas.enabled = true;
+            // cameraBrain.enabled = false;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             SpectatorBunbleHUD.SetActive(true);
-            PlayerBunbleHUD.SetActive(true);
-            Time.timeScale = 0.01f;
+            //PlayerBunbleHUD.SetActive(true);
+            Time.timeScale = 0.0001f;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
         }
 
@@ -68,15 +75,28 @@ public class Menu : MonoBehaviour
 
     public void SwitchBunble()
     {
-        if (PlayerBunble.activeSelf)
+        if (characterCtrl.enabled)
         {
-            PlayerBunble.SetActive(false); SpectatorBunble.SetActive(true);
-            SpectatorPos.position = PlayerPos.position;
+            characterCtrl.enabled = false;
+            PlayervCam.gameObject.SetActive(false);
+            PlayerfreeLook.gameObject.SetActive(false);
+            PlayerBunbleHUD.SetActive(false);
+            SpectatorBunble.SetActive(true);
+            //PlayerBunble.SetActive(false);
+            SwitchBubleWithCamera();
+
+
         }
         else
         {
-            PlayerBunble.SetActive(true); SpectatorBunble.SetActive(false);
-            PlayerPos.position = SpectatorPos.position;
+            characterCtrl.enabled = true;
+            // PlayervCam.gameObject.SetActive(true);
+            PlayerfreeLook.gameObject.SetActive(true);
+            PlayerBunbleHUD.SetActive(true);
+
+            // PlayerBunble.SetActive(true);
+            SpectatorBunble.SetActive(false);
+            //PlayerPos.position = SpectatorPos.position;
         }
 
     }
@@ -93,9 +113,27 @@ public class Menu : MonoBehaviour
         {
             return;
         }
-
+        PlayerPos.parent.position += new Vector3(0, 2, 0);
         Debug.Log(levelDropdown.value);
         SceneManager.LoadScene(levelDropdown.value);
+        Time.timeScale = 0.01f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
+    }
+    void SwitchBubleWithCamera()
+    { //let two bundle's camera have same direction
+
+        if (PlayervCam.gameObject.activeSelf)
+        {
+            SpectatorvCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = PlayervCam.GetCinemachineComponent<CinemachineOrbitalTransposer>().m_XAxis.Value;
+            // SpectatorvCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = PlayervCam.GetCinemachineComponent<CinemachineOrbitalTransposer>().m_XAxis.Value;
+        }
+        else if (PlayerfreeLook.gameObject.activeSelf)
+        {
+            SpectatorvCam.GetCinemachineComponent<CinemachinePOV>().m_HorizontalAxis.Value = PlayerfreeLook.m_XAxis.Value;
+            SpectatorvCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = PlayerfreeLook.m_YAxis.Value * 90;
+        }
+        SpectatorPos.position = MainCamera.position;
     }
 }
 

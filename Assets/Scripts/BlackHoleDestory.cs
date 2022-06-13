@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class BlackHoleDestory : MonoBehaviour
 {
@@ -13,12 +13,19 @@ public class BlackHoleDestory : MonoBehaviour
         if (!rigidbody || rigidbody.CompareTag("BlackHole") || rigidbody.gameObject.layer == 1) { return; }
         if (other.transform.localScale.x <= 0.01f)
         {
-            if (other.CompareTag("Player")) { CharacterCtrl._CharacterCtrl.LoadScene(0); CenterRotate.shootEnergy = 0; return; }
+            if (other.name == "Player")
+            {
+                Destroy(other.transform.parent.parent.gameObject);
+                // Destroy(CharacterCtrl._CharacterCtrl.transform.parent.parent.gameObject);
+                CenterRotate.shootEnergy = 0;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                return;
+            }
             Destroy(other.gameObject);
         }
         else
         {
-            if (other.CompareTag("Player")) { other.transform.localScale -= objectDestory; }
+            if (other.name == "Player") { other.transform.localScale -= objectDestory; }
             else
                 other.transform.localScale -= objectDestory;
             rigidbody.mass /= 2;

@@ -10,8 +10,8 @@ Material:
   m_Name: GroundCover
   m_Shader: {fileID: 4800000, guid: d7dd1c3f4cba1d441a7d295a168bac0d, type: 3}
   m_ValidKeywords:
-  - _ADVANCED_LIGHTING
   - _ENVIRONMENTREFLECTIONS_OFF
+  - _SIMPLE_LIGHTING
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -76,7 +76,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _LightingMode: 2
+    - _LightingMode: 1
     - _Metallic: 0
     - _OcclusionStrength: 0
     - _PerspectiveCorrection: 0

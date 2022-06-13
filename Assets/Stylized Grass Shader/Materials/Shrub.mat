@@ -23,7 +23,6 @@ Material:
   m_Name: Shrub
   m_Shader: {fileID: 4800000, guid: d7dd1c3f4cba1d441a7d295a168bac0d, type: 3}
   m_ValidKeywords:
-  - _ENVIRONMENTREFLECTIONS_OFF
   - _SIMPLE_LIGHTING
   m_InvalidKeywords: []
   m_LightmapFlags: 4

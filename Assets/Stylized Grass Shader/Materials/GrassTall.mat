@@ -23,11 +23,11 @@ Material:
   m_Name: GrassTall
   m_Shader: {fileID: 4800000, guid: d7dd1c3f4cba1d441a7d295a168bac0d, type: 3}
   m_ValidKeywords:
-  - _ANGLE_FADING
+  - _RECEIVE_SHADOWS_OFF
   - _SIMPLE_LIGHTING
   m_InvalidKeywords:
   - _ALPHATOCOVERAGE_ON
-  - _ANGLEFADING_ON
+  - _RECEIVESHADOWS_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -78,7 +78,7 @@ Material:
     - _AdvancedLighting: 1
     - _AlphaClip: 0
     - _AlphaToCoverage: 1
-    - _AngleFading: 1
+    - _AngleFading: 0
     - _BendFlattenStrength: 1
     - _BendMode: 0
     - _BendPushStrength: 1
@@ -103,7 +103,7 @@ Material:
     - _OcclusionStrength: 0
     - _PerspectiveCorrection: 0
     - _QueueOffset: 0
-    - _ReceiveShadows: 1
+    - _ReceiveShadows: 0
     - _Scalemap: 0
     - _ShadowBiasCorrection: 0
     - _Smoothness: 0

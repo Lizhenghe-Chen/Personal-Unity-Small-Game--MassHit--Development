@@ -26,6 +26,7 @@ Material:
   - _ANGLE_FADING
   - _SIMPLE_LIGHTING
   m_InvalidKeywords:
+  - _ALPHATOCOVERAGE_ON
   - _ANGLEFADING_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -76,7 +77,7 @@ Material:
     m_Floats:
     - _AdvancedLighting: 1
     - _AlphaClip: 0
-    - _AlphaToCoverage: 0
+    - _AlphaToCoverage: 1
     - _AngleFading: 1
     - _BendFlattenStrength: 1
     - _BendMode: 0

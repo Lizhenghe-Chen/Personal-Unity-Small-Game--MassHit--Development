@@ -7,6 +7,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 public class SpectatorUI : MonoBehaviour
 {
+    public static bool isPause = false;
     [SerializeField] CinemachineVirtualCamera vcam;
     [SerializeField] private Volume postProcessVolume;
     [SerializeField] private DepthOfField df;
@@ -22,11 +23,9 @@ public class SpectatorUI : MonoBehaviour
         FieldOfViewSlider.value = vcam.m_Lens.FieldOfView;
 
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-
+        // FieldOfViewSlider.value = MainCamera.GetComponent<Camera>().fieldOfView = 35f;
     }
 
     public void SetFocusDistance()

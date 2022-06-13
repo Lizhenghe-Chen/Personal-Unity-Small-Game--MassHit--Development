@@ -20,13 +20,16 @@ public class SpectatorCtrl : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        Movement();
+        // Movement();
+        MovementUnscaled();
     }
+
+
     void Movement()
     {
         var Speed = Input.GetKey(GlobalRules.instance.SpeedUp) ? moveSpeed * 10 : moveSpeed;
-        rb.AddForce(Speed * verticalInput * Camera.forward);
-        rb.AddForce(Speed * horizontalInput * Camera.right);
+        rb.AddForce(Speed * Time.unscaledDeltaTime * verticalInput * Camera.forward);
+        rb.AddForce(horizontalInput * Speed * Time.unscaledDeltaTime * Camera.right);
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.E))
         {
             rb.AddForce(Vector3.up * Speed);
@@ -39,5 +42,18 @@ public class SpectatorCtrl : MonoBehaviour
 
             //   Debug.Log(a + "Space pressed and jump" + jumpCount);
         }
+    }
+    void MovementUnscaled()
+    {
+        if (Input.GetKey(KeyCode.W)) { transform.position += Camera.forward * moveSpeed * Time.unscaledDeltaTime; }
+        if (Input.GetKey(KeyCode.S)) { transform.position -= Camera.forward * moveSpeed * Time.unscaledDeltaTime; }
+        if (Input.GetKey(KeyCode.A)) { transform.position -= Camera.right * moveSpeed * Time.unscaledDeltaTime; }
+        if (Input.GetKey(KeyCode.D)) { transform.position += Camera.right * moveSpeed * Time.unscaledDeltaTime; }
+        if (Input.GetKey(KeyCode.Space)) { transform.position += Vector3.up * moveSpeed * Time.unscaledDeltaTime; }
+        if (Input.GetKey(KeyCode.Q)) { transform.position -= Vector3.up * moveSpeed * Time.unscaledDeltaTime; }
+        if (Input.GetKey(KeyCode.E)) { transform.position += Vector3.up * moveSpeed * Time.unscaledDeltaTime; }
+
+
+
     }
 }

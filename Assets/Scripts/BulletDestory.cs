@@ -7,7 +7,7 @@ public class BulletDestory : MonoBehaviour
     public float explodeRadius = 5f;// should be the sphere collider trigger's radius
     public GameObject ignoreCollisionObject;
     //public GameObject explosion;
-    public float scaleOfTime = 0.5f;
+    public float scaleOfTime = 0.01f;
     //   private SphereCollider damageRange;
     //void Awake() { explosion.SetActive(false); }
     void Start()
