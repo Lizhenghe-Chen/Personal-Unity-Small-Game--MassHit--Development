@@ -42,12 +42,13 @@ public class Menu : MonoBehaviour
     }
     public void InGameMenu()
     {
+        CancelInvoke();
         if (escCanvas.enabled)//if menu is active, switch it inactive
         {
             escCanvas.enabled = false;
 
             Cursor.visible = false;
-            // cameraBrain.enabled = true;
+            cameraBrain.enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
             SpectatorBunbleHUD.SetActive(false);
             //PlayerBunbleHUD.SetActive(false);
@@ -57,13 +58,15 @@ public class Menu : MonoBehaviour
         else// if menu is inactive, switch it active,open the menu
         {
             escCanvas.enabled = true;
-            // cameraBrain.enabled = false;
+            cameraBrain.enabled = false;
+
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             SpectatorBunbleHUD.SetActive(true);
             //PlayerBunbleHUD.SetActive(true);
             Time.timeScale = 0.0001f;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
+            //   Invoke("UnableCinemachineBrain", 1f * Time.timeScale);
         }
 
     }
@@ -75,6 +78,8 @@ public class Menu : MonoBehaviour
 
     public void SwitchBunble()
     {
+        CancelInvoke();
+        cameraBrain.enabled = true;
         if (characterCtrl.enabled)
         {
             characterCtrl.enabled = false;
@@ -98,7 +103,7 @@ public class Menu : MonoBehaviour
             SpectatorBunble.SetActive(false);
             //PlayerPos.position = SpectatorPos.position;
         }
-
+        Invoke(nameof(UnableCinemachineBrain), 1f * Time.timeScale);
     }
 
 
@@ -134,6 +139,11 @@ public class Menu : MonoBehaviour
             SpectatorvCam.GetCinemachineComponent<CinemachinePOV>().m_VerticalAxis.Value = PlayerfreeLook.m_YAxis.Value * 90;
         }
         SpectatorPos.position = MainCamera.position;
+    }
+    void UnableCinemachineBrain()
+    {
+        cameraBrain.enabled = false;
+        Debug.Log("UnableCinemachineBrain");
     }
 }
 

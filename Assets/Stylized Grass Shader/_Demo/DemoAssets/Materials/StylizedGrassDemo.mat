@@ -10,13 +10,9 @@ Material:
   m_Name: StylizedGrassDemo
   m_Shader: {fileID: 4800000, guid: d7dd1c3f4cba1d441a7d295a168bac0d, type: 3}
   m_ValidKeywords:
-  - _RECEIVE_SHADOWS_OFF
-  - _SCALEMAP
   - _SIMPLE_LIGHTING
   m_InvalidKeywords:
   - _ALPHATOCOVERAGE_ON
-  - _RECEIVESHADOWS_OFF
-  - _SCALEMAP_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -88,8 +84,8 @@ Material:
     - _BillboardShadowFade: 0.5
     - _Blend: 0
     - _BumpScale: 1
-    - _ColorMapHeight: 1
-    - _ColorMapStrength: 1
+    - _ColorMapHeight: 0.5
+    - _ColorMapStrength: 0.5
     - _Cull: 0
     - _Cutoff: 0.5
     - _Darkening: 0.487
@@ -108,10 +104,10 @@ Material:
     - _OcclusionIndirectStrength: 0
     - _OcclusionStrength: 0.636
     - _OcclusionStrengthIndirect: 0
-    - _PerspectiveCorrection: 1
+    - _PerspectiveCorrection: 0
     - _QueueOffset: 0
-    - _ReceiveShadows: 0
-    - _Scalemap: 1
+    - _ReceiveShadows: 1
+    - _Scalemap: 0
     - _ShadowBiasCorrection: 0
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
@@ -147,13 +143,13 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.57894707, g: 0.8301887, b: 0, a: 1}
+    - _BaseColor: {r: 0.57894707, g: 0.8301887, b: 0, a: 0}
     - _BendTint: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _FadeParams: {r: 16.02564, g: 87.577354, b: 0, a: 0}
     - _HeightmapScaleInfluence: {r: 0.5, g: 1, b: 0.5, a: 0}
-    - _HueVariation: {r: 1, g: 0.93560714, b: 0.30660364, a: 0.08627451}
+    - _HueVariation: {r: 1, g: 0.93560714, b: 0.3066036, a: 0.08627451}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _LODDebugColor: {r: 1, g: 1, b: 1, a: 1}
     - _NormalParams: {r: 1, g: 1, b: 0.949, a: 1}

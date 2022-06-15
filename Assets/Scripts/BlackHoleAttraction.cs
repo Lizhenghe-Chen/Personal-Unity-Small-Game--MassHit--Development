@@ -24,9 +24,9 @@ public class BlackHoleAttraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CharacterCtrl c_Ctrl = other.gameObject.GetComponent<CharacterCtrl>();
-            PlayerCentertarget = c_Ctrl.PlayerKernelTarget;
+            PlayerCentertarget = c_Ctrl.gunScript.PlayerKernelTarget;
             // PlayerCentertarget.transform.parent = this.transform;
-            c_Ctrl.PlayerKernelTarget = this.transform;
+            c_Ctrl.gunScript.PlayerKernelTarget = this.transform;
             //originialSpeed=c_Ctrl.PlayerKernelSpeed;
             //c_Ctrl.PlayerKernelSpeed*=_Mass*0.1f;
         }
@@ -38,7 +38,7 @@ public class BlackHoleAttraction : MonoBehaviour
         {
             CharacterCtrl c_Ctrl = other.gameObject.GetComponent<CharacterCtrl>();
             // PlayerCentertarget = other.GetComponent<CharacterCtrl>().PlayerKernel;
-            c_Ctrl.PlayerKernelTarget = PlayerCentertarget;
+            c_Ctrl.gunScript.PlayerKernelTarget = PlayerCentertarget;
             //   PlayerCentertarget.transform.parent = other.transform;
             //c_Ctrl.PlayerKernelTarget = other.transform;
             //c_Ctrl.PlayerKernelSpeed = originialSpeed;

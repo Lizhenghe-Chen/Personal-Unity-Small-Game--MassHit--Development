@@ -7,12 +7,12 @@ public class CharacterCtrl : MonoBehaviour
 {
     public static CharacterCtrl _CharacterCtrl;
     public Transform Camera;
-    public Transform PlayerKernelTarget;
+    public Transform PlayerKernel;
     public bool towardWithCamera = true;
     public float initial_torque, speedUp_torque, jumpForce, rushForce, sliteForce = 5f;
     public Material TramsparentMaterial;
-    public GameObject PlayerKernel;
-    public float PlayerKernelSpeed = 3f;
+
+
     public GameObject Player_Camera1, Player_Camera2;// cam1 is CinemachineFreeLook with Orbits, cam2 is CinemachineVirtualCamera with CinemachineTransposer
     public ParticleSystem landBendEffect;
 
@@ -23,6 +23,7 @@ public class CharacterCtrl : MonoBehaviour
     [SerializeField] bool ableToJump = false;
     [SerializeField] List<GameObject> TransparentChangeList = new();
     [SerializeField] List<Material> OriginalMaterialList = new();
+    public GunScript gunScript;
     Rigidbody rb; // player
     float horizontalInput, verticalInput;
     void OnEnable()
@@ -42,7 +43,9 @@ public class CharacterCtrl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         //GlobalRules.instance.cam1 = Player_Camera1.GetComponent<Cinemachine.CinemachineFreeLook>();
         //GlobalRules.instance.cam2 = Player_Camera2.GetComponent<Cinemachine.CinemachineVirtualCamera>();
-        PlayerKernel.transform.parent = this.transform.parent.parent;
+        PlayerKernel.parent = this.transform.parent.parent;
+        gunScript = PlayerKernel.GetComponent<GunScript>();
+        gunScript.PlayerKernelTarget = this.gameObject.transform;
         foreach (var item in TransparentChangeList)
         {
             OriginalMaterialList.Add(item.GetComponent<Renderer>().material);
@@ -55,7 +58,7 @@ public class CharacterCtrl : MonoBehaviour
         ONBelowDeathAltitude();
         TurningTorque();
 
-        MovePlayerKernel();
+
         Break();
     }
     void Update()
@@ -236,6 +239,7 @@ public class CharacterCtrl : MonoBehaviour
         {
             Debug.LogWarning("Below Death Altitude");
             LoadScene(SceneManager.GetActiveScene().buildIndex);
+            this.transform.position = new Vector3(0, 5, 0);
         }
     }
     public void LoadScene(int sceneIndex)
@@ -244,10 +248,7 @@ public class CharacterCtrl : MonoBehaviour
         //Time.fixedDeltaTime = Time.timeScale * 0.02f;
         SceneManager.LoadScene(sceneIndex);
     }
-    void MovePlayerKernel()
-    {
-        PlayerKernel.transform.position = Vector3.Lerp(PlayerKernel.transform.position, PlayerKernelTarget.position, PlayerKernelSpeed * Time.deltaTime);
-    }
+
 
     void MenualCheckDestory()
     {

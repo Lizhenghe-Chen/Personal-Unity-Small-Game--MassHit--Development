@@ -29,8 +29,7 @@ Transform:
   m_LocalPosition: {x: 17.770302, y: 3.2169123, z: 21.9123}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7353953060108681671}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -86,58 +85,3 @@ WindZone:
   m_WindTurbulence: 1
   m_WindPulseMagnitude: 0.5
   m_WindPulseFrequency: 1
---- !u!1 &7353953060108681670
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7353953060108681671}
-  - component: {fileID: 7353953060108681668}
-  m_Layer: 0
-  m_Name: GrassBendRenderer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &7353953060108681671
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7353953060108681670}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.2103004, y: -3.2169123, z: -21.9123}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7353953058564292373}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7353953060108681668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7353953060108681670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f88c6c0bd2ee8e9439ca69a1bbb88368, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bendRenderer: {fileID: 11400000, guid: 6646d2562bb9379498d38addaba2d66d, type: 2}
-  debug: 0
-  followCamera: 1
-  renderExtends: 32
-  followTarget: {fileID: 0}
-  vectorRT: {fileID: 0}
-  renderCam: {fileID: 0}
-  resolution: 1024
-  colorMap: {fileID: 0}
-  listenToWindZone: 1
-  windZone: {fileID: 7353953058564292370}

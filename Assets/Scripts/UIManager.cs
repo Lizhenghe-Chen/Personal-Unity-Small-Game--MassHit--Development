@@ -75,13 +75,14 @@ public class UIManager : MonoBehaviour
     {
         if (CenterRotate.shootEnergy <= 0) { return; }
 
-        if (Input.GetKeyDown(GlobalRules.instance.HoldObject))
+        if (Input.GetKeyDown(GlobalRules.instance.HoldObject) && CenterRotate.shootEnergy > 1)
         {
             holdAim.enabled = true;
             isHoldKeyPressing = holdAim.enabled;
 
         }
-        else if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || CenterRotate.shootEnergy <= 1)
+        else { holdAim.enabled = false; }
+        if (Input.GetKeyUp(GlobalRules.instance.HoldObject))
         {
             holdAim.enabled = false;
             isHoldKeyPressing = holdAim.enabled;

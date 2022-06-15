@@ -10,7 +10,6 @@ Material:
   m_Name: Flowers
   m_Shader: {fileID: 4800000, guid: d7dd1c3f4cba1d441a7d295a168bac0d, type: 3}
   m_ValidKeywords:
-  - _ENVIRONMENTREFLECTIONS_OFF
   - _RECEIVE_SHADOWS_OFF
   - _SIMPLE_LIGHTING
   m_InvalidKeywords:
@@ -71,7 +70,7 @@ Material:
     - _ColorMapHeight: 1
     - _ColorMapStrength: 0
     - _Cull: 0
-    - _Cutoff: 0
+    - _Cutoff: 0.5
     - _DisableBending: 0
     - _DisableDecals: 0
     - _DstBlend: 0

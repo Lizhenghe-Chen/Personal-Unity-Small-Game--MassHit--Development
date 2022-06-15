@@ -10,6 +10,7 @@ public class SpectatorCtrl : MonoBehaviour
 
     private float horizontalInput, verticalInput;
     private Rigidbody rb; // player's rigidbody
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -43,17 +44,66 @@ public class SpectatorCtrl : MonoBehaviour
             //   Debug.Log(a + "Space pressed and jump" + jumpCount);
         }
     }
+
+    float Speed, vertical, horizontal;
     void MovementUnscaled()
     {
-        if (Input.GetKey(KeyCode.W)) { transform.position += Camera.forward * moveSpeed * Time.unscaledDeltaTime; }
-        if (Input.GetKey(KeyCode.S)) { transform.position -= Camera.forward * moveSpeed * Time.unscaledDeltaTime; }
-        if (Input.GetKey(KeyCode.A)) { transform.position -= Camera.right * moveSpeed * Time.unscaledDeltaTime; }
-        if (Input.GetKey(KeyCode.D)) { transform.position += Camera.right * moveSpeed * Time.unscaledDeltaTime; }
-        if (Input.GetKey(KeyCode.Space)) { transform.position += Vector3.up * moveSpeed * Time.unscaledDeltaTime; }
-        if (Input.GetKey(KeyCode.Q)) { transform.position -= Vector3.up * moveSpeed * Time.unscaledDeltaTime; }
-        if (Input.GetKey(KeyCode.E)) { transform.position += Vector3.up * moveSpeed * Time.unscaledDeltaTime; }
+        if (Input.GetKey(GlobalRules.instance.Break)) { return; }
+        if (Input.GetKey(KeyCode.W))
+        {
+            vertical = 1;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            vertical = -1;
+        }
+        else { vertical = 0; }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            horizontal = -1;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            horizontal = 1;
+        }
+        else { horizontal = 0; }
+
+        Speed = Input.GetKey(GlobalRules.instance.SpeedUp) ? moveSpeed * 10 : moveSpeed;
+        Physics.Raycast(this.transform.position, Vector3.down, out RaycastHit hit);
+        // Debug.Log(Camera.forward);
+        if (hit.distance < 0.5)
+        {
+            //Speed = moveSpeed;
+            if (hit.distance < 0.2)
+            {
+                Speed = moveSpeed;
+                transform.position += 0.1f * Vector3.up;
+                transform.position += Speed * Time.unscaledDeltaTime * new Vector3(Camera.forward.x, 0, Camera.forward.z) * vertical;
+                transform.position += Speed * Time.unscaledDeltaTime * new Vector3(Camera.forward.x, 0, Camera.forward.z) * horizontal;
+
+            }
+            else
+            {
+                // Speed = Input.GetKey(GlobalRules.instance.SpeedUp) ? moveSpeed * 10 : moveSpeed;
+                transform.position += Speed * Time.unscaledDeltaTime * Camera.forward * vertical;
+                transform.position += Speed * Time.unscaledDeltaTime * Camera.right * horizontal;
+                // if (Input.GetKey(KeyCode.Q)) { transform.position -= moveSpeed * Time.unscaledDeltaTime * Vector3.up; }
+            }
+        }
+        else
+        {
+
+            transform.position += Speed * Time.unscaledDeltaTime * Camera.forward * vertical;
+            transform.position += Speed * Time.unscaledDeltaTime * Camera.right * horizontal;
+            //transform.position += Speed * Time.unscaledDeltaTime * verticalInput * Camera.forward;
+            //transform.position += Speed * Time.unscaledDeltaTime * horizontalInput * Camera.right;
+            if (Input.GetKey(KeyCode.Q)) { transform.position -= Speed * Time.unscaledDeltaTime * Vector3.up; }
+        }
+        if (Input.GetKey(KeyCode.E) || Input.GetKey(GlobalRules.instance.Jump)) { transform.position += Speed * Time.unscaledDeltaTime * Vector3.up; }
 
 
 
     }
+
 }

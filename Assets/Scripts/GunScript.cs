@@ -12,6 +12,8 @@ public class GunScript : MonoBehaviour
     public CenterRotate BuckyBall;
     //================================================================
     [Header("\n")]
+    public Transform PlayerKernelTarget;
+    public float PlayerKernelSpeed = 3f;
     public float cameraOffset;
     public Transform Camera;
     public bool isLookAt;
@@ -40,6 +42,10 @@ public class GunScript : MonoBehaviour
         // var position = new Vector3(Player.position.x + cameraOffset, Player.position.y, Player.position.z);
 
         // this.transform.position = Vector3.Lerp(this.transform.position, position, 1f * Time.deltaTime);
+    }
+    private void FixedUpdate()
+    {
+        MovePlayerKernel();
     }
     void Shoot()
     {
@@ -81,5 +87,9 @@ public class GunScript : MonoBehaviour
             AimPoint.SetActive(false);
         }
 
+    }
+    void MovePlayerKernel()
+    {
+        this.transform.position = Vector3.Lerp(this.transform.position, PlayerKernelTarget.position, PlayerKernelSpeed * Time.deltaTime);
     }
 }

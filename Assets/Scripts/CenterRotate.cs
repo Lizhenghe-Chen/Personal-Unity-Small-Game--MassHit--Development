@@ -5,7 +5,7 @@ using UnityEngine;
 public class CenterRotate : MonoBehaviour
 {
     public Transform Player;
-    public GameObject PlayerKernel;
+    public Transform PlayerKernel;
     public static bool is_Charging;
     public float selfRotateSpeed = 1f;
     public Vector3 randomVector;
@@ -30,7 +30,7 @@ public class CenterRotate : MonoBehaviour
     {
         //  transform.position = Player.position;
         //  Debug.Log(Vector3.Distance(transform.position, PlayerKernel.transform.position));
-        if (Vector3.Distance(transform.position, PlayerKernel.transform.position) <= chargingRange) { is_Charging = true; } else { is_Charging = false; }
+        if (Vector3.Distance(transform.position, PlayerKernel.position) <= chargingRange) { is_Charging = true; } else { is_Charging = false; }
         if (is_Charging)
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime);
@@ -43,7 +43,7 @@ public class CenterRotate : MonoBehaviour
             }
             else if (CharacterCtrl.isAming && shootEnergy >= 100)
             {
-                transform.RotateAround(transform.position, PlayerKernel.transform.forward, 500 * Time.deltaTime);
+                transform.RotateAround(transform.position, PlayerKernel.forward, 500 * Time.deltaTime);
             }
 
             if (!(Input.GetKey(GlobalRules.instance.Aim) || Input.GetKey(GlobalRules.instance.HoldObject))) { BuckyBallAtoms.GetComponent<Renderer>().material = shootEnergy < 100 ? un_ChargedMaterial : chargedMaterial; }
