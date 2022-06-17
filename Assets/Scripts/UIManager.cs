@@ -60,11 +60,11 @@ public class UIManager : MonoBehaviour
         //    Debug.Log("postProcessVolume not found");
         //}
         if (isPlayer) { UpdateKernelStateBar(); HoldObject(); }
-        else
-        {
-            SpectatorHoldObjectCommand();
-            SpectatorHoldObject();
-        }
+        //else
+        //{
+        //    SpectatorHoldObjectCommand();
+        //    SpectatorHoldObject();
+        //}
 
     }
 
@@ -75,14 +75,14 @@ public class UIManager : MonoBehaviour
     {
         if (CenterRotate.shootEnergy <= 0) { return; }
 
-        if (Input.GetKeyDown(GlobalRules.instance.HoldObject) && CenterRotate.shootEnergy > 1)
+        if (Input.GetKeyDown(GlobalRules.instance.HoldObject))
         {
             holdAim.enabled = true;
             isHoldKeyPressing = holdAim.enabled;
 
         }
-        else { holdAim.enabled = false; }
-        if (Input.GetKeyUp(GlobalRules.instance.HoldObject))
+
+        if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || CenterRotate.shootEnergy <= 0)
         {
             holdAim.enabled = false;
             isHoldKeyPressing = holdAim.enabled;
@@ -100,42 +100,41 @@ public class UIManager : MonoBehaviour
     public void SpectatorHoldObjectCommand()
     {
 
-        if (Input.GetKey(GlobalRules.instance.HoldObject))
+        if (Input.GetKeyDown(GlobalRules.instance.HoldObject))
         {
             holdAim.enabled = true;
             isHoldKeyPressing = holdAim.enabled;
 
         }
-        else
+
+        if (Input.GetKeyUp(GlobalRules.instance.HoldObject))
         {
             holdAim.enabled = false;
             isHoldKeyPressing = holdAim.enabled;
 
             if (holdingObject)
             {
-                // holdingObject.isKinematic = false;
                 holdingObject.drag = originalDrag;//change back it's drag
-
                 holdingObject = null;
             }
 
         }
     }
-    [SerializeField] float holdDistance = 10;
+    [SerializeField] float holdDistance = 0;
+
     public void HoldObject()
     {
         if (!isHoldKeyPressing) { return; }
-        if (Input.GetKey(GlobalRules.instance.ExtemdHoldObjectDist) && (holdDistance <= holdRange.max)) { holdDistance += Time.deltaTime * 5f; }
-        else if (Input.GetKey(GlobalRules.instance.CloseHoldObjectDist) && (holdDistance >= holdRange.min)) { holdDistance -= Time.deltaTime * 5f; }
+
+
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(MainCamera.position, MainCamera.TransformDirection(Vector3.forward), out RaycastHit hit, holdRange.max, ~HoldRaycastIgnore))
+        if (holdingObject == null && Physics.Raycast(MainCamera.position, MainCamera.TransformDirection(Vector3.forward), out RaycastHit hit, holdRange.max, ~HoldRaycastIgnore))
         {
             if (hit.rigidbody && holdingObject == null)
             {
                 holdAim.enabled = false;
                 HoldTarget.position = hit.point;
-                HoldTarget.LookAt(MainCamera);
-                holdDistance = Vector3.Distance(MainCamera.position, hit.point);
+
                 holdingObject = hit.collider.gameObject.GetComponent<Rigidbody>();
 
                 originalDrag = holdingObject.drag;
@@ -154,9 +153,17 @@ public class UIManager : MonoBehaviour
         }
         if (holdingObject)
         {
+            HoldTarget.LookAt(MainCamera);
+            holdDistance = Vector3.Distance(MainCamera.position, HoldTarget.position);
+            if (Input.GetKey(GlobalRules.instance.ExtendHoldObjectDist) && (holdDistance <= holdRange.max)) { HoldTarget.position += MainCamera.forward.normalized * Time.deltaTime * 5f; }
+            else if (Input.GetKey(GlobalRules.instance.CloseHoldObjectDist) && (holdDistance >= holdRange.min)) { HoldTarget.position -= MainCamera.forward.normalized * Time.deltaTime * 5f; }
+
+            if (Input.GetKey(GlobalRules.instance.MoveUp) && (holdDistance <= holdRange.max)) { HoldTarget.position += Vector3.up * Time.deltaTime * 5f; }
+            else if (Input.GetKey(GlobalRules.instance.MoveDown) && (HoldTarget.position.y - Player.position.y) > 0) { HoldTarget.position -= Vector3.up * Time.deltaTime * 5f; }
+
             CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
-            //holdingObject.transform.position = Vector3.Lerp(holdingObject.transform.position, HoldTarget.position, Time.deltaTime * 1000f);
-            HoldTarget.position = ((MainCamera.forward).normalized * holdDistance + MainCamera.position);
+
+            //HoldTarget.position = (MainCamera.forward.normalized * fowardback_holdoffset + Vector3.up * updown_holdOffset);
             holdingObject.AddForce(50f * holdingObject.mass * (HoldTarget.position - holdingObject.position));
             //holdingObject.MovePosition((HoldTarget.position - holdingObject.position) * 50f * Time.deltaTime + holdingObject.position);
 
@@ -165,7 +172,7 @@ public class UIManager : MonoBehaviour
     public void SpectatorHoldObject()
     {
         if (!isHoldKeyPressing) { return; }
-        if (Input.GetKey(GlobalRules.instance.ExtemdHoldObjectDist) && (holdDistance <= holdRange.max)) { holdDistance += Time.deltaTime * 5f; }
+        if (Input.GetKey(GlobalRules.instance.ExtendHoldObjectDist) && (holdDistance <= holdRange.max)) { holdDistance += Time.deltaTime * 5f; }
         else if (Input.GetKey(GlobalRules.instance.CloseHoldObjectDist) && (holdDistance >= holdRange.min)) { holdDistance -= Time.deltaTime * 5f; }
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(MainCamera.position, MainCamera.TransformDirection(Vector3.forward), out RaycastHit hit, holdRange.max, ~HoldRaycastIgnore))

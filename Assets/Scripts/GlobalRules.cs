@@ -12,8 +12,8 @@ public class GlobalRules : MonoBehaviour
 
     public List<Transform> checkParentLists = new();
     public WaitForSeconds waitTime = new(5);
-    public KeyCode Break, Jump, SpeedUp, Rush, Aim, Shoot,
-        HoldObject, ExtemdHoldObjectDist, CloseHoldObjectDist, SwitchCamera, DestoryHittedObj;
+    public KeyCode Break, Jump, SpeedUp, MoveUp, MoveDown, Rush, Aim, Shoot,
+        HoldObject, ExtendHoldObjectDist, CloseHoldObjectDist, SwitchCamera, DestoryHittedObj;
     public float energyChargeSpeed, holdConsume, flyCosume;
     [Tooltip("CharacterCtrl.cs will allocate below camera")]
     public CinemachineFreeLook cam1;
@@ -23,7 +23,8 @@ public class GlobalRules : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.02f;
         if (instance == null)
         {
             instance = this;
@@ -37,9 +38,14 @@ public class GlobalRules : MonoBehaviour
         // cam1 = Player.GetComponent<CharacterCtrl>().Player_Camera1.GetComponent<CinemachineFreeLook>();
         // cam2 = Player.GetComponent<CharacterCtrl>().Player_Camera2.GetComponent<CinemachineVirtualCamera>();
         // Debug.Log(Player.GetComponent<CharacterCtrl>().Player_Camera1);
-        StartCoroutine(CheckDestoryByDistanceFromPlayer(CharacterCtrl._CharacterCtrl.HitObjectsQueue));
-
-
+        try
+        {
+            StartCoroutine(CheckDestoryByDistanceFromPlayer(CharacterCtrl._CharacterCtrl.HitObjectsQueue));
+        }
+        catch (System.Exception e)//it may because at start menu
+        {
+            Debug.LogWarning(e);
+        }
     }
     void OnEnable()
     {
@@ -126,6 +132,7 @@ public class GlobalRules : MonoBehaviour
     public void FitCameraDirection(bool isCam1ToCam2)
     {
         var (A, B) = GetCamerasDetails();
+        Debug.Log(A.m_XAxis.Value + ", " + B.m_XAxis.Value);
         if (isCam1ToCam2)
         {
             B.m_XAxis.Value = A.m_XAxis.Value;
@@ -134,7 +141,7 @@ public class GlobalRules : MonoBehaviour
         {
             A.m_XAxis.Value = B.m_XAxis.Value;
         }
-
+        Debug.Log("->" + A.m_XAxis.Value + ", " + B.m_XAxis.Value);
     }
     public (CinemachineFreeLook, CinemachineOrbitalTransposer) GetCamerasDetails()
     {

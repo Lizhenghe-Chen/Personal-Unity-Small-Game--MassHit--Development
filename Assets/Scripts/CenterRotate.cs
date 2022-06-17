@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CenterRotate : MonoBehaviour
 {
+
+    [Tooltip("true if buckyball to rotate in Start Menu")] public bool inMenuRotate = false;
     public Transform Player;
     public Transform PlayerKernel;
     public static bool is_Charging;
@@ -12,6 +14,7 @@ public class CenterRotate : MonoBehaviour
     public Transform randomTransform;
     public float chargeSpeed = 0.01f;
     public static float shootEnergy = 0;
+
 
     [Header("charge actions:")]
     public GameObject BuckyBallAtoms;
@@ -22,12 +25,17 @@ public class CenterRotate : MonoBehaviour
     private void Start()
     {
         // myCollider = GetComponent<SphereCollider>();
-        PlayerKernel = Player.GetComponent<CharacterCtrl>().PlayerKernel;
-        chargingRange = GetComponent<SphereCollider>().radius - 0.1f;
+        if (!inMenuRotate)
+        {
+            PlayerKernel = Player.GetComponent<CharacterCtrl>().PlayerKernel;
+            chargingRange = GetComponent<SphereCollider>().radius - 0.1f;
+        }
+
         StartCoroutine(GenerateRandomVector());
     }
     private void Update()
     {
+        if (inMenuRotate) { transform.rotation = Quaternion.Lerp(transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime); return; }
         //  transform.position = Player.position;
         //  Debug.Log(Vector3.Distance(transform.position, PlayerKernel.transform.position));
         if (Vector3.Distance(transform.position, PlayerKernel.position) <= chargingRange) { is_Charging = true; } else { is_Charging = false; }

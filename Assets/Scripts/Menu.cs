@@ -1,13 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
 using Cinemachine;
+using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 public class Menu : MonoBehaviour
 {
     public TMP_Dropdown videoDropdown, levelDropdown;
+    public GameObject SwitchButton;
+
     [SerializeField] private GameObject PlayerBunble, SpectatorBunble;
+
     public GameObject PlayerBunbleHUD, SpectatorBunbleHUD;
     public Transform PlayerPos, SpectatorPos;
     //public GameObject escUI;
@@ -89,8 +92,8 @@ public class Menu : MonoBehaviour
             SpectatorBunble.SetActive(true);
             //PlayerBunble.SetActive(false);
             SwitchBubleWithCamera();
-
-
+            //  var a = SwitchButton.GetComponentInChildren(typeof(Text)) as Text;
+            SwitchButton.GetComponentInChildren<TextMeshProUGUI>().text = "Player Mode";
         }
         else
         {
@@ -102,6 +105,7 @@ public class Menu : MonoBehaviour
             // PlayerBunble.SetActive(true);
             SpectatorBunble.SetActive(false);
             //PlayerPos.position = SpectatorPos.position;
+            SwitchButton.GetComponentInChildren<TextMeshProUGUI>().text = "Photo Mode";
         }
         Invoke(nameof(UnableCinemachineBrain), 1f * Time.timeScale);
     }
@@ -114,16 +118,21 @@ public class Menu : MonoBehaviour
     }
     public void ChangeLevel()
     {
-        if (SceneManager.GetActiveScene().buildIndex == levelDropdown.value)
+        if (SceneManager.GetActiveScene().buildIndex == levelDropdown.value + 1)
         {
             return;
         }
         PlayerPos.parent.position += new Vector3(0, 2, 0);
-        Debug.Log(levelDropdown.value);
-        SceneManager.LoadScene(levelDropdown.value);
+        Debug.Log(levelDropdown.value + 1);
+        SceneManager.LoadScene(levelDropdown.value + 1);
         Time.timeScale = 0.01f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
+    }
+    public void BackToStartMenu()
+    {
+        Destroy(PlayerBunble.transform.parent.gameObject);
+        SceneManager.LoadScene(0);
     }
     void SwitchBubleWithCamera()
     { //let two bundle's camera have same direction

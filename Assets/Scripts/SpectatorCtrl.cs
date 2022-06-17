@@ -98,9 +98,9 @@ public class SpectatorCtrl : MonoBehaviour
             transform.position += Speed * Time.unscaledDeltaTime * Camera.right * horizontal;
             //transform.position += Speed * Time.unscaledDeltaTime * verticalInput * Camera.forward;
             //transform.position += Speed * Time.unscaledDeltaTime * horizontalInput * Camera.right;
-            if (Input.GetKey(KeyCode.Q)) { transform.position -= Speed * Time.unscaledDeltaTime * Vector3.up; }
+            if (Input.GetKey(GlobalRules.instance.MoveDown)) { transform.position -= Speed * Time.unscaledDeltaTime * Vector3.up; }
         }
-        if (Input.GetKey(KeyCode.E) || Input.GetKey(GlobalRules.instance.Jump)) { transform.position += Speed * Time.unscaledDeltaTime * Vector3.up; }
+        if (Input.GetKey(GlobalRules.instance.MoveUp) || Input.GetKey(GlobalRules.instance.Jump)) { transform.position += Speed * Time.unscaledDeltaTime * Vector3.up; }
 
 
 
