@@ -11,7 +11,7 @@ public class CharacterCtrl : MonoBehaviour
     public bool towardWithCamera = true;
     public float initial_torque, speedUp_torque, jumpForce, rushForce, sliteForce = 5f;
     public Material TramsparentMaterial;
-
+    public Animator MaskAnimator;
 
     public GameObject Player_Camera1, Player_Camera2;// cam1 is CinemachineFreeLook with Orbits, cam2 is CinemachineVirtualCamera with CinemachineTransposer
     public ParticleSystem landBendEffect;
@@ -26,20 +26,34 @@ public class CharacterCtrl : MonoBehaviour
     public GunScript gunScript;
     Rigidbody rb; // player
     float horizontalInput, verticalInput;
+    private void Awake()
+    {
+        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("Respawn"))
+        {
+            if (temp != this.transform.parent.parent.gameObject) { Destroy(temp); }
+
+        }
+        //if (GameObject.FindGameObjectsWithTag("Respawn"))
+        //{
+
+        //    Destroy(this.transform.parent.parent.gameObject);
+        //}
+        _CharacterCtrl = this;
+        DontDestroyOnLoad(this.transform.parent.parent);
+    }
     void OnEnable()
     {
-        _CharacterCtrl = this;
-        if (GameObject.FindGameObjectsWithTag("Respawn").Length > 1)
-        {
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
-            Destroy(this.transform.parent.parent.gameObject);
-        }
+    }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (MaskAnimator != null) { MaskAnimator.Play("Enter"); }
+
     }
     void Start()
     {
 
-
-        DontDestroyOnLoad(this.transform.parent.parent);
         rb = GetComponent<Rigidbody>();
         //GlobalRules.instance.cam1 = Player_Camera1.GetComponent<Cinemachine.CinemachineFreeLook>();
         //GlobalRules.instance.cam2 = Player_Camera2.GetComponent<Cinemachine.CinemachineVirtualCamera>();
@@ -105,8 +119,9 @@ public class CharacterCtrl : MonoBehaviour
     }
     private void OnCollisionExit(Collision other)
     {
+        isCliming = false;
         if (other.gameObject.layer == GlobalRules.instance.groundLayerID) { ableToJump = false; }
-        if (other.gameObject.layer != GlobalRules.instance.groundLayerID) { isCliming = false; }
+        //if (other.gameObject.layer != GlobalRules.instance.groundLayerID) { isCliming = false; }
     }
 
 
@@ -116,7 +131,8 @@ public class CharacterCtrl : MonoBehaviour
 
 
     }
-    float doubleClickTime = 1, lastClickTime; bool isDoubleClick, isCliming;
+    float doubleClickTime = 1, lastClickTime;
+    [SerializeField] bool isDoubleClick, isCliming;
     private bool IsDoubleClick(KeyCode keyCode)
     {
         if (Input.GetKeyDown(keyCode))
@@ -130,21 +146,23 @@ public class CharacterCtrl : MonoBehaviour
     }
     private void ClimbWall(Collision collision)
     {
-        if (collision.gameObject.layer == GlobalRules.instance.groundLayerID) { isCliming = false; return; }
+        //if (collision.gameObject.layer == GlobalRules.instance.groundLayerID) { isCliming = false; return; }
 
-        if (Input.GetKeyUp(GlobalRules.instance.Jump))
+        if (Input.GetKey(GlobalRules.instance.Climb) && CenterRotate.shootEnergy > 0)
         {
-            isCliming = false;
-            rb.AddForce((transform.position - collision.GetContact(0).point).normalized * jumpForce);
-
-        }
-        else if (Input.GetKey(GlobalRules.instance.Jump) && CenterRotate.shootEnergy > 0)
-        {
+            if (Input.GetKeyDown(GlobalRules.instance.Jump))
+            {
+                rb.AddForce((transform.position - collision.GetContact(0).point).normalized * jumpForce);
+                isCliming = false;
+                return;
+            }
             isCliming = true;
             CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
             rb.AddForce((collision.GetContact(0).point - transform.position).normalized * -Physics.gravity.y);
             rb.AddForce(-Physics.gravity);// print("First point that collided: " + collision.contacts[0].point);
         }
+        else { isCliming = false; }
+
     }
     void GiveForce()
     {
@@ -152,7 +170,7 @@ public class CharacterCtrl : MonoBehaviour
         var force = (Input.GetKey(GlobalRules.instance.SpeedUp) ? sliteForce * 2 : sliteForce);
         rb.AddForce(force * verticalInput * Camera.transform.forward);
         rb.AddForce(force * horizontalInput * Camera.transform.right);
-        CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
+        //CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
     }
     void JumpCommand()
     {
@@ -284,5 +302,9 @@ public class CharacterCtrl : MonoBehaviour
             }
         }
 
+    }
+    public void PlayMaskLeaveClip()
+    {
+        MaskAnimator.Play("Leave");
     }
 }

@@ -10,10 +10,11 @@ public class GlobalRules : MonoBehaviour
     public int DeathAltitude;
     public Menu escMenu;
 
+
     public List<Transform> checkParentLists = new();
     public WaitForSeconds waitTime = new(5);
     public KeyCode Break, Jump, SpeedUp, MoveUp, MoveDown, Rush, Aim, Shoot,
-        HoldObject, ExtendHoldObjectDist, CloseHoldObjectDist, SwitchCamera, DestoryHittedObj;
+        HoldObject, Climb, ExtendHoldObjectDist, CloseHoldObjectDist, SwitchCamera, DestoryHittedObj;
     public float energyChargeSpeed, holdConsume, flyCosume;
     [Tooltip("CharacterCtrl.cs will allocate below camera")]
     public CinemachineFreeLook cam1;
@@ -23,21 +24,33 @@ public class GlobalRules : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Time.timeScale = 1;
-        Time.fixedDeltaTime = 0.02f;
+        //Time.timeScale = 1;
+        //Time.fixedDeltaTime = 0.02f;
         if (instance == null)
         {
             instance = this;
         }
-        ReallocateCheckDestoryList();
+
+
+    }
+    void OnEnable()
+    {
+
+        //Debug.Log("OnEnable called");
+        //if (SceneManager.GetActiveScene().buildIndex == 0) return;
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
     }
     void Start()
     {
+
+        ReallocateCheckDestoryList();
         //Player = GameObject.Find("Player").transform;
         // cam1 = Player.GetComponent<CharacterCtrl>().Player_Camera1.GetComponent<CinemachineFreeLook>();
         // cam2 = Player.GetComponent<CharacterCtrl>().Player_Camera2.GetComponent<CinemachineVirtualCamera>();
         // Debug.Log(Player.GetComponent<CharacterCtrl>().Player_Camera1);
+
+
         try
         {
             StartCoroutine(CheckDestoryByDistanceFromPlayer(CharacterCtrl._CharacterCtrl.HitObjectsQueue));
@@ -47,19 +60,17 @@ public class GlobalRules : MonoBehaviour
             Debug.LogWarning(e);
         }
     }
-    void OnEnable()
-    {
-        Debug.Log("OnEnable called");
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+
 
     // called second
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
+        //  Debug.Log(scene.buildIndex + "Secen Loaded");
+        // if (scene.buildIndex == 0) { return; }
+        //MaskAnimator.Play("Enter");
         ReallocateCheckDestoryList();
-
-
-        Debug.Log("OnSceneLoaded: " + scene.name);
+        // Debug.Log("OnSceneLoaded: " + scene.name);
         // Debug.Log(mode);
     }
     // Update is called once per frame
@@ -115,6 +126,7 @@ public class GlobalRules : MonoBehaviour
     }
     IEnumerator CheckDestoryByDeathAltitude(List<Transform> checkParentLists)
     {
+        if (checkParentLists.Count == 0) { yield return null; }
         while (true)
         {
             foreach (Transform parent in checkParentLists)
@@ -164,4 +176,5 @@ public class GlobalRules : MonoBehaviour
 
         }
     }
+
 }

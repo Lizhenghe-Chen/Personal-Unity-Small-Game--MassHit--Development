@@ -1,21 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class BackGroundMusicCtrl : MonoBehaviour
 {
-    AudioSource audioSource;
-    void Start()
+    public List<AudioClip> MusicList = new();
+    [SerializeField] AudioSource audioSource;
+
+    private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        //audioSource.time = 53f;
-        Invoke("Play", 1f);
-
-
+        LoadMusic();
     }
-
     void Play()
     {
         audioSource.Play();
+    }
+    public void LoadMusic()
+    {
+
+        audioSource.clip = MusicList[SceneManager.GetActiveScene().buildIndex];
+        //audioSource.time = 53f;
+        Invoke("Play", 1f);
     }
 }

@@ -30,10 +30,16 @@ public class CenterRotate : MonoBehaviour
             PlayerKernel = Player.GetComponent<CharacterCtrl>().PlayerKernel;
             chargingRange = GetComponent<SphereCollider>().radius - 0.1f;
         }
-
+        shootEnergy = 100;
         StartCoroutine(GenerateRandomVector());
     }
     private void Update()
+    {
+        shootEnergy = Mathf.Clamp(shootEnergy, 0, 100);
+        if (!(Input.GetKey(GlobalRules.instance.Aim) || Input.GetKey(GlobalRules.instance.HoldObject))) { BuckyBallAtoms.GetComponent<Renderer>().material = shootEnergy < 90 ? un_ChargedMaterial : chargedMaterial; }
+        //   Debug.Log(shootEnergy);   
+    }
+    private void FixedUpdate()
     {
         if (inMenuRotate) { transform.rotation = Quaternion.Lerp(transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime); return; }
         //  transform.position = Player.position;
@@ -49,14 +55,11 @@ public class CenterRotate : MonoBehaviour
                 shootEnergy += GlobalRules.instance.energyChargeSpeed * Time.deltaTime;
 
             }
-            else if (CharacterCtrl.isAming && shootEnergy >= 100)
-            {
-                transform.RotateAround(transform.position, PlayerKernel.forward, 500 * Time.deltaTime);
-            }
-
-            if (!(Input.GetKey(GlobalRules.instance.Aim) || Input.GetKey(GlobalRules.instance.HoldObject))) { BuckyBallAtoms.GetComponent<Renderer>().material = shootEnergy < 100 ? un_ChargedMaterial : chargedMaterial; }
         }
-        //   Debug.Log(shootEnergy);
+        if (CharacterCtrl.isAming)
+        {
+            transform.RotateAround(transform.position, PlayerKernel.forward, 500 * Time.deltaTime);
+        }
 
     }
     // private void OnTriggerStay(Collider other)

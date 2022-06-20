@@ -134,7 +134,7 @@ MonoBehaviour:
   explodeRadius: 4
   ignoreCollisionObject: {fileID: 3811683612415167881, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
     type: 3}
-  scaleOfTime: 0.1
+  scaleOfTime: 0.5
 --- !u!135 &4729638353243057881
 SphereCollider:
   m_ObjectHideFlags: 0

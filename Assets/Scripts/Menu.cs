@@ -1,8 +1,8 @@
 using Cinemachine;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
@@ -28,11 +28,11 @@ public class Menu : MonoBehaviour
     {
         escCanvas = this.GetComponent<Canvas>();
         videoDropdown.value = QualitySettings.GetQualityLevel();
-        // levelDropdown.value = SceneManager.GetActiveScene().buildIndex;
+
         ChangeQualityLevel();
         cameraBrain = MainCamera.GetComponent<CinemachineBrain>();
         InGameMenu();
-
+        levelDropdown.value = SceneManager.GetActiveScene().buildIndex - 1;
     }
 
     // Update is called once per frame
@@ -120,19 +120,27 @@ public class Menu : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex == levelDropdown.value + 1)
         {
+            levelDropdown.value = SceneManager.GetActiveScene().buildIndex - 1;
+            Debug.LogWarning("Same Level");
+
             return;
         }
+
         PlayerPos.parent.position += new Vector3(0, 2, 0);
         Debug.Log(levelDropdown.value + 1);
         SceneManager.LoadScene(levelDropdown.value + 1);
-        Time.timeScale = 0.01f;
-        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        //  StartCoroutine(DelayLoadLevel(levelDropdown.value + 1));
+
+        //Time.timeScale = 0.01f;
+        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
     }
     public void BackToStartMenu()
     {
-        Destroy(PlayerBunble.transform.parent.gameObject);
-        SceneManager.LoadScene(0);
+
+        StartCoroutine(DelayBackToStartMenu(0));
+
+        //  DelayLoadLevel(0);
     }
     void SwitchBubleWithCamera()
     { //let two bundle's camera have same direction
@@ -153,6 +161,17 @@ public class Menu : MonoBehaviour
     {
         cameraBrain.enabled = false;
         Debug.Log("UnableCinemachineBrain");
+    }
+    public IEnumerator DelayLoadLevel(int leveID)
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        SceneManager.LoadScene(leveID);
+    }
+    public IEnumerator DelayBackToStartMenu(int leveID)
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        SceneManager.LoadScene(leveID);
+        Destroy(PlayerBunble.transform.parent.gameObject);
     }
 }
 
