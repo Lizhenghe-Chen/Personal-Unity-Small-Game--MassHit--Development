@@ -21,7 +21,7 @@ public class BackGroundMusicCtrl : MonoBehaviour
     public void LoadMusic()
     {
 
-        audioSource.clip = MusicList[SceneManager.GetActiveScene().buildIndex];
+        audioSource.clip = MusicList[SceneManager.GetActiveScene().buildIndex - 1];
         //audioSource.time = 53f;
         Invoke("Play", 1f);
     }

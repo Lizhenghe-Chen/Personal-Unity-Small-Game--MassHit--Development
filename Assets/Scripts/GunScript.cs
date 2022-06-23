@@ -63,7 +63,7 @@ public class GunScript : MonoBehaviour
         // this.transform.forward = Camera.transform.forward;
         if (CharacterCtrl.isAming)
         {
-            Camera = Player.GetComponent<CharacterCtrl>().Camera;
+
             if (isLookAt) { transform.LookAt(Camera); } else { transform.forward = new(-Camera.forward.x, 0, -Camera.forward.z); }
             AimPoint.SetActive(true);
 

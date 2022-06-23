@@ -4,20 +4,20 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - GravityCube
-  - Bullet
   - BlackHole
+  - Bullet
+  - GravityCube
   - GravityCubeList
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - Player
-  - Bullet
-  - Tree
+  - 
+  - 
+  - 
   - 
   - 
   - 

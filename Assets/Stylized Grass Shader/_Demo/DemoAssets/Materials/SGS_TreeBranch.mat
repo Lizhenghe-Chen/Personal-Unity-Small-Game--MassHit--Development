@@ -15,19 +15,14 @@ MonoBehaviour:
   version: 1
 --- !u!21 &2100000
 Material:
-  serializedVersion: 8
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SGS_TreeBranch
   m_Shader: {fileID: 4800000, guid: d7dd1c3f4cba1d441a7d295a168bac0d, type: 3}
-  m_ValidKeywords:
-  - _ANGLE_FADING
-  - _SIMPLE_LIGHTING
-  m_InvalidKeywords:
-  - _ALPHATOCOVERAGE_ON
-  - _ANGLEFADING_ON
+  m_ShaderKeywords: _ANGLE_FADING _SIMPLE_LIGHTING
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
@@ -146,9 +141,6 @@ Material:
     - _SubsurfaceKwToggle: 0
     - _Surface: 0
     - _Translucency: 0.459
-    - _TranslucencyFalloff: 4
-    - _TranslucencyIndirect: 0
-    - _TranslucencyOffset: 0
     - _TwoSided: 2
     - _VertexDarkening: 0.147
     - _WindAmbientStrength: 0.053
@@ -170,11 +162,10 @@ Material:
     - _CameraFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FadeParams: {r: 50, g: 400, b: 1, a: 0}
+    - _FadeParams: {r: 50, g: 100, b: 0, a: 0}
     - _HeightmapScaleInfluence: {r: 0, g: 1, b: 0, a: 0}
     - _HueVariation: {r: 1, g: 0.84278667, b: 0, a: 1}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}
-    - _LODDebugColor: {r: 1, g: 1, b: 1, a: 1}
     - _NormalParams: {r: 0, g: 0, b: 0, a: 0}
     - _ScalemapInfluence: {r: 0, g: 1, b: 0, a: 0}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}

@@ -76,6 +76,10 @@ public class GlobalRules : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         //Debug.Log(Time.fixedDeltaTime);
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
         if (!escMenu.escCanvas.enabled && !SpectatorUI.isPause)

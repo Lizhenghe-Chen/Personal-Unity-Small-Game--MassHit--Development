@@ -116,29 +116,29 @@ public class Menu : MonoBehaviour
         QualitySettings.SetQualityLevel(videoDropdown.value, true);
 
     }
-    public void ChangeLevel()
+    //public void ChangeLevel()
+    //{
+    //    if (SceneManager.GetActiveScene().buildIndex == levelDropdown.value + 1)
+    //    {
+    //        levelDropdown.value = SceneManager.GetActiveScene().buildIndex - 1;
+    //        Debug.LogWarning("Same Level");
+
+    //        return;
+    //    }
+
+    //    PlayerPos.parent.position += new Vector3(0, 2, 0);
+    //    Debug.Log(levelDropdown.value + 1);
+    //    SceneManager.LoadScene(levelDropdown.value + 1);
+    //    StartCoroutine(DelayLoadLevel(levelDropdown.value + 1));
+
+    //    Time.timeScale = 0.01f;
+    //    Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
+    //}
+    public void BackToStartMenu(string startMenuName)
     {
-        if (SceneManager.GetActiveScene().buildIndex == levelDropdown.value + 1)
-        {
-            levelDropdown.value = SceneManager.GetActiveScene().buildIndex - 1;
-            Debug.LogWarning("Same Level");
 
-            return;
-        }
-
-        PlayerPos.parent.position += new Vector3(0, 2, 0);
-        Debug.Log(levelDropdown.value + 1);
-        SceneManager.LoadScene(levelDropdown.value + 1);
-        //  StartCoroutine(DelayLoadLevel(levelDropdown.value + 1));
-
-        //Time.timeScale = 0.01f;
-        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
-
-    }
-    public void BackToStartMenu()
-    {
-
-        StartCoroutine(DelayBackToStartMenu(0));
+        StartCoroutine(DelayBackToStartMenu(startMenuName));
 
         //  DelayLoadLevel(0);
     }
@@ -167,7 +167,7 @@ public class Menu : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         SceneManager.LoadScene(leveID);
     }
-    public IEnumerator DelayBackToStartMenu(int leveID)
+    public IEnumerator DelayBackToStartMenu(string leveID)
     {
         yield return new WaitForSecondsRealtime(2f);
         SceneManager.LoadScene(leveID);

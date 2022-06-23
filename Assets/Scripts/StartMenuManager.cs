@@ -9,18 +9,15 @@ public class StartMenuManager : MonoBehaviour
     public List<GameObject> MenuList = new();
     public GameObject StartMenu;
     public GameObject StartCharacterBundle;
-    void Awake()
+    public Animator MaskAnimator;
+    void Start()
     {
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
-        OpenMenu(StartMenu);
+        // OpenMenu(StartMenu);
+        Invoke("LateOpenMenu", 2f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void OpenMenu(GameObject targetMenu)
     {
 
@@ -42,21 +39,30 @@ public class StartMenuManager : MonoBehaviour
     }
     public void QuitGame()
     {
-        Application.Quit();
+        if (MaskAnimator != null) { MaskAnimator.Play("Leave"); }
+        Invoke("LateQuitGame", 2f);
     }
-    public void LoadLevel(int leveID)
+    public void LoadLevel(string leveID)
     {
-
+        if (MaskAnimator != null) { MaskAnimator.Play("Leave"); }
         StartCoroutine(DelayLoadLevel(leveID));
 
 
     }
-    public IEnumerator DelayLoadLevel(int leveID)
+    public IEnumerator DelayLoadLevel(string leveID)
     {
         yield return new WaitForSecondsRealtime(1f);
         //   Destroy(StartCharacterBundle);
         SceneManager.LoadScene(leveID);
         GlobalRules.instance = null;
 
+    }
+    public void LateOpenMenu()
+    {
+        OpenMenu(StartMenu);
+    }
+    public void LateQuitGame()
+    {
+        Application.Quit();
     }
 }

@@ -73,15 +73,6 @@ public class UIManager : MonoBehaviour
 
     public void HoldObjectCommand()
     {
-        if (CenterRotate.shootEnergy <= 0) { return; }
-
-        if (Input.GetKeyDown(GlobalRules.instance.HoldObject))
-        {
-            holdAim.enabled = true;
-            isHoldKeyPressing = holdAim.enabled;
-
-        }
-
         if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || CenterRotate.shootEnergy <= 0)
         {
             holdAim.enabled = false;
@@ -94,8 +85,18 @@ public class UIManager : MonoBehaviour
                 kernelParticle.target = originalKernelParticleTarget;
                 holdingObject = null;
             }
+            return;
+        }
+
+
+        if (Input.GetKeyDown(GlobalRules.instance.HoldObject))
+        {
+            holdAim.enabled = true;
+            isHoldKeyPressing = holdAim.enabled;
 
         }
+
+
     }
     public void SpectatorHoldObjectCommand()
     {

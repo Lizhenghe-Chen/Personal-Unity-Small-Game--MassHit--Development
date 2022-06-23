@@ -72,7 +72,7 @@ public class CharacterCtrl : MonoBehaviour
         ONBelowDeathAltitude();
         TurningTorque();
 
-
+        GiveForce();//swimming
         Break();
     }
     void Update()
@@ -114,13 +114,13 @@ public class CharacterCtrl : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (landBendEffect) landBendEffect.Emit(1);
-        if (other.gameObject.layer == GlobalRules.instance.groundLayerID) { ableToJump = true; }
+        if (other.gameObject.layer == GlobalRules.instance.groundLayerID || other.gameObject.layer == 0) { ableToJump = true; }
 
     }
     private void OnCollisionExit(Collision other)
     {
         isCliming = false;
-        if (other.gameObject.layer == GlobalRules.instance.groundLayerID) { ableToJump = false; }
+        if (other.gameObject.layer == GlobalRules.instance.groundLayerID || other.gameObject.layer == 0) { ableToJump = false; }
         //if (other.gameObject.layer != GlobalRules.instance.groundLayerID) { isCliming = false; }
     }
 
@@ -185,7 +185,7 @@ public class CharacterCtrl : MonoBehaviour
         }
         else if (!isCliming && !ableToJump && CenterRotate.shootEnergy > 0)
         {
-            GiveForce();//swimming
+
             if ((Input.GetKey(GlobalRules.instance.Jump)))
             {
 
@@ -213,7 +213,7 @@ public class CharacterCtrl : MonoBehaviour
     }
     void DestroyCommand()
     {
-        if (Input.GetKey(GlobalRules.instance.DestoryHittedObj))
+        if (Input.GetKey(KeyCode.C))
         {
             MenualCheckDestory();
         }
