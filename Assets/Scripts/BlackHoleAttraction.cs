@@ -20,6 +20,8 @@ public class BlackHoleAttraction : MonoBehaviour
     //private float originialSpeed;
     private void OnTriggerEnter(Collider other)
     {
+        var rigidbody = other.gameObject.GetComponent<Rigidbody>();
+        if (!rigidbody || rigidbody.CompareTag("BlackHole") || rigidbody.gameObject.layer == 1) { return; }
         if (other.CompareTag("GravityCube")) { other.transform.Find("Particle").gameObject.SetActive(true); }
         if (other.CompareTag("Player"))
         {
@@ -33,6 +35,8 @@ public class BlackHoleAttraction : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        var rigidbody = other.gameObject.GetComponent<Rigidbody>();
+        if (!rigidbody || rigidbody.CompareTag("BlackHole") || rigidbody.gameObject.layer == 1) { return; }
         if (other.CompareTag("GravityCube")) { other.transform.Find("Particle").gameObject.SetActive(false); }
         if (other.CompareTag("Player"))
         {

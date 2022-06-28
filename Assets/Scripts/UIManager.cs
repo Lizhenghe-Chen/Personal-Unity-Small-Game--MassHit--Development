@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
 
     public Image holdAim;
     public Transform aimRay, HoldTarget, MainCamera;
+    private Camera RayCam;
 
 
     [Serializable]
@@ -36,7 +37,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         holdAim.enabled = false;
-
+        RayCam = MainCamera.GetComponent<Camera>();
 
     }
 
@@ -127,11 +128,14 @@ public class UIManager : MonoBehaviour
     {
         if (!isHoldKeyPressing) { return; }
 
-
         // Does the ray intersect any objects excluding the player layer
-        if (holdingObject == null && Physics.Raycast(MainCamera.position, MainCamera.TransformDirection(Vector3.forward), out RaycastHit hit, holdRange.max, ~HoldRaycastIgnore))
+        if (holdingObject == null && Physics.Raycast(RayCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out RaycastHit hit, Mathf.Infinity, ~HoldRaycastIgnore))
         {
-            if (hit.rigidbody && holdingObject == null)
+            //draw ray from screen
+
+            // Debug.DrawRay(MainCamera.transform.position, MainCamera.transform.forward * 1000, Color.green, 2);
+            // Debug.Log(Vector3.Distance(Player.position, hit.transform.position));
+            if (hit.rigidbody != null && Vector3.Distance(Player.position, hit.transform.position) <= holdRange.max)
             {
                 holdAim.enabled = false;
                 HoldTarget.position = hit.point;
@@ -150,17 +154,18 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(MainCamera.transform.position, MainCamera.transform.TransformDirection(Vector3.forward) * holdRange.max, Color.red);
+            //  Debug.DrawRay(MainCamera.transform.position, MainCamera.transform.forward * 1000, Color.red, 2);
+            //return;
         }
         if (holdingObject)
         {
             HoldTarget.LookAt(MainCamera);
-            holdDistance = Vector3.Distance(MainCamera.position, HoldTarget.position);
-            if (Input.GetKey(GlobalRules.instance.ExtendHoldObjectDist) && (holdDistance <= holdRange.max)) { HoldTarget.position += MainCamera.forward.normalized * Time.deltaTime * 5f; }
-            else if (Input.GetKey(GlobalRules.instance.CloseHoldObjectDist) && (holdDistance >= holdRange.min)) { HoldTarget.position -= MainCamera.forward.normalized * Time.deltaTime * 5f; }
+            holdDistance = Vector3.Distance(Player.position, HoldTarget.position);
+            if (Input.GetKey(GlobalRules.instance.ExtendHoldObjectDist) && (holdDistance <= holdRange.max)) { HoldTarget.position += 5f * Time.deltaTime * MainCamera.forward.normalized; }
+            else if (Input.GetKey(GlobalRules.instance.CloseHoldObjectDist) && (holdDistance >= holdRange.min)) { HoldTarget.position -= 5f * Time.deltaTime * MainCamera.forward.normalized; }
 
-            if (Input.GetKey(GlobalRules.instance.MoveUp) && (holdDistance <= holdRange.max)) { HoldTarget.position += Vector3.up * Time.deltaTime * 5f; }
-            else if (Input.GetKey(GlobalRules.instance.MoveDown) && (HoldTarget.position.y - Player.position.y) > 0) { HoldTarget.position -= Vector3.up * Time.deltaTime * 5f; }
+            if (Input.GetKey(GlobalRules.instance.MoveUp) && (holdDistance <= holdRange.max)) { HoldTarget.position += 5f * Time.deltaTime * Vector3.up; }
+            else if (Input.GetKey(GlobalRules.instance.MoveDown) && (HoldTarget.position.y - Player.position.y) > 0) { HoldTarget.position -= 5f * Time.deltaTime * Vector3.up; }
 
             CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
 

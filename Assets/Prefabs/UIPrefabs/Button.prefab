@@ -286,7 +286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9666cd561d5d45bf29cc0c884cc2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonClickSound: {fileID: 5796776904778308170}
+  buttonSound: {fileID: 0}
+  Clickable: {fileID: 8300000, guid: a0648d9fcec40b342ab875e03da44cee, type: 3}
+  UnClickable: {fileID: 8300000, guid: 9629dc670b815194aa6f0a9cf65b99d1, type: 3}
 --- !u!114 &7948162631868634761
 MonoBehaviour:
   m_ObjectHideFlags: 0

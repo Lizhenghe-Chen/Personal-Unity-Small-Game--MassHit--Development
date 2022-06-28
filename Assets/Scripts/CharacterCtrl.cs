@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,8 @@ public class CharacterCtrl : MonoBehaviour
     public static CharacterCtrl _CharacterCtrl;
     public Transform Camera;
     public Transform PlayerKernel;
+    public Vector3 CheckPoint;
+    public bool dontUseGravity = false;
     public bool towardWithCamera = true;
     public float initial_torque, speedUp_torque, jumpForce, rushForce, sliteForce = 5f;
     public Material TramsparentMaterial;
@@ -33,6 +36,7 @@ public class CharacterCtrl : MonoBehaviour
             if (temp != this.transform.parent.parent.gameObject) { Destroy(temp); }
 
         }
+
         //if (GameObject.FindGameObjectsWithTag("Respawn"))
         //{
 
@@ -43,12 +47,19 @@ public class CharacterCtrl : MonoBehaviour
     }
     void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        CheckPoint = new Vector3(PlayerPrefs.GetFloat("SavedCheckPoint_X"), PlayerPrefs.GetFloat("SavedCheckPoint_Y"), PlayerPrefs.GetFloat("SavedCheckPoint_Z"));
 
+        if (CheckPoint == Vector3.zero) { CheckPoint = this.transform.position; }
+        else { this.transform.position = CheckPoint; }
+
+        PlayerPrefs.SetString("SavedCheckPointScene", SceneManager.GetActiveScene().name);//save player's current scene
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        CheckPoint = this.transform.position;
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (MaskAnimator != null) { MaskAnimator.Play("Enter"); }
+
 
     }
     void Start()
@@ -158,7 +169,7 @@ public class CharacterCtrl : MonoBehaviour
             }
             isCliming = true;
             CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
-            rb.AddForce((collision.GetContact(0).point - transform.position).normalized * -Physics.gravity.y);
+            rb.AddForce(2 * -Physics.gravity.y * (collision.GetContact(0).point - transform.position).normalized);
             rb.AddForce(-Physics.gravity);// print("First point that collided: " + collision.contacts[0].point);
         }
         else { isCliming = false; }
@@ -166,14 +177,24 @@ public class CharacterCtrl : MonoBehaviour
     }
     void GiveForce()
     {
-        if (verticalInput + horizontalInput <= 0) { return; }
+        // if (verticalInput + horizontalInput <= 0) { return; }
         var force = (Input.GetKey(GlobalRules.instance.SpeedUp) ? sliteForce * 2 : sliteForce);
         rb.AddForce(force * verticalInput * Camera.transform.forward);
         rb.AddForce(force * horizontalInput * Camera.transform.right);
+        if (Input.GetKey(GlobalRules.instance.MoveUp))
+        {
+            rb.AddForce(Vector3.up);
+        }
+        if (Input.GetKey(GlobalRules.instance.MoveDown))
+        {
+            rb.AddForce(-Vector3.up);
+        }
+
         //CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
     }
     void JumpCommand()
     {
+        if (dontUseGravity) { rb.useGravity = false; return; }
         if (Input.GetKeyDown(GlobalRules.instance.Jump))
         {
             if (ableToJump)
@@ -255,9 +276,13 @@ public class CharacterCtrl : MonoBehaviour
     {
         if (transform.position.y < GlobalRules.instance.DeathAltitude)
         {
+            MaskAnimator.Play("Enter", 0, 0);
             Debug.LogWarning("Below Death Altitude");
-            LoadScene(SceneManager.GetActiveScene().buildIndex);
-            this.transform.position = new Vector3(0, 5, 0);
+            this.transform.position = CheckPoint;
+            rb.velocity = Vector3.zero;
+
+            // LoadScene(SceneManager.GetActiveScene().buildIndex);
+            // this.transform.position = new Vector3(0, 5, 0);
         }
     }
     public void LoadScene(int sceneIndex)
@@ -302,6 +327,26 @@ public class CharacterCtrl : MonoBehaviour
             }
         }
 
+    }
+    public void BackToStartMenu()
+    {
+
+        StartCoroutine(DelayBackToStartMenu());
+
+        //  DelayLoadLevel(0);
+    }
+    public IEnumerator DelayLoadLevel(int leveID)
+    {
+        PlayMaskLeaveClip();
+        yield return new WaitForSecondsRealtime(2f);
+        SceneManager.LoadScene(leveID);
+    }
+    public IEnumerator DelayBackToStartMenu()
+    {
+        PlayMaskLeaveClip();
+        yield return new WaitForSecondsRealtime(2f);
+        SceneManager.LoadScene(GlobalRules.instance.StartSceneName);
+        Destroy(this.transform.parent.parent.gameObject);
     }
     public void PlayMaskLeaveClip()
     {

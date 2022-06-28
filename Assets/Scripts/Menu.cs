@@ -135,13 +135,7 @@ public class Menu : MonoBehaviour
     //    Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
     //}
-    public void BackToStartMenu(string startMenuName)
-    {
 
-        StartCoroutine(DelayBackToStartMenu(startMenuName));
-
-        //  DelayLoadLevel(0);
-    }
     void SwitchBubleWithCamera()
     { //let two bundle's camera have same direction
 
@@ -162,16 +156,6 @@ public class Menu : MonoBehaviour
         cameraBrain.enabled = false;
         Debug.Log("UnableCinemachineBrain");
     }
-    public IEnumerator DelayLoadLevel(int leveID)
-    {
-        yield return new WaitForSecondsRealtime(2f);
-        SceneManager.LoadScene(leveID);
-    }
-    public IEnumerator DelayBackToStartMenu(string leveID)
-    {
-        yield return new WaitForSecondsRealtime(2f);
-        SceneManager.LoadScene(leveID);
-        Destroy(PlayerBunble.transform.parent.gameObject);
-    }
+
 }
 

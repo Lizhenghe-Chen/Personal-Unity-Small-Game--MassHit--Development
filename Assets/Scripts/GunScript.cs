@@ -7,6 +7,7 @@ public class GunScript : MonoBehaviour
 {
     [Header("Need Assign in Inspector")]
     public Transform Player;
+
     public Transform muzzle;
     public GameObject AimPoint;
     public CenterRotate BuckyBall;
@@ -25,7 +26,7 @@ public class GunScript : MonoBehaviour
     [SerializeField] GameObject GreenAim, RedAim;
     void Start()
     {
-        Physics.IgnoreLayerCollision(6, 6);
+        Physics.IgnoreLayerCollision(GlobalRules.instance.playerLayerID, GlobalRules.instance.playerLayerID);
         Camera = Player.GetComponent<CharacterCtrl>().Camera;
         GreenAim = AimPoint.transform.Find("GreenAim").gameObject;
         RedAim = AimPoint.transform.Find("RedAim").gameObject;

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class BackGroundMusicCtrl : MonoBehaviour
 {
     public List<AudioClip> MusicList = new();
+    public int TargetSound;
     [SerializeField] AudioSource audioSource;
 
     private void Start()
@@ -22,6 +23,7 @@ public class BackGroundMusicCtrl : MonoBehaviour
     {
 
         audioSource.clip = MusicList[SceneManager.GetActiveScene().buildIndex - 1];
+        audioSource.clip = MusicList[TargetSound];
         //audioSource.time = 53f;
         Invoke("Play", 1f);
     }

@@ -16,6 +16,7 @@ public class GlobalRules : MonoBehaviour
     public KeyCode Break, Jump, SpeedUp, MoveUp, MoveDown, Rush, Aim, Shoot,
         HoldObject, Climb, ExtendHoldObjectDist, CloseHoldObjectDist, SwitchCamera, DestoryHittedObj;
     public float energyChargeSpeed, holdConsume, flyCosume;
+    public string StartSceneName;
     [Tooltip("CharacterCtrl.cs will allocate below camera")]
     public CinemachineFreeLook cam1;
     public CinemachineVirtualCamera cam2;
@@ -51,14 +52,14 @@ public class GlobalRules : MonoBehaviour
         // Debug.Log(Player.GetComponent<CharacterCtrl>().Player_Camera1);
 
 
-        try
-        {
-            StartCoroutine(CheckDestoryByDistanceFromPlayer(CharacterCtrl._CharacterCtrl.HitObjectsQueue));
-        }
-        catch (System.Exception e)//it may because at start menu
-        {
-            Debug.LogWarning(e);
-        }
+        //try
+        //{
+        //    StartCoroutine(CheckDestoryByDistanceFromPlayer(CharacterCtrl._CharacterCtrl.HitObjectsQueue));
+        //}
+        //catch (System.Exception e)//it may because at start menu
+        //{
+        //    Debug.LogWarning(e);
+        //}
     }
 
 
@@ -175,7 +176,11 @@ public class GlobalRules : MonoBehaviour
         }
         if (checkParentLists.Count > 0)
         {
-            try { StartCoroutine(CheckDestoryByDeathAltitude(checkParentLists)); }
+            try
+            {
+                StartCoroutine(CheckDestoryByDeathAltitude(checkParentLists));
+                // StartCoroutine(CheckDestoryByDistanceFromPlayer(CharacterCtrl._CharacterCtrl.HitObjectsQueue));
+            }
             catch (System.Exception e) { Debug.Log(e.Message); }
 
         }

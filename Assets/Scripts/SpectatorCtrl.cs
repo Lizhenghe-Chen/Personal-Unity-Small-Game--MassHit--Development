@@ -21,16 +21,17 @@ public class SpectatorCtrl : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        // Movement();
-        MovementUnscaled();
+        if (Time.timeScale >= 0.5) { Movement(); } else MovementUnscaled();
+
+
     }
 
 
     void Movement()
     {
         var Speed = Input.GetKey(GlobalRules.instance.SpeedUp) ? moveSpeed * 10 : moveSpeed;
-        rb.AddForce(Speed * Time.unscaledDeltaTime * verticalInput * Camera.forward);
-        rb.AddForce(horizontalInput * Speed * Time.unscaledDeltaTime * Camera.right);
+        rb.AddForce(Speed * verticalInput * Camera.forward);
+        rb.AddForce(horizontalInput * Speed * Camera.right);
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.E))
         {
             rb.AddForce(Vector3.up * Speed);
@@ -69,27 +70,18 @@ public class SpectatorCtrl : MonoBehaviour
         }
         else { horizontal = 0; }
 
-        Speed = Input.GetKey(GlobalRules.instance.SpeedUp) ? moveSpeed * 10 : moveSpeed;
+        Speed = Input.GetKey(GlobalRules.instance.SpeedUp) ? moveSpeed * 5 : moveSpeed;
         Physics.Raycast(this.transform.position, Vector3.down, out RaycastHit hit);
-        // Debug.Log(Camera.forward);
-        if (hit.distance < 0.5)
+        Debug.Log(hit.distance);
+        if (hit.distance < 0.2)
         {
-            //Speed = moveSpeed;
-            if (hit.distance < 0.2)
-            {
-                Speed = moveSpeed;
-                transform.position += 0.1f * Vector3.up;
-                transform.position += Speed * Time.unscaledDeltaTime * new Vector3(Camera.forward.x, 0, Camera.forward.z) * vertical;
-                transform.position += Speed * Time.unscaledDeltaTime * new Vector3(Camera.forward.x, 0, Camera.forward.z) * horizontal;
+            if (hit.distance < 0.1) { transform.position += new Vector3(0, 0.001f, 0) + hit.distance * Vector3.up; }
 
-            }
-            else
-            {
-                // Speed = Input.GetKey(GlobalRules.instance.SpeedUp) ? moveSpeed * 10 : moveSpeed;
-                transform.position += Speed * Time.unscaledDeltaTime * Camera.forward * vertical;
-                transform.position += Speed * Time.unscaledDeltaTime * Camera.right * horizontal;
-                // if (Input.GetKey(KeyCode.Q)) { transform.position -= moveSpeed * Time.unscaledDeltaTime * Vector3.up; }
-            }
+            // Speed = Input.GetKey(GlobalRules.instance.SpeedUp) ? moveSpeed * 10 : moveSpeed;
+            transform.position += Speed * Time.unscaledDeltaTime * Camera.forward * vertical;
+            transform.position += Speed * Time.unscaledDeltaTime * Camera.right * horizontal;
+            // if (Input.GetKey(KeyCode.Q)) { transform.position -= moveSpeed * Time.unscaledDeltaTime * Vector3.up; }
+
         }
         else
         {

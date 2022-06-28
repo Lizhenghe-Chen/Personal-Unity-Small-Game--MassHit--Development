@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6148173433482989962}
   - component: {fileID: 463371869441273203}
   - component: {fileID: 4284734950558642088}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SGS_Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 87.66, y: 0.018311739, z: 81.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -52,10 +53,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -81,6 +84,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &4284734950558642088
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -88,10 +92,10 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2185068589674305967}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 82ee09d6465b88246b6acab24e61c70f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 1
-  m_Height: 29.099388
+  m_Height: 17.02
   m_Direction: 1
-  m_Center: {x: 0.09, y: 14.279694, z: 0.07}
+  m_Center: {x: 0, y: 7.5, z: 0}

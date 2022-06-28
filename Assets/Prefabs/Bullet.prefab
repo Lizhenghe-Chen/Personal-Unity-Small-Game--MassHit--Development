@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 116174622645146083}
   - component: {fileID: -858497306686126319}
   - component: {fileID: 4729638353243057881}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -132,9 +132,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explodeRadius: 4
-  ignoreCollisionObject: {fileID: 3811683612415167881, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
-    type: 3}
   scaleOfTime: 0.5
+  test:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!135 &4729638353243057881
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -159,7 +160,7 @@ GameObject:
   - component: {fileID: 7772609646962769014}
   - component: {fileID: 6470883706708180686}
   - component: {fileID: 8374087443153641493}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +276,7 @@ GameObject:
   - component: {fileID: 6613752582901818080}
   - component: {fileID: 8082733729368419911}
   - component: {fileID: 3233834392434224161}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Particle revolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4990,7 +4991,7 @@ GameObject:
   - component: {fileID: 7130843300264058078}
   - component: {fileID: 5199575374250395759}
   - component: {fileID: 5902037396960680241}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
