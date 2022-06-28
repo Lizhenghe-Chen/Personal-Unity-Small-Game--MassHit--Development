@@ -2,8 +2,9 @@
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
 
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
-
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION  
+   
+不能未经许可直接使用代码和创意，尤其不能直接用在商业用途上，不过好像确实没什么好用的吧QAQ
    1. Definitions.
 
       "License" shall mean the terms and conditions for use, reproduction,
@@ -186,7 +187,7 @@
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright [yyyy] [name of copyright owner]
+Copyright (c) 2022 Lizhenghe Chen
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
