@@ -11,7 +11,7 @@ public class SplashCtrl : MonoBehaviour
 
     private void Start()
     {
-        loadingText.text = "Hi ^_^";
+        //loadingText.text = "Hi Stranger ^_^";
     }
     public void LoadScene(int NextSceneIndex)
     {
@@ -40,7 +40,7 @@ public class SplashCtrl : MonoBehaviour
             // Check if the load has finished
             if (asyncOperation.progress >= 0.9f)
             {
-
+                loadingText.text = "Hi Stranger ^_^";
                 //Activate the Scene
                 asyncOperation.allowSceneActivation = finnieshedAnimation;
 

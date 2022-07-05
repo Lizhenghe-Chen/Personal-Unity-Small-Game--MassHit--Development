@@ -13,29 +13,41 @@ public class SpectatorUI : MonoBehaviour
     [SerializeField] private DepthOfField df;
     public Slider focusDistanceSlider, FieldOfViewSlider, focalLengthSlider, aptureSlider;
     public Transform MainCamera;
+    Camera MainCameraForFieldOfView;
     void Start()
     {
         postProcessVolume.sharedProfile.TryGet<DepthOfField>(out df);
-
-        df.aperture.value = aptureSlider.value;
-        df.focalLength.value = focalLengthSlider.value;
-        df.focusDistance.value = focusDistanceSlider.value;
-        FieldOfViewSlider.value = vcam.m_Lens.FieldOfView;
+        MainCameraForFieldOfView = MainCamera.GetComponent<Camera>();
+        SetApture();
+        SetFocalLength();
+        SetFocusDistance();
+        SetFieldOfView();
 
     }
     private void OnEnable()
     {
         // FieldOfViewSlider.value = MainCamera.GetComponent<Camera>().fieldOfView = 35f;
     }
+    private void Update()
+    {
+        if (Input.mouseScrollDelta.y != 0) { vcam.m_Lens.FieldOfView = FieldOfViewSlider.value = MainCameraForFieldOfView.fieldOfView += Input.mouseScrollDelta.y; }
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (Physics.Raycast(MainCameraForFieldOfView.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+            {
+                focusDistanceSlider.value = df.focusDistance.value = hit.distance;
+            }
 
+        }
+    }
     public void SetFocusDistance()
     {
         df.focusDistance.value = focusDistanceSlider.value;
     }
     public void SetFieldOfView()
     {
-        vcam.m_Lens.FieldOfView = FieldOfViewSlider.value;
-        MainCamera.GetComponent<Camera>().fieldOfView = FieldOfViewSlider.value;
+        vcam.m_Lens.FieldOfView = MainCameraForFieldOfView.fieldOfView = FieldOfViewSlider.value;
+        // MainCameraForFieldOfView.fieldOfView = FieldOfViewSlider.value;
 
     }
     public void SetFocalLength()

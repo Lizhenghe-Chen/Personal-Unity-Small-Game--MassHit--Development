@@ -1,17 +1,18 @@
 using Cinemachine;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
     public TMP_Dropdown videoDropdown, levelDropdown;
     public GameObject SwitchButton;
-
+    public Button resumeButton;
     [SerializeField] private GameObject PlayerBunble, SpectatorBunble;
 
     public GameObject PlayerBunbleHUD, SpectatorBunbleHUD;
+    public Canvas SpectatorBunbleCnavs;
     public Transform PlayerPos, SpectatorPos;
     //public GameObject escUI;
     public CharacterCtrl characterCtrl;
@@ -51,21 +52,22 @@ public class Menu : MonoBehaviour
             escCanvas.enabled = false;
 
             Cursor.visible = false;
-            cameraBrain.enabled = true;
+
             Cursor.lockState = CursorLockMode.Locked;
-            SpectatorBunbleHUD.SetActive(false);
+            //  SpectatorBunbleHUD.SetActive(false);
+            SpectatorBunbleCnavs.enabled = false;
             //PlayerBunbleHUD.SetActive(false);
-            //Time.timeScale = 1f;
-            // Time.fixedDeltaTime = Time.timeScale * 0.02f;
+            //if (!characterCtrl.enabled) { SwitchBunble(); CancelInvoke(); }//back to player mode
+            cameraBrain.enabled = true;
         }
         else// if menu is inactive, switch it active,open the menu
         {
             escCanvas.enabled = true;
             cameraBrain.enabled = false;
-
+            SpectatorBunbleCnavs.enabled = true;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            SpectatorBunbleHUD.SetActive(true);
+            //SpectatorBunbleHUD.SetActive(true);
             //PlayerBunbleHUD.SetActive(true);
             Time.timeScale = 0.0001f;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
@@ -90,6 +92,7 @@ public class Menu : MonoBehaviour
             PlayerfreeLook.gameObject.SetActive(false);
             PlayerBunbleHUD.SetActive(false);
             SpectatorBunble.SetActive(true);
+            resumeButton.interactable = false;
             //PlayerBunble.SetActive(false);
             SwitchBubleWithCamera();
             //  var a = SwitchButton.GetComponentInChildren(typeof(Text)) as Text;
@@ -101,7 +104,7 @@ public class Menu : MonoBehaviour
             // PlayervCam.gameObject.SetActive(true);
             PlayerfreeLook.gameObject.SetActive(true);
             PlayerBunbleHUD.SetActive(true);
-
+            resumeButton.interactable = true;
             // PlayerBunble.SetActive(true);
             SpectatorBunble.SetActive(false);
             //PlayerPos.position = SpectatorPos.position;

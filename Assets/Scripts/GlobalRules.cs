@@ -7,6 +7,7 @@ public class GlobalRules : MonoBehaviour
 {
     public static GlobalRules instance;
     public int waterLayerID, playerLayerID, bulletLayerID, groundLayerID;
+    public LayerMask GoundLayer;
     public int DeathAltitude;
     public Menu escMenu;
 
@@ -15,7 +16,7 @@ public class GlobalRules : MonoBehaviour
     public WaitForSeconds waitTime = new(5);
     public KeyCode Break, Jump, SpeedUp, MoveUp, MoveDown, Rush, Aim, Shoot,
         HoldObject, Climb, ExtendHoldObjectDist, CloseHoldObjectDist, SwitchCamera, DestoryHittedObj;
-    public float energyChargeSpeed, holdConsume, flyCosume;
+    public float energyChargeSpeed, holdConsume, holdForce, flyCosume;
     public string StartSceneName;
     [Tooltip("CharacterCtrl.cs will allocate below camera")]
     public CinemachineFreeLook cam1;
@@ -185,5 +186,8 @@ public class GlobalRules : MonoBehaviour
 
         }
     }
-
+    public static bool IsGameObjInLayerMask(GameObject gameObject, LayerMask layerMask)
+    {
+        return layerMask.value == (layerMask.value | (1 << gameObject.layer));
+    }
 }

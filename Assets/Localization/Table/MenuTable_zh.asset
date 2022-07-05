@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: MenuTable_zh
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: zh
+  m_SharedData: {fileID: 11400000, guid: d8ec274d75d86c4468c7bdd0016e6a5a, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 8416390001611505674
+  m_TableData:
+  - m_Id: 38833049600
+    m_Localized: "\u9A6C\u65AF\u8D6B\u7279"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30918549000192
+    m_Localized: "\u82F1\u56FD\u5386\u53F2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31710416818176
+    m_Localized: "\u9009\u62E9\u5173\u5361"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31782294605824
+    m_Localized: "\u9000\u51FA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31818025881600
+    m_Localized: "\u8BBE\u7F6E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 391133735768064
+    m_Localized: "\u7EE7\u7EED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 391164308049920
+    m_Localized: "\u76F8\u673A\u6A21\u5F0F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 391199171104768
+    m_Localized: "\u8FD4\u56DE\u5230\u83DC\u5355"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 400002058899456
+    m_Localized: "\u7EE7\u7EED"
+    m_Metadata:
+      m_Items:
+      - rid: 8416390001611505674
+  - m_Id: 400069239066624
+    m_Localized: "\u5F00\u59CB"
+    m_Metadata:
+      m_Items:
+      - rid: 8416390001611505674
+  - m_Id: 416061428158464
+    m_Localized: "\u6E05\u9664\u6570\u636E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416316072742912
+    m_Localized: "\u8FD4\u56DE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 422089599307776
+    m_Localized: "\u6240\u6709\u6570\u636E\u5305\u62EC\u4E2A\u4EBA\u548C\u6E38\u620F\u8FDB\u5EA6\u90FD\u5C06\u88AB\u5F7B\u5E95\u5220\u9664\uFF0C\u65E0\u6CD5\u64A4\u9500\u54E6"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 8416390001611505674
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0050e160dc6b01000050a1bccc6b0100

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class CharacterCtrl : MonoBehaviour
 {
     public static CharacterCtrl _CharacterCtrl;
+    public LayerMask groundLayer;
     public Transform Camera;
     public Transform PlayerKernel;
     public Vector3 CheckPoint;
@@ -42,19 +43,22 @@ public class CharacterCtrl : MonoBehaviour
 
         //    Destroy(this.transform.parent.parent.gameObject);
         //}
+        Debug.Log("Awake");
         _CharacterCtrl = this;
         DontDestroyOnLoad(this.transform.parent.parent);
+        CheckPoint = new Vector3(PlayerPrefs.GetFloat("SavedCheckPoint_X"), PlayerPrefs.GetFloat("SavedCheckPoint_Y"), PlayerPrefs.GetFloat("SavedCheckPoint_Z"));
+        PlayerPrefs.SetString("SavedCheckPointScene", SceneManager.GetActiveScene().name);//save player's current scene
+        if (CheckPoint == Vector3.zero) { CheckPoint = this.transform.position; }
+        else { this.transform.position = CheckPoint; }
     }
     void OnEnable()
     {
-        CheckPoint = new Vector3(PlayerPrefs.GetFloat("SavedCheckPoint_X"), PlayerPrefs.GetFloat("SavedCheckPoint_Y"), PlayerPrefs.GetFloat("SavedCheckPoint_Z"));
 
-        if (CheckPoint == Vector3.zero) { CheckPoint = this.transform.position; }
-        else { this.transform.position = CheckPoint; }
 
-        PlayerPrefs.SetString("SavedCheckPointScene", SceneManager.GetActiveScene().name);//save player's current scene
+
+
         SceneManager.sceneLoaded += OnSceneLoaded;
-        CheckPoint = this.transform.position;
+
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -125,14 +129,21 @@ public class CharacterCtrl : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (landBendEffect) landBendEffect.Emit(1);
-        if (other.gameObject.layer == GlobalRules.instance.groundLayerID || other.gameObject.layer == 0) { ableToJump = true; }
 
+        //if layer is ground
+        if (GlobalRules.IsGameObjInLayerMask(other.gameObject, GlobalRules.instance.GoundLayer))
+        {
+            ableToJump = true;
+        }
     }
     private void OnCollisionExit(Collision other)
     {
         isCliming = false;
-        if (other.gameObject.layer == GlobalRules.instance.groundLayerID || other.gameObject.layer == 0) { ableToJump = false; }
-        //if (other.gameObject.layer != GlobalRules.instance.groundLayerID) { isCliming = false; }
+        //if layer is ground
+        if (GlobalRules.IsGameObjInLayerMask(other.gameObject, GlobalRules.instance.GoundLayer))
+        {
+            ableToJump = false;
+        }
     }
 
 

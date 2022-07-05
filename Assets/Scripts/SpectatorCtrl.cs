@@ -22,6 +22,7 @@ public class SpectatorCtrl : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         if (Time.timeScale >= 0.5) { Movement(); } else MovementUnscaled();
+        if (Input.GetKey(GlobalRules.instance.Break)) { rb.velocity = Vector3.zero; }
 
 
     }
@@ -72,7 +73,7 @@ public class SpectatorCtrl : MonoBehaviour
 
         Speed = Input.GetKey(GlobalRules.instance.SpeedUp) ? moveSpeed * 5 : moveSpeed;
         Physics.Raycast(this.transform.position, Vector3.down, out RaycastHit hit);
-        Debug.Log(hit.distance);
+        //Debug.Log(hit.distance);
         if (hit.distance < 0.2)
         {
             if (hit.distance < 0.1) { transform.position += new Vector3(0, 0.001f, 0) + hit.distance * Vector3.up; }

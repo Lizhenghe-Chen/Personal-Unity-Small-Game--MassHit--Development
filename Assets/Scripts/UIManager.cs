@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
         public float min;
         public float max;
     }
+
     public Range holdRange;
     [SerializeField] Rigidbody holdingObject;
     [SerializeField] private float value = 0f;
@@ -74,14 +75,14 @@ public class UIManager : MonoBehaviour
 
     public void HoldObjectCommand()
     {
-        if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || CenterRotate.shootEnergy <= 0)
+        if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || CenterRotate.shootEnergy <= 0)//set object free~
         {
             holdAim.enabled = false;
             isHoldKeyPressing = holdAim.enabled;
 
             if (holdingObject)
             {
-                // holdingObject.isKinematic = false;
+
                 holdingObject.drag = originalDrag;//change back it's drag
                 kernelParticle.target = originalKernelParticleTarget;
                 holdingObject = null;
@@ -147,16 +148,16 @@ public class UIManager : MonoBehaviour
 
                 holdingObject.drag = 5f;
                 kernelParticle.target = holdingObject.transform;
-                //holdingObject.isKinematic = true;
+                //holdingObject.isKinematic = false;
                 // Debug.DrawRay(MainCamera.transform.position, MainCamera.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
                 Debug.Log(hit.transform.tag);
             }
         }
-        else
-        {
-            //  Debug.DrawRay(MainCamera.transform.position, MainCamera.transform.forward * 1000, Color.red, 2);
-            //return;
-        }
+        //else
+        //{
+        //    //  Debug.DrawRay(MainCamera.transform.position, MainCamera.transform.forward * 1000, Color.red, 2);
+        //    //return;
+        //}
         if (holdingObject)
         {
             HoldTarget.LookAt(MainCamera);
@@ -170,7 +171,7 @@ public class UIManager : MonoBehaviour
             CenterRotate.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
 
             //HoldTarget.position = (MainCamera.forward.normalized * fowardback_holdoffset + Vector3.up * updown_holdOffset);
-            holdingObject.AddForce(50f * holdingObject.mass * (HoldTarget.position - holdingObject.position));
+            holdingObject.AddForce(GlobalRules.instance.holdForce * (HoldTarget.position - holdingObject.position));
             //holdingObject.MovePosition((HoldTarget.position - holdingObject.position) * 50f * Time.deltaTime + holdingObject.position);
 
         }

@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 7353863938493327142}
   - component: {fileID: 7353863938493327145}
   - component: {fileID: 188128366484646124}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CheckPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCheckPoint: 1
+  RefreshScene: 0
   animator: {fileID: 188128366484646124}
 --- !u!33 &7353863938493327143
 MeshFilter:

@@ -7,9 +7,12 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.DA949528" = "player pref"
+	"last_search.DA949528" = "planar"
 	"OpenInspectorPreview.DA949528" = "0"
-	"currentGroup.DA949528" = "all"
+	"currentGroup.DA949528" = "menu"
+	"last_search.B655092D" = "st:"
+	"OpenInspectorPreview.B655092D" = "0"
+	"currentGroup.B655092D" = "all"
 }
 providers = {
 	adb = {
@@ -52,10 +55,23 @@ providers = {
 		priority = 50
 		defaultAction = null
 	}
+	at = {
+		active = true
+		priority = 100
+		defaultAction = null
+	}
+	st = {
+		active = true
+		priority = 100
+		defaultAction = null
+	}
 }
 objectSelectors = {
 }
 recentSearches = [
+	"st:StartGame"
+	"st:Continue"
+	"planar "
 ]
 searchItemFavorites = [
 ]

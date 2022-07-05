@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/StartMenu.unity
     guid: f8efb08dc8b832946862e09f9b506b73
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/TestScene.unity
+    guid: 6af75d9f24f4d3c4f83c5ee365efeae0
   - enabled: 1
     path: Assets/Scenes/Grass Scene.unity
     guid: 98fc6980a02c7c5469c580150499a616
@@ -23,4 +23,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Forest.unity
     guid: 5af227f30f74cf8438a862026e24f329
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 895dfa85da25bca498e0999b09b75f2d,
+      type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: fed75b8ebfbfcf04b9c2bf760cdb7533,
+      type: 2}
