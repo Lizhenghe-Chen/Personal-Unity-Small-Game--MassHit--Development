@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: MissionTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: MissionTable
+  m_TableCollectionNameGuidString: dc9122bfaa25c06498979a76135bffc5
+  m_Entries:
+  - m_Id: 75495460864
+    m_Key: Mission 1-1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 182425047040
+    m_Key: Mission 1-3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28428692705280
+    m_Key: Mission 1-4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9072384730116096
+    m_Key: Mission 1-5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9374450396606464
+    m_Key: Mission 1-6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9712826236710912
+    m_Key: Mission 1-7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9719034767126528
+    m_Key: Mission 1-8
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 8416390190265008130
+  references:
+    version: 2
+    RefIds:
+    - rid: 8416390190265008130
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1657747729900

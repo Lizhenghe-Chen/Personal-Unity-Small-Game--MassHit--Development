@@ -1,12 +1,24 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CheckPoint : MonoBehaviour
 {
     [Tooltip("False if wnat it to be the finnish point")]
-    public bool isCheckPoint = true, RefreshScene = false;
+    public bool isCheckPoint = true;
     [SerializeField] Animator animator;
     int HitCount;
+    public bool isLoading = false;
+    [SerializeField] Image MaskImage;
+    private void Update()
+    {
+        if (isLoading)
+        {
+            Debug.Log(1 - MaskImage.color.a);
+            AudioListener.volume = 1 - MaskImage.color.a;
+        }
+
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -45,7 +57,9 @@ public class CheckPoint : MonoBehaviour
     }
     public void LoadNextLevel()
     {
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+    public void SetIsLoading() { GlobalRules.instance.isLoadingNextLevel = isLoading = true; }
 
 }

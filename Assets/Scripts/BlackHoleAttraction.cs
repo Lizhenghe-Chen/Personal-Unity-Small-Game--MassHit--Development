@@ -25,10 +25,9 @@ public class BlackHoleAttraction : MonoBehaviour
         if (other.CompareTag("GravityCube")) { other.transform.Find("Particle").gameObject.SetActive(true); }
         if (other.CompareTag("Player"))
         {
-            CharacterCtrl c_Ctrl = other.gameObject.GetComponent<CharacterCtrl>();
-            PlayerCentertarget = c_Ctrl.gunScript.PlayerKernelTarget;
+            PlayerCentertarget = CharacterCtrl._CharacterCtrl.gunScript.PlayerKernelTarget;
             // PlayerCentertarget.transform.parent = this.transform;
-            c_Ctrl.gunScript.PlayerKernelTarget = this.transform;
+            CharacterCtrl._CharacterCtrl.gunScript.PlayerKernelTarget = this.transform;
             //originialSpeed=c_Ctrl.PlayerKernelSpeed;
             //c_Ctrl.PlayerKernelSpeed*=_Mass*0.1f;
         }
@@ -40,9 +39,8 @@ public class BlackHoleAttraction : MonoBehaviour
         if (other.CompareTag("GravityCube")) { other.transform.Find("Particle").gameObject.SetActive(false); }
         if (other.CompareTag("Player"))
         {
-            CharacterCtrl c_Ctrl = other.gameObject.GetComponent<CharacterCtrl>();
-            // PlayerCentertarget = other.GetComponent<CharacterCtrl>().PlayerKernel;
-            c_Ctrl.gunScript.PlayerKernelTarget = PlayerCentertarget;
+
+            CharacterCtrl._CharacterCtrl.gunScript.PlayerKernelTarget = PlayerCentertarget;
             //   PlayerCentertarget.transform.parent = other.transform;
             //c_Ctrl.PlayerKernelTarget = other.transform;
             //c_Ctrl.PlayerKernelSpeed = originialSpeed;

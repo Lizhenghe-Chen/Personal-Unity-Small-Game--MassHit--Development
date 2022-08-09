@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   postExposure:
-    m_OverrideState: 1
-    m_Value: 0
+    m_OverrideState: 0
+    m_Value: 1
   contrast:
     m_OverrideState: 1
     m_Value: 10
@@ -26,8 +26,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   saturation:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 10
 --- !u!114 &-4253761486896626661
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -99,7 +99,7 @@ MonoBehaviour:
     m_Value: 0.4
   rounded:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 1
 --- !u!114 &682193277540482718
 MonoBehaviour:
   m_ObjectHideFlags: 3

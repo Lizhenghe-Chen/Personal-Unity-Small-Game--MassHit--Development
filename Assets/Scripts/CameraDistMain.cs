@@ -16,8 +16,8 @@ public class CameraDistMain : MonoBehaviour
     [SerializeField] float disdance; //for postProcessVolume Depth od Field use
     [SerializeField] float playerRadius;
 
-    int maxRadius = 30; //should >0
-    int minRadius = -2; //should <0
+    int maxRadius = 8; //should >0
+    int minRadius = -1; //should <0
     int offset_Value = 1; //offset when Mouse ScrollWheel
 
     private DepthOfField dof;

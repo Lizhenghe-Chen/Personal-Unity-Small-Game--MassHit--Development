@@ -10,7 +10,7 @@ public class GunScript : MonoBehaviour
 
     public Transform muzzle;
     public GameObject AimPoint;
-    public CenterRotate BuckyBall;
+    public PlayerBrain BuckyBall;
     //================================================================
     [Header("\n")]
     public Transform PlayerKernelTarget;
@@ -24,7 +24,8 @@ public class GunScript : MonoBehaviour
 
 
     [SerializeField] GameObject GreenAim, RedAim;
-    void Start()
+
+    void OnEnable()
     {
         Physics.IgnoreLayerCollision(GlobalRules.instance.playerLayerID, GlobalRules.instance.playerLayerID);
         Camera = Player.GetComponent<CharacterCtrl>().Camera;
@@ -52,7 +53,7 @@ public class GunScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            CenterRotate.shootEnergy -= 25;
+            PlayerBrain.shootEnergy -= 25;
             //  Instantiate(bullet, muzzle.position, muzzle.rotation).GetComponent<Rigidbody>().AddForce(muzzle.forward * bulletSpeed);
             var temp = Instantiate(bullet, transform.position, transform.rotation);
             Physics.IgnoreCollision(temp.GetComponent<Collider>(), Player.GetComponent<Collider>(), true);
@@ -61,14 +62,15 @@ public class GunScript : MonoBehaviour
     }
     void Aim()
     {
+        if (!CharacterCtrl._CharacterCtrl.shootAbility) { return; }
         // this.transform.forward = Camera.transform.forward;
-        if (CharacterCtrl.isAming)
+        if (CharacterCtrl._CharacterCtrl.playerActionState == CharacterCtrl.ActionState.AIMING)
         {
 
             if (isLookAt) { transform.LookAt(Camera); } else { transform.forward = new(-Camera.forward.x, 0, -Camera.forward.z); }
             AimPoint.SetActive(true);
 
-            if (CenterRotate.is_Charging && CenterRotate.shootEnergy > 25)
+            if (PlayerBrain.is_Charging && PlayerBrain.shootEnergy > 25)
             {
                 //BuckyBall.selfRotateSpeed = 10f;
                 GreenAim.SetActive(true);

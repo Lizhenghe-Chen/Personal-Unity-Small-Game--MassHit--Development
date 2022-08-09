@@ -63,6 +63,46 @@ MonoBehaviour:
     m_Key: ClearWarning
     m_Metadata:
       m_Items: []
+  - m_Id: 889972473286656
+    m_Key: BeginningLevel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 890186382790656
+    m_Key: PrairieLevel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 890390372765696
+    m_Key: CastleLevel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 890533952180224
+    m_Key: ForestLevel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084184762339328
+    m_Key: Player Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084187241172992
+    m_Key: Photo Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1626086372888576
+    m_Key: Acknowledgement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2245656607543296
+    m_Key: PlayerWelecome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2259830683291648
+    m_Key: NullPlayerName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2271612193820672
+    m_Key: InputName
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

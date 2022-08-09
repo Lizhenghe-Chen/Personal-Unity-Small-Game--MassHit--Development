@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using UIElements;
+using UnityEngine.UI;
+
 public class GlobalRules : MonoBehaviour
 {
     public static GlobalRules instance;
+    public bool isPause = false;
     public int waterLayerID, playerLayerID, bulletLayerID, groundLayerID;
     public LayerMask GoundLayer;
     public int DeathAltitude;
-    public Menu escMenu;
-
+    public EscUI escMenu;
+    [SerializeField] Image MaskImage;
+    public bool isLoadingNextLevel;
 
     public List<Transform> checkParentLists = new();
     public WaitForSeconds waitTime = new(5);
@@ -23,6 +28,8 @@ public class GlobalRules : MonoBehaviour
     public CinemachineVirtualCamera cam2;
     readonly float recoverTimeSpeed = 2f;
     [SerializeField] Transform Player;
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -31,6 +38,17 @@ public class GlobalRules : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+        }
+
+        try
+        {
+            MaskImage = GlobalUIFunctions.MaskAnimator.GetComponentInChildren<Image>();
+
+        }
+        catch (System.Exception)
+        {
+            //Debug.LogWarning(e);
+            if (MaskImage == null) { MaskImage = GameObject.Find("Mask").GetComponentInChildren<Image>(); }
         }
 
 
@@ -47,6 +65,7 @@ public class GlobalRules : MonoBehaviour
     {
 
         ReallocateCheckDestoryList();
+
         //Player = GameObject.Find("Player").transform;
         // cam1 = Player.GetComponent<CharacterCtrl>().Player_Camera1.GetComponent<CinemachineFreeLook>();
         // cam2 = Player.GetComponent<CharacterCtrl>().Player_Camera2.GetComponent<CinemachineVirtualCamera>();
@@ -67,9 +86,20 @@ public class GlobalRules : MonoBehaviour
     // called second
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-
         //  Debug.Log(scene.buildIndex + "Secen Loaded");
-        // if (scene.buildIndex == 0) { return; }
+        if (scene.name == StartSceneName) { isPause = true; return; }
+        else
+        {
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f; isPause = false;
+        }
+        //if (SceneManager.GetActiveScene().name == "Acknowledgements" || SceneManager.GetActiveScene().name == "Splash")
+        //{
+        //    // Debug.Log("Acknowledgements Scene");
+
+        //}
+        string tempname = PlayerPrefs.GetString("PlayerName");
+        if (string.IsNullOrEmpty(tempname)) { PlayerPrefs.SetString("PlayerName", "Stranger"); }
         //MaskAnimator.Play("Enter");
         ReallocateCheckDestoryList();
         // Debug.Log("OnSceneLoaded: " + scene.name);
@@ -82,22 +112,26 @@ public class GlobalRules : MonoBehaviour
         {
             instance = this;
         }
-        //Debug.Log(Time.fixedDeltaTime);
+        TimeCtrl();
+        AudioListenerCtrl();
+    }
+    private void TimeCtrl()
+    {
+        // Debug.Log(Time.fixedDeltaTime + "," + isPause);
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
-        if (!escMenu.escCanvas.enabled && !SpectatorUI.isPause)
+        if (!isPause)
         {
             Time.timeScale += recoverTimeSpeed * Time.unscaledDeltaTime;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
         }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Debug.Log("Pressed P");
-            SpectatorUI.isPause = !SpectatorUI.isPause;
 
-        }
+    }
+    void AudioListenerCtrl()
+    {
+        if (!MaskImage || MaskImage.color.a > 1 || isLoadingNextLevel) { return; }
 
-
-
+        AudioListener.volume = 1 - MaskImage.color.a;
+        // Debug.Log(AudioListener.volume + ", " + MaskImage.color.a);
     }
     IEnumerator CheckDestoryByDistanceFromPlayer(Queue<GameObject> checkLists)
     {

@@ -17,7 +17,7 @@ public class BlackHoleDestory : MonoBehaviour
             {
                 Destroy(other.transform.parent.parent.gameObject);
                 // Destroy(CharacterCtrl._CharacterCtrl.transform.parent.parent.gameObject);
-                CenterRotate.shootEnergy = 0;
+                PlayerBrain.shootEnergy = 0;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 return;
             }
