@@ -43,7 +43,7 @@ public class CameraDistMain : MonoBehaviour
 
 
     }
-    void FixedUpdate()
+    void Update()
     {
         if (Player == null) return;
         ScrollWheeldetect();

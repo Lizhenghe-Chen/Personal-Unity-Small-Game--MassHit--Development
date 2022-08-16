@@ -17,7 +17,7 @@ public class particleAttractorLinear : MonoBehaviour
             GetComponent<Transform>();
         }
     }
-    void FixedUpdate()
+    void Update()
     {
         if (!target) { target = transform.parent; }
         // transform.RotateAround(transform.position, transform.forward, speed * Time.deltaTime);

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 124555760581523320}
   - component: {fileID: 124555760581511302}
   - component: {fileID: 124555760581523321}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BlackHoleDestory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 124555760729056336}
   - component: {fileID: 124555760729056339}
   - component: {fileID: 124555760729056351}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BlackHole
   m_TagString: BlackHole
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 1272578526612490116}
   - component: {fileID: 1555030325527006332}
   - component: {fileID: 7730974027606022994}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

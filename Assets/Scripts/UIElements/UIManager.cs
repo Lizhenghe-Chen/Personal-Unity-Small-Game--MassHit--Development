@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Animations;
 
 public class UIManager : MonoBehaviour
 {
@@ -19,9 +20,11 @@ public class UIManager : MonoBehaviour
 
     public Image holdAim;
     public Transform aimRay, HoldTarget, MainCamera;
-    private Camera RayCam;
-
-
+    private Camera mainCamera;
+    public LayerMask ShootRaycastIgnore;
+    public Transform Traget, shootTraget;
+    public Image targetSceenIcion;
+    public LayerMask HoldRaycastIgnore;
     [Serializable]
     public struct Range
     {
@@ -33,23 +36,37 @@ public class UIManager : MonoBehaviour
     [SerializeField] Rigidbody holdingObject;
     [SerializeField] private float kernelValue, healthValue;
     [SerializeField] private bool isHoldKeyPressing = false;
-    public LayerMask HoldRaycastIgnore;
+    [SerializeField] Vector2 screenBound;
+
 
 
 
 
     void Start()
     {
+        Debug.Log(screenBound.x);
+        screenBound = new Vector2(Screen.width, Screen.height);
         holdAim.enabled = false;
-        RayCam = MainCamera.GetComponent<Camera>();
+        mainCamera = MainCamera.GetComponent<Camera>();
 
     }
 
+    private void LateUpdate()
+    {
+        if (!targetSceenIcion.gameObject.activeSelf) { return; }
+        var screenPosition = mainCamera.WorldToScreenPoint(shootTraget.position);
+        //if (screenPosition.x <= 0 || screenPosition.x >= screenBound.x || screenPosition.y <= 0 || screenPosition.y >= screenBound.y) return;
+        //targetSceenIcion.transform.position = screenPosition;
+        if (screenPosition.z < 0) { return; }
+        targetSceenIcion.transform.position = new Vector2(Mathf.Clamp(screenPosition.x, 50, screenBound.x - 50), Mathf.Clamp(screenPosition.y, 50, screenBound.y - 50));//https://docs.unity3d.com/ScriptReference/Mathf.Clamp.html
+                                                                                                                                                                        // Debug.Log(screenPosition);
+    }
     // Update is called once per frame
     void Update()
     {
 
         HoldObjectCommand();
+
         //Debug.Log(vcam.m_Lens.FieldOfView);
     }
 
@@ -78,6 +95,7 @@ public class UIManager : MonoBehaviour
 
     public void HoldObjectCommand()
     {
+
         if (!CharacterCtrl._CharacterCtrl.catchObjAbility) { return; }
         if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || PlayerBrain.shootEnergy <= 0)//set object free~
         {
@@ -132,9 +150,29 @@ public class UIManager : MonoBehaviour
     public void HoldObject()
     {
         if (!isHoldKeyPressing) { return; }
+        var constraintSource = new ConstraintSource();
+        if (Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out RaycastHit shoot_hit, Mathf.Infinity, ~ShootRaycastIgnore))
+        {
+
+            shootTraget.gameObject.SetActive(true);
+            targetSceenIcion.gameObject.SetActive(true);
+            shootTraget.position = shoot_hit.point;
+            //Debug.Log(shoot_hit);
+            if (shoot_hit.transform.gameObject.name == "Terrain") { shootTraget.GetComponent<PositionConstraint>().enabled = false; return; }
+            constraintSource.sourceTransform = shoot_hit.transform;
+            constraintSource.weight = 1;
+            shootTraget.GetComponent<PositionConstraint>().SetSource(0, constraintSource);
+        }
+        else
+        {
+            shootTraget.position = mainCamera.transform.position + 1000 * mainCamera.transform.forward;
+            targetSceenIcion.gameObject.SetActive(false);
+            shootTraget.gameObject.SetActive(false);
+            //Traget.position = Vector3.zero;
+        }
 
         // Does the ray intersect any objects excluding the player layer
-        if (holdingObject == null && Physics.Raycast(RayCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out RaycastHit hit, Mathf.Infinity, ~HoldRaycastIgnore))
+        if (holdingObject == null && Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out RaycastHit hit, Mathf.Infinity, ~HoldRaycastIgnore))
         {
             //draw ray from screen
 

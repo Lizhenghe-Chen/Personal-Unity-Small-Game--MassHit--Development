@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0af8862a5699ab42bcc49731c6540ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPause: 0
   waterLayerID: 4
   playerLayerID: 3
   bulletLayerID: 3
@@ -54,6 +55,8 @@ MonoBehaviour:
     m_Bits: 129
   DeathAltitude: -10
   escMenu: {fileID: 0}
+  MaskImage: {fileID: 0}
+  isLoadingNextLevel: 0
   checkParentLists:
   - {fileID: 0}
   - {fileID: 0}
@@ -63,7 +66,7 @@ MonoBehaviour:
   MoveUp: 101
   MoveDown: 113
   Rush: 102
-  Aim: 306
+  PreShoot: 306
   Shoot: 323
   HoldObject: 114
   Climb: 325

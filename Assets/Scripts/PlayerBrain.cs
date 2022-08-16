@@ -36,7 +36,7 @@ public class PlayerBrain : MonoBehaviour
     private void Update()
     {
         shootEnergy = Mathf.Clamp(shootEnergy, 0, 100);
-        if (!(Input.GetKey(GlobalRules.instance.Aim) || Input.GetKey(GlobalRules.instance.HoldObject))) { BuckyBallAtoms.GetComponent<Renderer>().material = shootEnergy < 90 ? un_ChargedMaterial : chargedMaterial; }
+        if (!Input.GetKey(GlobalRules.instance.HoldObject)) { BuckyBallAtoms.GetComponent<Renderer>().material = shootEnergy < 90 ? un_ChargedMaterial : chargedMaterial; }
         //   Debug.Log(shootEnergy);   
     }
     private void FixedUpdate()
@@ -55,11 +55,12 @@ public class PlayerBrain : MonoBehaviour
                 shootEnergy += GlobalRules.instance.energyChargeSpeed * Time.deltaTime;
 
             }
+            if (CharacterCtrl._CharacterCtrl.playerActionState == CharacterCtrl.ActionState.AIMING || Input.GetKey(GlobalRules.instance.PreShoot))
+            {
+                transform.RotateAround(transform.position, PlayerKernel.forward, 500 * Time.deltaTime);
+            }
         }
-        if (CharacterCtrl._CharacterCtrl.playerActionState == CharacterCtrl.ActionState.AIMING)
-        {
-            transform.RotateAround(transform.position, PlayerKernel.forward, 500 * Time.deltaTime);
-        }
+
 
     }
     // private void OnTriggerStay(Collider other)

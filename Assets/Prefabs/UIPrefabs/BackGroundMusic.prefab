@@ -148,6 +148,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3f7f596f8222304408b761bde1ef6b85, type: 3}
   - {fileID: 8300000, guid: 0a42f6f6c8d27774cbb49088672f2b3e, type: 3}
   - {fileID: 8300000, guid: 6beefee8ce93f174096f1079bdf53d7a, type: 3}
+  - {fileID: 8300000, guid: 18967f84876446944b5289ff4113623c, type: 3}
+  autoPlay: 1
   useTargetSound: 0
-  TargetSound: 0
-  audioSource: {fileID: 0}
+  TargetSound: {fileID: 0}

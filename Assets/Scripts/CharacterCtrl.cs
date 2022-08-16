@@ -69,12 +69,10 @@ public class CharacterCtrl : MonoBehaviour
         //DontDestroyOnLoad(this.transform.parent.parent);
 
     }
+
     void OnEnable()
     {
-        CheckPoint = new Vector3(PlayerPrefs.GetFloat("SavedCheckPoint_X"), PlayerPrefs.GetFloat("SavedCheckPoint_Y"), PlayerPrefs.GetFloat("SavedCheckPoint_Z"));
-        PlayerPrefs.SetString("SavedCheckPointScene", SceneManager.GetActiveScene().name);//save player's current scene
-        if (CheckPoint == Vector3.zero) { CheckPoint = this.transform.position; }
-        else { this.transform.position = CheckPoint; }
+
 
 
 
@@ -88,7 +86,10 @@ public class CharacterCtrl : MonoBehaviour
     void Start()
     {
 
-
+        CheckPoint = new Vector3(PlayerPrefs.GetFloat("SavedCheckPoint_X"), PlayerPrefs.GetFloat("SavedCheckPoint_Y"), PlayerPrefs.GetFloat("SavedCheckPoint_Z"));
+        PlayerPrefs.SetString("SavedCheckPointScene", SceneManager.GetActiveScene().name);//save player's current scene
+        if (CheckPoint == Vector3.zero) { CheckPoint = this.transform.position; }
+        else { this.transform.position = CheckPoint; }
         rb = GetComponent<Rigidbody>();
         //GlobalRules.instance.cam1 = Player_Camera1.GetComponent<Cinemachine.CinemachineFreeLook>();
         //GlobalRules.instance.cam2 = Player_Camera2.GetComponent<Cinemachine.CinemachineVirtualCamera>();
@@ -309,7 +310,7 @@ public class CharacterCtrl : MonoBehaviour
     {
         if (Input.GetMouseButton(1)) { rb.angularVelocity = Vector3.zero; }
         if (!shootAbility) { return; }
-        if (Input.GetKey(GlobalRules.instance.Aim) || Input.GetKey(GlobalRules.instance.HoldObject))
+        if (Input.GetKey(GlobalRules.instance.HoldObject))
         {
             // Debug.Log("GetKeyDown");
             playerActionState = ActionState.AIMING;
@@ -317,7 +318,7 @@ public class CharacterCtrl : MonoBehaviour
 
             //ChangeMaterialsToTransparent();
         }
-        if (Input.GetKeyUp(GlobalRules.instance.Aim) || Input.GetKeyUp(GlobalRules.instance.HoldObject))
+        if (Input.GetKeyUp(GlobalRules.instance.PreShoot) || Input.GetKeyUp(GlobalRules.instance.HoldObject))
         {
             playerActionState = ActionState.IDLE;
             PlayerAnimator.SetBool("isAiming", false);

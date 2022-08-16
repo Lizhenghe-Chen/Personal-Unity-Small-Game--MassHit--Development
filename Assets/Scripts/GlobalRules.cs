@@ -19,7 +19,7 @@ public class GlobalRules : MonoBehaviour
 
     public List<Transform> checkParentLists = new();
     public WaitForSeconds waitTime = new(5);
-    public KeyCode Break, Jump, SpeedUp, MoveUp, MoveDown, Rush, Aim, Shoot,
+    public KeyCode Break, Jump, SpeedUp, MoveUp, MoveDown, Rush, PreShoot, Shoot,
         HoldObject, Climb, ExtendHoldObjectDist, CloseHoldObjectDist, SwitchCamera, DestoryHittedObj;
     public float energyChargeSpeed, holdConsume, holdForce, flyCosume;
     public string StartSceneName;
