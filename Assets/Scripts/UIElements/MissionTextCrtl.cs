@@ -22,12 +22,20 @@ namespace UIElements
         public WaitForSeconds StylizedSetStrigWaitTime;
         public AudioSource soundEffect;
         public Button previousButton, NextButton;
-        private void Awake()
+        private void Start()
         {
-            Mission_Text_Progress = 0;
-            MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress];
-            // soundEffect = this.GetComponent<AudioSource>(); MissionTextEvent = this.GetComponentInChildren<LocalizeStringEvent>();
+            // missionAnimator.GetComponent<Animator>();
+            // MissionTextEvent.GetComponent<LocalizeStringEvent>();
             // TMP_MissionText = this.GetComponent<TextMeshProUGUI>();
+            // soundEffect = this.GetComponent<AudioSource>();
+
+            Mission_Text_Progress = 0;
+
+            MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress];
+
+
+
+
             // Invoke("SetEnable", 2);
             //Debug.Log("SetEnable");
         }

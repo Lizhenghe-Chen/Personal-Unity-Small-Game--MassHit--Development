@@ -12,7 +12,7 @@ namespace UIElements
     {
         [Header("Below Are From GlobalUIFunctions")]
         public static Animator MaskAnimator;
-        public TMP_Dropdown videoDropdown;
+        // public TMP_Dropdown videoDropdown;
         public string playerName;// https://docs.unity3d.com/Packages/com.unity.localization@1.2/manual/QuickStartGuideWithVariants.html
         public TMP_Text loadingText;
         public bool AsyncLoadPass = false;
@@ -29,7 +29,6 @@ namespace UIElements
         private void OnEnable()
         {
 
-            if (videoDropdown) { videoDropdown.value = QualitySettings.GetQualityLevel(); }
 
             try { MaskAnimator = GameObject.Find("Mask").GetComponent<Animator>(); }
             catch (System.Exception)
@@ -41,7 +40,10 @@ namespace UIElements
 
             playerName = PlayerPrefs.GetString("PlayerName");
         }
-
+        public void LoadVideoDropdown(TMP_Dropdown videoDropdown)
+        {
+            if (videoDropdown) { videoDropdown.value = QualitySettings.GetQualityLevel(); }
+        }
         public void LoadLevelByName(string SceneName)
         {
             if (MaskAnimator) { PlayMaskAnimatorLeave(); }
@@ -88,14 +90,10 @@ namespace UIElements
 
                 // Check if the load has finished
 
-
-
                 //Activate the Scene
                 // asyncOperation.allowSceneActivation = AsyncLoadPass;
 
-
                 yield return null;
-
             }
 
         }
@@ -131,7 +129,7 @@ namespace UIElements
             Application.Quit();
             Debug.Log("Quit");
         }
-        public void ChangeQualityLevel()
+        public void ChangeQualityLevel(TMP_Dropdown videoDropdown)
         {
             QualitySettings.SetQualityLevel(videoDropdown.value, true);
         }
@@ -145,6 +143,7 @@ namespace UIElements
             if (string.IsNullOrEmpty(playerName) && loadingText) { loadingText.GetComponentInChildren<LocalizeStringEvent>().SetEntry("NullPlayerName"); }
             else { loadingText.GetComponentInChildren<LocalizeStringEvent>().SetEntry("PlayerWelecome"); }
         }
+
     }
 }
 

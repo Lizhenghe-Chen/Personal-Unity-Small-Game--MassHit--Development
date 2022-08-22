@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3191088, g: 0.6803909, b: 0.94016236, a: 1}
+  m_IndirectSpecularColor: {r: 0.31910878, g: 0.6803908, b: 0.94016224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11829,7 +11829,7 @@ PrefabInstance:
     - target: {fileID: 2546043427099967041, guid: 9065f3b448f16fd4f840873f50517770,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2546043427099967041, guid: 9065f3b448f16fd4f840873f50517770,
         type: 3}
@@ -11849,17 +11849,17 @@ PrefabInstance:
     - target: {fileID: 2546043427099967041, guid: 9065f3b448f16fd4f840873f50517770,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: StartMenuManager, Assembly-CSharp
+      value: UIElements.GlobalUIFunctions, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2546043427099967041, guid: 9065f3b448f16fd4f840873f50517770,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1141222999}
     - target: {fileID: 2546043427099967041, guid: 9065f3b448f16fd4f840873f50517770,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: TMPro.TMP_Dropdown, Unity.TextMeshPro
       objectReference: {fileID: 0}
     - target: {fileID: 2546043427099967042, guid: 9065f3b448f16fd4f840873f50517770,
         type: 3}
@@ -24619,10 +24619,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 664b0894c458a9a40a7ee01dd4a5d97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoDropdown: {fileID: 1141222999}
   playerName: 
   loadingText: {fileID: 0}
   AsyncLoadPass: 0
+  videoDropdown: {fileID: 1141222999}
   contine_Start: {fileID: 1875814874}
   nameInputField: {fileID: 2107492897}
   SavedDataPrefab: {fileID: 7853239295438816169, guid: 36b062761677dc14894336c8409335ea,
@@ -32544,17 +32544,17 @@ PrefabInstance:
     - target: {fileID: 5297087521302815385, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.02243185
+      value: 0.021834373
       objectReference: {fileID: 0}
     - target: {fileID: 5297087521302815385, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.41188145
+      value: -0.41207123
       objectReference: {fileID: 0}
     - target: {fileID: 5297087521302815385, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.013202667
+      value: 0.012763977
       objectReference: {fileID: 0}
     - target: {fileID: 5370912608817578043, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
@@ -32674,17 +32674,17 @@ PrefabInstance:
     - target: {fileID: 6847052310339850547, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.22399901
+      value: -0.2221298
       objectReference: {fileID: 0}
     - target: {fileID: 6847052310339850547, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.04581451
+      value: -0.050020214
       objectReference: {fileID: 0}
     - target: {fileID: 6847052310339850547, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.022811888
+      value: 0.019226072
       objectReference: {fileID: 0}
     - target: {fileID: 6946485530470651696, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}

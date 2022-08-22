@@ -103,6 +103,14 @@ MonoBehaviour:
     m_Key: InputName
     m_Metadata:
       m_Items: []
+  - m_Id: 16356653366161408
+    m_Key: SpectatorTips
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16356657023594496
+    m_Key: PlayerTips
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

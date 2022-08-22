@@ -9,8 +9,6 @@ namespace UIElements
 {
     public class SpectatorUI : MonoBehaviour
     {
-
-
         public bool menuPause;
         public Slider focusDistanceSlider, FieldOfViewSlider, focalLengthSlider, aptureSlider;
         public Transform MainCamera;
@@ -28,11 +26,11 @@ namespace UIElements
             SetFieldOfView();
 
         }
-        private void OnEnable()
-        {
-            // SetTimeScale();
-            // FieldOfViewSlider.value = MainCamera.GetComponent<Camera>().fieldOfView = 35f;
-        }
+        //private void OnEnable()
+        //{
+        //    // SetTimeScale();
+        //    // FieldOfViewSlider.value = MainCamera.GetComponent<Camera>().fieldOfView = 35f;
+        //}
         private void Update()
         {
             if (Input.mouseScrollDelta.y != 0) { vcam.m_Lens.FieldOfView = FieldOfViewSlider.value = MainCameraForFieldOfView.fieldOfView += Input.mouseScrollDelta.y; }
@@ -55,7 +53,7 @@ namespace UIElements
         {
             if (menuPause)
             {
-                Time.timeScale = 0.0001f;
+                Time.timeScale = 0;
                 Time.fixedDeltaTime = Time.timeScale * 0.02f;
             }
 

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 public class CharacterCtrl : MonoBehaviour
 {
     public static CharacterCtrl _CharacterCtrl;
@@ -28,7 +27,7 @@ public class CharacterCtrl : MonoBehaviour
     public Transform Camera;
     public Transform PlayerKernel;
     public Vector3 CheckPoint;
-    public bool towardWithCamera = true, climbAbility = true, shootAbility = true, catchObjAbility = true, jumpAbility = true, flyAbility = true;
+    public bool towardWithCamera = true, moveAbility = true, climbAbility = true, shootAbility = true, catchObjAbility = true, jumpAbility = true, flyAbility = true;
     public float initial_torque, speedUp_torque, jumpForce, rushForce, sliteForce = 5f;
     public Material TramsparentMaterial;
     public Animator MaskAnimator, PlayerAnimator;
@@ -53,6 +52,7 @@ public class CharacterCtrl : MonoBehaviour
     float horizontalInput, verticalInput;
     private void Awake()
     {
+        Physics.IgnoreLayerCollision(GlobalRules.instance.playerLayerID, GlobalRules.instance.playerLayerID);
         foreach (GameObject temp in GameObject.FindGameObjectsWithTag("Respawn"))
         {
             if (temp != this.transform.parent.parent.gameObject) { Destroy(temp); }
@@ -72,12 +72,7 @@ public class CharacterCtrl : MonoBehaviour
 
     void OnEnable()
     {
-
-
-
-
         SceneManager.sceneLoaded += OnSceneLoaded;
-
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -85,7 +80,6 @@ public class CharacterCtrl : MonoBehaviour
     }
     void Start()
     {
-
         CheckPoint = new Vector3(PlayerPrefs.GetFloat("SavedCheckPoint_X"), PlayerPrefs.GetFloat("SavedCheckPoint_Y"), PlayerPrefs.GetFloat("SavedCheckPoint_Z"));
         PlayerPrefs.SetString("SavedCheckPointScene", SceneManager.GetActiveScene().name);//save player's current scene
         if (CheckPoint == Vector3.zero) { CheckPoint = this.transform.position; }
@@ -104,13 +98,15 @@ public class CharacterCtrl : MonoBehaviour
     void FixedUpdate()
     {
         ONBelowDeathAltitude();
-        TurningTorque();
+        if (moveAbility) { TurningTorque(); }
+
 
         GiveForce();//swimming
 
     }
     void Update()
     {
+        if (!moveAbility) { return; }
         PlayerHealth = Mathf.Clamp(PlayerHealth, 0, 100);
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
@@ -150,6 +146,7 @@ public class CharacterCtrl : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (landBendEffect) landBendEffect.Emit(1);
+
         if (other.collider.name == "Diamond" && currentOutLookState != OutLookState.DIAMOND)
         {
             PlayerAnimator.SetBool("ToDiamond", true);
@@ -169,6 +166,7 @@ public class CharacterCtrl : MonoBehaviour
             other.gameObject.GetComponent<CheckPoint>().enabled = true;
         }
     }
+
     public void ResetAnimateParamater() { PlayerAnimator.SetBool("ToDiamond", false); PlayerAnimator.SetBool("ToNormal", false); }
     private void OnCollisionExit(Collision other)
     {

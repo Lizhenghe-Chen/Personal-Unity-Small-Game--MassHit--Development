@@ -10,12 +10,15 @@ scopes = {
 	"last_search.DA949528" = "planar"
 	"OpenInspectorPreview.DA949528" = "0"
 	"currentGroup.DA949528" = "menu"
-	"last_search.B655092D" = "st:mi"
+	"last_search.B655092D" = "st:player"
 	"OpenInspectorPreview.B655092D" = "0"
 	"currentGroup.B655092D" = "all"
-	"last_search.DA94955A" = "realtime"
+	"last_search.DA94955A" = "Sprite Editor"
 	"OpenInspectorPreview.DA94955A" = "0"
 	"currentGroup.DA94955A" = "all"
+	"last_search.21382318" = ""
+	"OpenInspectorPreview.21382318" = "0"
+	"currentGroup.21382318" = "asset"
 }
 providers = {
 	adb = {
@@ -72,6 +75,8 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"Sprite Editor"
+	"2"
 	"s"
 	"st:StartGame"
 	"st:Continue"

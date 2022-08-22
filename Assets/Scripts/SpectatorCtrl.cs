@@ -21,7 +21,7 @@ public class SpectatorCtrl : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        if (Time.timeScale >= 0.5) { Movement(); } else MovementUnscaled();
+        if (Time.timeScale >= 0.1) { Movement(); } else MovementUnscaled();
         if (Input.GetKey(GlobalRules.instance.Break)) { rb.velocity = Vector3.zero; }
 
 
@@ -79,16 +79,16 @@ public class SpectatorCtrl : MonoBehaviour
             if (hit.distance < 0.1) { transform.position += new Vector3(0, 0.001f, 0) + hit.distance * Vector3.up; }
 
             // Speed = Input.GetKey(GlobalRules.instance.SpeedUp) ? moveSpeed * 10 : moveSpeed;
-            transform.position += Speed * Time.unscaledDeltaTime * Camera.forward * vertical;
-            transform.position += Speed * Time.unscaledDeltaTime * Camera.right * horizontal;
+            transform.position += Speed * Time.unscaledDeltaTime * vertical * Camera.forward;
+            transform.position += horizontal * Speed * Time.unscaledDeltaTime * Camera.right;
             // if (Input.GetKey(KeyCode.Q)) { transform.position -= moveSpeed * Time.unscaledDeltaTime * Vector3.up; }
 
         }
         else
         {
 
-            transform.position += Speed * Time.unscaledDeltaTime * Camera.forward * vertical;
-            transform.position += Speed * Time.unscaledDeltaTime * Camera.right * horizontal;
+            transform.position += Speed * Time.unscaledDeltaTime * vertical * Camera.forward;
+            transform.position += horizontal * Speed * Time.unscaledDeltaTime * Camera.right;
             //transform.position += Speed * Time.unscaledDeltaTime * verticalInput * Camera.forward;
             //transform.position += Speed * Time.unscaledDeltaTime * horizontalInput * Camera.right;
             if (Input.GetKey(GlobalRules.instance.MoveDown)) { transform.position -= Speed * Time.unscaledDeltaTime * Vector3.up; }

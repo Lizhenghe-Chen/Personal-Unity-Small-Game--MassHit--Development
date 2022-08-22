@@ -30,7 +30,7 @@ public class GunScript : MonoBehaviour
 
     void OnEnable()
     {
-        Physics.IgnoreLayerCollision(GlobalRules.instance.playerLayerID, GlobalRules.instance.playerLayerID);
+
         Camera = Player.GetComponent<CharacterCtrl>().Camera.GetComponent<Camera>();
         GreenAim = AimPoint.transform.Find("GreenAim").gameObject;
         RedAim = AimPoint.transform.Find("RedAim").gameObject;

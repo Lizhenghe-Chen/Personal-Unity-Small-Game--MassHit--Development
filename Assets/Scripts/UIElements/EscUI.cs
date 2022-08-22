@@ -10,14 +10,14 @@ namespace UIElements
 {
     public class EscUI : GlobalUIFunctions
     {
-        public TMP_Dropdown levelDropdown;
+        public TMP_Dropdown levelDropdown, videoDropdown;
         public GameObject SwitchButton;
         public Button resumeButton;
         [SerializeField] private GameObject PlayerBunble, SpectatorBunble;
 
 
         public GameObject PlayerBunbleHUD, SpectatorBunbleHUD;
-        public Canvas SpectatorBunbleCnavs;
+
         public Transform PlayerPos, SpectatorPos;
         //public GameObject escUI;
         public CharacterCtrl characterCtrl;
@@ -28,19 +28,23 @@ namespace UIElements
         public Canvas escCanvas;
         public GameObject MissionCanvas;
         CinemachineBrain cameraBrain;
-
+        public GameObject PlayerTips;
+        [SerializeField] Canvas SpectatorBundleCanavs, PlayerBundleCanvas;
 
         // Start is called before the first frame update
 
         void OnEnable()
         {
             escCanvas = this.GetComponent<Canvas>();
+            PlayerBundleCanvas = PlayerBunbleHUD.GetComponent<Canvas>();
+            SpectatorBundleCanavs = SpectatorBunbleHUD.GetComponent<Canvas>();
             // videoDropdown.value = QualitySettings.GetQualityLevel();
 
             //ChangeQualityLevel();
             cameraBrain = MainCamera.GetComponent<CinemachineBrain>();
             try { MissionCanvas = GameObject.Find("MissionCanvas"); } catch (Exception) { }
-            if (videoDropdown) { videoDropdown.value = QualitySettings.GetQualityLevel(); }
+            LoadVideoDropdown(videoDropdown);
+            // if (videoDropdown) { videoDropdown.value = QualitySettings.GetQualityLevel(); }
             levelDropdown.value = SceneManager.GetActiveScene().buildIndex - 1;
         }
         private void Start()
@@ -71,7 +75,7 @@ namespace UIElements
 
                 Cursor.lockState = CursorLockMode.Locked;
                 //  SpectatorBunbleHUD.SetActive(false);
-                SpectatorBunbleCnavs.enabled = false;
+                PlayerTips.SetActive(false); SpectatorBundleCanavs.enabled = false;
                 //PlayerBunbleHUD.SetActive(false);
                 if (characterCtrl.enabled) { GlobalRules.instance.isPause = false; }
                 cameraBrain.enabled = true;
@@ -81,7 +85,8 @@ namespace UIElements
                 escCanvas.enabled = true;
                 cameraBrain.enabled = false;
                 GlobalRules.instance.isPause = true;
-                SpectatorBunbleCnavs.enabled = true;
+                PlayerTips.SetActive(true);
+                SpectatorBundleCanavs.enabled = true;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 //SpectatorBunbleHUD.SetActive(true);

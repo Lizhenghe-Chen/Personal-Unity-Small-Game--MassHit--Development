@@ -9,6 +9,7 @@ namespace UIElements
     public class StartMenuManager : GlobalUIFunctions
     {
         [Header("StartMenuManager")]
+        public TMP_Dropdown videoDropdown;
         public Button contine_Start;
         public TMP_InputField nameInputField;
         public GameObject SavedDataPrefab;
@@ -24,7 +25,8 @@ namespace UIElements
             Time.timeScale = 0.5f;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
             nameInputField.text = PlayerPrefs.GetString("PlayerName");
-            videoDropdown.value = QualitySettings.GetQualityLevel();
+            LoadVideoDropdown(videoDropdown);
+            // videoDropdown.value = QualitySettings.GetQualityLevel();
             ChangeStart_ContinueButton();
             // OpenMenu(StartMenu);
             Invoke("LateOpenMenu", 1f);

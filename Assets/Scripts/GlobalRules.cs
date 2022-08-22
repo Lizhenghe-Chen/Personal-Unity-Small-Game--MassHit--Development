@@ -26,7 +26,7 @@ public class GlobalRules : MonoBehaviour
     [Tooltip("CharacterCtrl.cs will allocate below camera")]
     public CinemachineFreeLook cam1;
     public CinemachineVirtualCamera cam2;
-    readonly float recoverTimeSpeed = 2f;
+    public float recoverTimeSpeed = 1f;
     [SerializeField] Transform Player;
 
 
@@ -118,9 +118,11 @@ public class GlobalRules : MonoBehaviour
     private void TimeCtrl()
     {
         // Debug.Log(Time.fixedDeltaTime + "," + isPause);
-        Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+
         if (!isPause)
         {
+            if (Time.timeScale > 1) { Time.timeScale = 1; return; }
+            //  Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
             Time.timeScale += recoverTimeSpeed * Time.unscaledDeltaTime;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
         }

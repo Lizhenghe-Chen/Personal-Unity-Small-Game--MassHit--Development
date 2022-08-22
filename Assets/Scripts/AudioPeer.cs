@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioPeer : MonoBehaviour
 {
 
     private AudioSource audioSource;
-    public Transform FollowTarget;
+    public Transform FollowTarget, playerBrain;
+    public Transform Audiovisualparent;
     //========== variables for the FFT analysis ==========
     [Header("Aduio Visualizer Settings")]
     public int num_Samples = 512;
@@ -17,7 +16,7 @@ public class AudioPeer : MonoBehaviour
     public enum FFTWindowType { Blackman, Triangle, Hamming, Hanning, BlackmanHarris }
     public int channels = 1;
 
-    public float[] averageSamples = new float[8];
+
     public Transform AuidioTestParent;
     public int multiplier = 500, buffer = 10;
 
@@ -30,7 +29,7 @@ public class AudioPeer : MonoBehaviour
     public float cubeScale = 0.05f;
     public float radius = 5f;
     public float rangeTimer = 100;
-    [SerializeField] Transform[] _cubesSamples;
+
 
     public float[] testSample;
     public int rangeA, rangeB;
@@ -41,9 +40,8 @@ public class AudioPeer : MonoBehaviour
     //============================================================================
     [Header("\n")]
     public float[] samples;
-
-
-
+    public float[] averageSamples = new float[8];
+    [SerializeField] Transform[] _cubesSamples;
     // public float BaseValue;
 
     void Start()
@@ -59,7 +57,7 @@ public class AudioPeer : MonoBehaviour
     {
         samples = GetSpectrumAudioSource(samples);
         SimpleAudioVisualize();
-
+        if (Input.GetKeyDown(KeyCode.T)) { showCircle = !showCircle; }
         //samples = GetSpectrumAudioSource(samples);
         //GetAverageSpectrum();
         //if (showCircle) { SimpleCircle(); }
@@ -68,15 +66,17 @@ public class AudioPeer : MonoBehaviour
     private void FixedUpdate()
     {
 
-        SimpleFollowSnake();
-        // GetAverageSpectrum();
-        //if (showCircle) { SimpleCircle(); }
+
+
+        if (showCircle) { SimpleCircle(); } else { SimpleFollowSnake(); }
         //else
         //{
         //    SimpleSnake();
         //}
         //TEST = GetRhythm();
-        //AudioVisualize();
+
+        if (AuidioTestParent) { GetAverageSpectrum(); AudioVisualize(); }
+
     }
 
     float[] GetSpectrumAudioSource(float[] samples)    //get spectrum audio source
@@ -134,29 +134,33 @@ public class AudioPeer : MonoBehaviour
             averageSamples[i] = average * multiplier;
         }
     }
+    int AudioVisualizeCounter;
     public void AudioVisualize()
     {
-        int count = 0;
+        AudioVisualizeCounter = 0;
         foreach (Transform child in AuidioTestParent)
         {
-            child.localScale = new Vector3(1, Mathf.Lerp(child.localScale.y, averageSamples[count], Time.deltaTime * buffer), 1);
-            count++;
+            child.localScale = new Vector3(1, Mathf.Lerp(child.localScale.y, averageSamples[AudioVisualizeCounter], Time.deltaTime * buffer), 1);
+            AudioVisualizeCounter++;
         }
     }
+
+    int SimpleAudioVisualizeCounter;
+    float range;
     public void SimpleAudioVisualize()
     {
-        int count = 0;
+        SimpleAudioVisualizeCounter = 0;
         foreach (Transform child in _cubesSamples)
         {
-
-            var range = samples[count] * rangeTimer * PlayerBrain.shootEnergy;
-            if (range > 5) { range /= (rangeTimer * 10); }
-            else if (range < 1) { range *= 10; }
+            range = samples[SimpleAudioVisualizeCounter + begainSampleIndex] * rangeTimer * PlayerBrain.shootEnergy;
+            if (range > 3) { range = 3; }
+            //else if (range < 1) { range *= 10; }
             if (isVertical) { child.localScale = new Vector3(cubeScale, Mathf.Lerp(child.localScale.y, range, Time.deltaTime * buffer), cubeScale); }
             else { child.localScale = new Vector3(cubeScale, cubeScale, Mathf.Lerp(child.localScale.z, range, Time.deltaTime * buffer)); }
-            count++;
+            SimpleAudioVisualizeCounter++;
         }
     }
+    GameObject Ins_cube;
     void InstantiateCubes()
     {
         _cubesSamples = new Transform[samples.Length - endSampleMinus - begainSampleIndex];
@@ -166,34 +170,43 @@ public class AudioPeer : MonoBehaviour
         for (int i = 0; i < _cubesSamples.Length; i++)
         {
             //  GameObject Ins_cube;
-            var Ins_cube = Instantiate(cubePrefab, this.transform.position, Quaternion.Euler(0, averangeEulerAng * i, 0));
+            Ins_cube = Instantiate(cubePrefab, this.transform.position, Quaternion.Euler(0, averangeEulerAng * i, 0));
 
-            //Ins_cube.transform.parent = this.transform;
+            Ins_cube.transform.parent = Audiovisualparent;
             // Ins_cube.transform.position = this.transform.position;
             // this.transform.eulerAngles = new Vector3(0, averangeEulerAng * i, 0);
 
             Ins_cube.name = "Cube" + i;
+
             _cubesSamples[i] = Ins_cube.transform;
         }
     }
+    private float speed_Distance;
     void SimpleCircle()
     {
-
         foreach (Transform child in _cubesSamples)
         {
-            child.position = child.forward * radius + this.transform.position;
+            //child.position = child.forward * radius + this.transform.position;
+            speed_Distance = 10 / Vector3.Distance(child.position, transform.position);
+            //speed_Distance = speed_Distance < 1 ? 10 : speed_Distance;
+            child.position = Vector3.Lerp(
+                child.position
+                , (child.forward * radius + this.transform.position)
+                , (speed_Distance < 1 ? 10 : speed_Distance) * Time.deltaTime);
+            child.RotateAround(playerBrain.position, playerBrain.up, 20 * Time.deltaTime);
         }
     }
+    private int SimpleSnakeCounter;
     IEnumerator SimpleSnake()
     {
-        int count = 0;
+        SimpleSnakeCounter = 0;
         while (true)
         {
-            if (count >= _cubesSamples.Length) { count = 0; }
-            _cubesSamples[count].position = FollowTarget.position;
+            if (SimpleSnakeCounter >= _cubesSamples.Length) { SimpleSnakeCounter = 0; }
+            _cubesSamples[SimpleSnakeCounter].position = FollowTarget.position;
             //if (count == 0) { _cubesSamples[count].position = FollowTarget.position; }
             //else { _cubesSamples[count].position = _cubesSamples[count - 1].position; }
-            count++;
+            SimpleSnakeCounter++;
             yield return new WaitForSeconds(0.01f);
         }
     }

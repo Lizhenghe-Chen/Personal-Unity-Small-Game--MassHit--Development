@@ -150,27 +150,8 @@ public class UIManager : MonoBehaviour
     public void HoldObject()
     {
         if (!isHoldKeyPressing) { return; }
-        var constraintSource = new ConstraintSource();
-        if (Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out RaycastHit shoot_hit, Mathf.Infinity, ~ShootRaycastIgnore))
-        {
 
-            shootTraget.gameObject.SetActive(true);
-            targetSceenIcion.gameObject.SetActive(true);
-            shootTraget.position = shoot_hit.point;
-            //Debug.Log(shoot_hit);
-            if (shoot_hit.transform.gameObject.name == "Terrain") { shootTraget.GetComponent<PositionConstraint>().enabled = false; return; }
-            constraintSource.sourceTransform = shoot_hit.transform;
-            constraintSource.weight = 1;
-            shootTraget.GetComponent<PositionConstraint>().SetSource(0, constraintSource);
-        }
-        else
-        {
-            shootTraget.position = mainCamera.transform.position + 1000 * mainCamera.transform.forward;
-            targetSceenIcion.gameObject.SetActive(false);
-            shootTraget.gameObject.SetActive(false);
-            //Traget.position = Vector3.zero;
-        }
-
+        LockTarget();
         // Does the ray intersect any objects excluding the player layer
         if (holdingObject == null && Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out RaycastHit hit, Mathf.Infinity, ~HoldRaycastIgnore))
         {
@@ -178,7 +159,7 @@ public class UIManager : MonoBehaviour
 
             // Debug.DrawRay(MainCamera.transform.position, MainCamera.transform.forward * 1000, Color.green, 2);
             // Debug.Log(Vector3.Distance(Player.position, hit.transform.position));
-            if (hit.rigidbody != null && Vector3.Distance(Player.position, hit.transform.position) <= holdRange.max)
+            if (hit.rigidbody && Vector3.Distance(Player.position, hit.transform.position) <= holdRange.max)
             {
                 holdAim.enabled = false;
                 HoldTarget.position = hit.point;
@@ -217,6 +198,44 @@ public class UIManager : MonoBehaviour
             //holdingObject.MovePosition((HoldTarget.position - holdingObject.position) * 50f * Time.deltaTime + holdingObject.position);
 
         }
+    }
+    void LockTarget()
+    {
+        if (holdingObject) { SetConstrantTarget(holdingObject.transform); return; }
+        if (Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out RaycastHit shoot_hit, Mathf.Infinity, ~HoldRaycastIgnore))
+        {
+
+            if (!shoot_hit.rigidbody)
+            {
+                AlignCameraView();
+                return;
+            }
+            SetConstrantTarget(shoot_hit.transform);
+            //shootTraget.GetComponent<PositionConstraint>().enabled = true;
+            shootTraget.gameObject.SetActive(true);
+            targetSceenIcion.gameObject.SetActive(true);
+
+        }
+        else
+        {
+            AlignCameraView();
+        }
+    }
+    void AlignCameraView()
+    {
+        shootTraget.position = mainCamera.transform.position + 1000 * mainCamera.transform.forward;
+        targetSceenIcion.gameObject.SetActive(false);
+        shootTraget.gameObject.SetActive(false);
+    }
+    void SetConstrantTarget(Transform target)
+    {
+        var constraintSource = new ConstraintSource
+        {
+            // shootTraget.position = shoot_hit.point;
+            sourceTransform = target,
+            weight = 1
+        };
+        shootTraget.GetComponent<PositionConstraint>().SetSource(0, constraintSource);
     }
     public void SpectatorHoldObject()
     {
@@ -278,8 +297,6 @@ public class UIManager : MonoBehaviour
             case < .4f:
                 HealthState.color = BadHealthColor;
                 break;
-
-
         }
 
     }

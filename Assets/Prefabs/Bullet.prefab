@@ -59,7 +59,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &3057072432001533289
 MeshRenderer:
@@ -132,9 +132,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explodeRadius: 4
-  scaleOfTime: 0.5
+  playerHitParticleSystem: {fileID: 2312591318274358132, guid: 77da29788f3010e4396994ea52057980,
+    type: 3}
+  hitParticleSystem: {fileID: 6510125619236422600, guid: 6d7b01bdef4c9d44596d7108af762e72,
+    type: 3}
+  scaleOfTime: 0.01
   ignorePlayerColletion: 1
-  isPlayerBullet: 0
+  isPlayerBullet: 1
 --- !u!135 &4729638353243057881
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -142,11 +146,11 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1710411021089273418}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f544712de4e29f845b69bd2019dec914, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4455071975469440707
 GameObject:

@@ -115,6 +115,43 @@ MonoBehaviour:
     m_Localized: Enter Your Pref Name...
     m_Metadata:
       m_Items: []
+  - m_Id: 16356657023594496
+    m_Localized: 'Q, E: Mission Text
+
+      A, S, D, W: Move
+
+      <sprite=1>: Jump
+
+      Mouse
+      Scroll Wheel: Camera Distance
+
+      R: Hold & Aim Object
+
+      R + Q, E,
+      Z, X: Move Holding Target
+
+      Right Click: Break
+
+      Crtl + LeftMouse:
+      Shooting
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16356653366161408
+    m_Localized: 'A, S, D, W: Move
+
+      Space: Jump
+
+      Right Click: Break
+
+      Right
+      Click In Menu: Quick Focus Distance
+
+      Mouse Scroll Wheel: Quick Field
+      Of View'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
