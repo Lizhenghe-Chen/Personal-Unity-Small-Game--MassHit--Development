@@ -56,9 +56,6 @@ public class GunScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-
-
-
             PlayerBrain.shootEnergy -= 25;
             //  Instantiate(bullet, muzzle.position, muzzle.rotation).GetComponent<Rigidbody>().AddForce(muzzle.forward * bulletSpeed);
             var temp = Instantiate(bullet, transform.position, Quaternion.identity);
@@ -103,6 +100,6 @@ public class GunScript : MonoBehaviour
     }
     void MovePlayerKernel()
     {
-        this.transform.position = Vector3.Lerp(this.transform.position, PlayerKernelTarget.position, PlayerKernelSpeed * Time.deltaTime);
+        this.transform.position = Vector3.Lerp(this.transform.position, PlayerKernelTarget.position, PlayerKernelSpeed * 10 / Vector3.Distance(PlayerKernelTarget.position, transform.position) * Time.deltaTime);
     }
 }

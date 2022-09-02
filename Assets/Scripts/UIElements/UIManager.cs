@@ -8,6 +8,7 @@ using UnityEngine.Animations;
 public class UIManager : MonoBehaviour
 {
     public bool isPlayer = true;
+    public Transform playerKernel;
     public Transform Player;
     public GameObject InGameUI;
     [Header("Show Power")]
@@ -57,7 +58,7 @@ public class UIManager : MonoBehaviour
         var screenPosition = mainCamera.WorldToScreenPoint(shootTraget.position);
         //if (screenPosition.x <= 0 || screenPosition.x >= screenBound.x || screenPosition.y <= 0 || screenPosition.y >= screenBound.y) return;
         //targetSceenIcion.transform.position = screenPosition;
-        if (screenPosition.z < 0) { return; }
+        if (screenPosition.z < 0) { screenPosition.z = 0; }
         targetSceenIcion.transform.position = new Vector2(Mathf.Clamp(screenPosition.x, 50, screenBound.x - 50), Mathf.Clamp(screenPosition.y, 50, screenBound.y - 50));//https://docs.unity3d.com/ScriptReference/Mathf.Clamp.html
                                                                                                                                                                         // Debug.Log(screenPosition);
     }
@@ -101,6 +102,7 @@ public class UIManager : MonoBehaviour
         {
             holdAim.enabled = false;
             isHoldKeyPressing = holdAim.enabled;
+            holdAim.transform.position = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
 
             if (holdingObject)
             {
@@ -115,6 +117,7 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(GlobalRules.instance.HoldObject))
         {
+
             holdAim.enabled = true;
             isHoldKeyPressing = holdAim.enabled;
 
@@ -146,14 +149,18 @@ public class UIManager : MonoBehaviour
         }
     }
     [SerializeField] float holdDistance = 0;
+    
 
     public void HoldObject()
     {
         if (!isHoldKeyPressing) { return; }
-
+        // Debug.Log(holdAim.rectTransform.position);
         LockTarget();
         // Does the ray intersect any objects excluding the player layer
-        if (holdingObject == null && Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out RaycastHit hit, Mathf.Infinity, ~HoldRaycastIgnore))
+        if (holdingObject == null && Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(
+            holdAim.rectTransform.position.x / Screen.width,
+            holdAim.rectTransform.position.y / Screen.height, 0)),
+            out RaycastHit hit, Mathf.Infinity, ~HoldRaycastIgnore))
         {
             //draw ray from screen
 
@@ -201,8 +208,8 @@ public class UIManager : MonoBehaviour
     }
     void LockTarget()
     {
-        if (holdingObject) { SetConstrantTarget(holdingObject.transform); return; }
-        if (Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out RaycastHit shoot_hit, Mathf.Infinity, ~HoldRaycastIgnore))
+        if (holdingObject) { SetConstrantTarget(holdingObject.transform); Debug.LogWarning("holdingObject"); return; }
+        if (Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(holdAim.rectTransform.position.x / Screen.width, holdAim.rectTransform.position.y / Screen.height, 0)), out RaycastHit shoot_hit, Mathf.Infinity, ~HoldRaycastIgnore))
         {
 
             if (!shoot_hit.rigidbody)

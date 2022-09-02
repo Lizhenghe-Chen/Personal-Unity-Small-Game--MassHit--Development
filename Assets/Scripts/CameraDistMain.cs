@@ -17,7 +17,7 @@ public class CameraDistMain : MonoBehaviour
     [SerializeField] float playerRadius;
 
     int maxRadius = 8; //should >0
-    int minRadius = -1; //should <0
+    int minRadius = -5; //should <0
     int offset_Value = 1; //offset when Mouse ScrollWheel
 
     private DepthOfField dof;

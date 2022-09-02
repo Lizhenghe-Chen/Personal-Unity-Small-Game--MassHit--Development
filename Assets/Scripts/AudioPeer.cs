@@ -57,27 +57,26 @@ public class AudioPeer : MonoBehaviour
     {
         samples = GetSpectrumAudioSource(samples);
         SimpleAudioVisualize();
+        if (AuidioTestParent) { GetAverageSpectrum(); AudioVisualize(); }
         if (Input.GetKeyDown(KeyCode.T)) { showCircle = !showCircle; }
+        if (showCircle) { SimpleCircle(); } else { SimpleFollowSnake(); }
         //samples = GetSpectrumAudioSource(samples);
         //GetAverageSpectrum();
         //if (showCircle) { SimpleCircle(); }
         // Buffer();
     }
-    private void FixedUpdate()
-    {
+    //private void FixedUpdate()
+    //{
+        
+    //    //else
+    //    //{
+    //    //    SimpleSnake();
+    //    //}
+    //    //TEST = GetRhythm();
 
+       
 
-
-        if (showCircle) { SimpleCircle(); } else { SimpleFollowSnake(); }
-        //else
-        //{
-        //    SimpleSnake();
-        //}
-        //TEST = GetRhythm();
-
-        if (AuidioTestParent) { GetAverageSpectrum(); AudioVisualize(); }
-
-    }
+    //}
 
     float[] GetSpectrumAudioSource(float[] samples)    //get spectrum audio source
     {

@@ -89,7 +89,7 @@ public class CharacterCtrl : MonoBehaviour
         //GlobalRules.instance.cam2 = Player_Camera2.GetComponent<Cinemachine.CinemachineVirtualCamera>();
         PlayerKernel.parent = this.transform.parent.parent;
         gunScript = PlayerKernel.GetComponent<GunScript>();
-        gunScript.PlayerKernelTarget = this.gameObject.transform;
+        //gunScript.PlayerKernelTarget = this.gameObject.transform;
 
         StartCoroutine(AutoDestory());
     }
