@@ -12,16 +12,17 @@ public class particleAttractorLinear : MonoBehaviour
     {
         ps = GetComponent<ParticleSystem>();
         target = this.transform.parent;
-        if (!GetComponent<Transform>())
-        {
-            GetComponent<Transform>();
-        }
+        //if (!GetComponent<Transform>())
+        //{
+        //    GetComponent<Transform>();
+        //}
+        m_Particles = new ParticleSystem.Particle[ps.main.maxParticles];
     }
     void Update()
     {
         if (!target) { target = transform.parent; }
         // transform.RotateAround(transform.position, transform.forward, speed * Time.deltaTime);
-        m_Particles = new ParticleSystem.Particle[ps.main.maxParticles];
+       
         numParticlesAlive = ps.GetParticles(m_Particles);
         float step = speed * Time.deltaTime;
         for (int i = 0; i < numParticlesAlive; i++)

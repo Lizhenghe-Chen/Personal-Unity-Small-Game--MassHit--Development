@@ -98,7 +98,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 90.05
+    m_StopTime: 91.86667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -237,14 +237,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 88.95
+  - time: 90.03333
     functionName: PlayMaskAnimatorLeave
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 89.76667
+  - time: 91.86667
     functionName: FinnishAsyncLoad
     data: 
     objectReferenceParameter: {fileID: 0}

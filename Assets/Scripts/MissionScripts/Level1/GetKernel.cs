@@ -6,6 +6,7 @@ namespace UIElements
 {
     public class GetKernel : GlobalUIFunctions
     {
+        [Header("GetKernelMission, Neeed Assign:")]
         public LocalizeStringEvent MissionTextEvent;
         public MissionTextCrtl missionTextCrtl;
         public MissionTextUpper_Lower CollectedKernelMission;
@@ -20,7 +21,7 @@ namespace UIElements
         // Start is called before the first frame update
         private void OnTriggerEnter(Collider collision)
         {
-            Debug.Log(collision.name);
+            //Debug.Log(collision.name);
             if (collision.gameObject.name == "Player")
             {
                 this.gameObject.layer = GlobalRules.instance.playerLayerID;

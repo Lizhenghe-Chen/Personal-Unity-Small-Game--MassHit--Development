@@ -68,6 +68,32 @@ namespace UIElements
         }
         public void NextMissionText()
         {
+            if (!CheckNextAvailability()) return;
+            missionAnimator.Play("FadeAway", 0, 0);
+            Mission_Text_Progress++;
+            MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress];
+        }
+        public void PreviousMissionText()
+        {
+            if (!CheckPreviousAvailability()) return;
+            missionAnimator.Play("FadeAway", 0, 0);
+            Mission_Text_Progress--;
+            MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress];
+        }
+        public void NextMissionTextNow()
+        {
+            // if (!CheckNextAvailability()) return;
+            missionAnimator.Play("FadeAway", 0, 0);
+            Mission_Text_Progress++;
+            try { MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress]; }
+            catch (System.Exception)
+            {
+                Debug.LogWarning("MissionTextList out of range");
+            }
+
+        }
+        bool CheckNextAvailability()
+        {
             NextButton.interactable = true;
             previousButton.interactable = true;
             var currentAnimatorInfo = missionAnimator.GetCurrentAnimatorStateInfo(0);
@@ -75,7 +101,7 @@ namespace UIElements
             {
                 if (currentAnimatorInfo.normalizedTime >= 0.8)// if animator finnished
                 {
-                    missionAnimator.Play("ShowUp", 0, 0); return;
+                    missionAnimator.Play("ShowUp", 0, 0); return false;
                 }
             }
             if (Mission_Text_Progress + 1 >= MissionTextList.Count - 1 || Mission_Text_Progress + 1 >= Mission_Text_Progress_UpperLimit)
@@ -84,33 +110,12 @@ namespace UIElements
             }
             if (Mission_Text_Progress >= MissionTextList.Count - 1 || Mission_Text_Progress >= Mission_Text_Progress_UpperLimit)
             {
-                NextButton.interactable = false; return;
+                return NextButton.interactable = false;
             }
-            Debug.Log("Enable");
-
-            missionAnimator.Play("FadeAway", 0, 0);
-            Mission_Text_Progress++;
-            MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress];
+            return true;
+            // Debug.Log("Enable");
         }
-        public void NextMissionTextNow()
-        {
-            NextButton.interactable = true;
-            previousButton.interactable = true;
-            if (Mission_Text_Progress + 1 >= MissionTextList.Count - 1 || Mission_Text_Progress + 1 >= Mission_Text_Progress_UpperLimit)
-            {
-                NextButton.interactable = false;
-            }
-            if (Mission_Text_Progress - 1 <= 0 || Mission_Text_Progress - 1 <= Mission_Text_Progress_LowerLimit)
-            {
-                previousButton.interactable = false;
-            }
-
-            if (Mission_Text_Progress >= MissionTextList.Count - 1 || Mission_Text_Progress >= Mission_Text_Progress_UpperLimit) { return; }
-            missionAnimator.Play("FadeAway", 0, 0);
-            Mission_Text_Progress++;
-            MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress];
-        }
-        public void PreviousMissionText()
+        bool CheckPreviousAvailability()
         {
             NextButton.interactable = true;
             previousButton.interactable = true;
@@ -119,7 +124,7 @@ namespace UIElements
             {
                 if (currentAnimatorInfo.normalizedTime >= 0.8)
                 {
-                    missionAnimator.Play("ShowUp", 0, 0); return;
+                    missionAnimator.Play("ShowUp", 0, 0); return false;
                 }
             }
             if (Mission_Text_Progress - 1 <= 0 || Mission_Text_Progress - 1 <= Mission_Text_Progress_LowerLimit)
@@ -128,12 +133,9 @@ namespace UIElements
             }
             if (Mission_Text_Progress <= 0 || Mission_Text_Progress <= Mission_Text_Progress_LowerLimit)
             {
-                previousButton.interactable = false; return;
+                return previousButton.interactable = false;
             }
-
-            missionAnimator.Play("FadeAway", 0, 0);
-            Mission_Text_Progress--;
-            MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress];
+            return true;
         }
         private IEnumerator coroutine;
 
@@ -143,7 +145,7 @@ namespace UIElements
             // TMP_MissionText.text = string.Empty;
             if (coroutine != null) StopCoroutine(coroutine);
             //StartCoroutine(StylizedSetString(content));
-            Invoke("DelayCoroutine", 0.1f);//this is strange that Locolaz event need time to compile...so wait it for a while
+            Invoke(nameof(DelayCoroutine), 0.1f);//this is strange that Locolaz event need time to compile...so wait it for a while
 
 
         }

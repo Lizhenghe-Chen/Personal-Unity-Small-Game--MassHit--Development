@@ -73,7 +73,12 @@ namespace UIElements
             for (int i = 0; i < LevelButtons.Length; i++)
             {
                 if (i <= unlockedLevel) { LevelButtons[i].interactable = true; }
-                else { LevelButtons[i].interactable = false; }
+                else { LevelButtons[i].interactable = false;
+                    LevelButtons[i].GetComponentInChildren<LocalizeStringEvent>().enabled = false;
+                
+
+                LevelButtons[i].GetComponentInChildren<TMP_Text>().text = "?";
+                }
             }
         }
         void ChangeStart_ContinueButton()//let start button text different accroding to the current unlocked level https://forum.unity.com/threads/how-to-update-localizestring-at-runtime.969270/

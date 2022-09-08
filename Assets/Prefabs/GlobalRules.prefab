@@ -77,10 +77,12 @@ MonoBehaviour:
   energyChargeSpeed: 20
   holdConsume: 22
   holdForce: 10
-  flyCosume: 40
+  flyConsume: 40
+  rushConsume: 40
   StartSceneName: StartMenu
   cam1: {fileID: 0}
   cam2: {fileID: 0}
+  recoverTimeSpeed: 1
   Player: {fileID: 0}
 --- !u!182 &7353953058564292370
 WindZone:

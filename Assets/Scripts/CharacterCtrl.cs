@@ -27,7 +27,7 @@ public class CharacterCtrl : MonoBehaviour
     public Transform Camera;
     public Transform PlayerKernel;
     public Vector3 CheckPoint;
-    public bool towardWithCamera = true, moveAbility = true, climbAbility = true, shootAbility = true, catchObjAbility = true, jumpAbility = true, flyAbility = true;
+    public bool towardWithCamera = true, moveAbility = true, climbAbility = true, shootAbility = true, catchObjAbility = true, jumpAbility = true, rushAbility = true, flyAbility = true;
     public float initial_torque, speedUp_torque, jumpForce, rushForce, sliteForce = 5f;
     public Material TramsparentMaterial;
     public Animator MaskAnimator, PlayerAnimator;
@@ -52,12 +52,12 @@ public class CharacterCtrl : MonoBehaviour
     float horizontalInput, verticalInput;
     private void Awake()
     {
-        Physics.IgnoreLayerCollision(GlobalRules.instance.playerLayerID, GlobalRules.instance.playerLayerID);
-        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("Respawn"))
-        {
-            if (temp != this.transform.parent.parent.gameObject) { Destroy(temp); }
+       
+        //foreach (GameObject temp in GameObject.FindGameObjectsWithTag("Respawn"))
+        //{
+        //    if (temp != this.transform.parent.parent.gameObject) { Destroy(temp); }
 
-        }
+        //}
 
         //if (GameObject.FindGameObjectsWithTag("Respawn"))
         //{
@@ -67,7 +67,7 @@ public class CharacterCtrl : MonoBehaviour
         //  Debug.Log("Awake");
         _CharacterCtrl = this;
         //DontDestroyOnLoad(this.transform.parent.parent);
-
+        Physics.IgnoreLayerCollision(GlobalRules.instance.playerLayerID, GlobalRules.instance.playerLayerID);
     }
 
     void OnEnable()
@@ -264,7 +264,7 @@ public class CharacterCtrl : MonoBehaviour
             {
 
                 rb.useGravity = false;
-                PlayerBrain.shootEnergy -= Time.deltaTime * GlobalRules.instance.flyCosume;
+                PlayerBrain.shootEnergy -= Time.deltaTime * GlobalRules.instance.flyConsume;
 
                 // Debug.Log("Fly");
             }
@@ -275,8 +275,10 @@ public class CharacterCtrl : MonoBehaviour
     }
     void RushCommand()
     {
-        if (Input.GetKeyDown(GlobalRules.instance.Rush))
+        if (!rushAbility) { return; }
+        if (Input.GetKeyDown(GlobalRules.instance.Rush) && PlayerBrain.shootEnergy > 0)
         {
+            PlayerBrain.shootEnergy -= GlobalRules.instance.rushConsume;
             if (towardWithCamera)
             { rb.AddForce(Camera.transform.forward * rushForce); }
             else

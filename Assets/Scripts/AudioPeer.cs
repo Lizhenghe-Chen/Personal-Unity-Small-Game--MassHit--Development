@@ -59,24 +59,24 @@ public class AudioPeer : MonoBehaviour
         SimpleAudioVisualize();
         if (AuidioTestParent) { GetAverageSpectrum(); AudioVisualize(); }
         if (Input.GetKeyDown(KeyCode.T)) { showCircle = !showCircle; }
-        if (showCircle) { SimpleCircle(); } else { SimpleFollowSnake(); }
+        
         //samples = GetSpectrumAudioSource(samples);
         //GetAverageSpectrum();
         //if (showCircle) { SimpleCircle(); }
         // Buffer();
     }
-    //private void FixedUpdate()
-    //{
-        
-    //    //else
-    //    //{
-    //    //    SimpleSnake();
-    //    //}
-    //    //TEST = GetRhythm();
+    private void FixedUpdate()
+    {
+        if (showCircle) { SimpleCircle(); } else { SimpleFollowSnake(); }
+        //else
+        //{
+        //    SimpleSnake();
+        //}
+        //TEST = GetRhythm();
 
-       
 
-    //}
+
+    }
 
     float[] GetSpectrumAudioSource(float[] samples)    //get spectrum audio source
     {
@@ -153,6 +153,7 @@ public class AudioPeer : MonoBehaviour
         {
             range = samples[SimpleAudioVisualizeCounter + begainSampleIndex] * rangeTimer * PlayerBrain.shootEnergy;
             if (range > 3) { range = 3; }
+            if (range <= 0) { range = 0.1f; }
             //else if (range < 1) { range *= 10; }
             if (isVertical) { child.localScale = new Vector3(cubeScale, Mathf.Lerp(child.localScale.y, range, Time.deltaTime * buffer), cubeScale); }
             else { child.localScale = new Vector3(cubeScale, cubeScale, Mathf.Lerp(child.localScale.z, range, Time.deltaTime * buffer)); }

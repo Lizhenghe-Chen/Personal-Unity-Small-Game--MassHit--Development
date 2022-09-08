@@ -14,6 +14,7 @@ namespace UIElements
         public static Animator MaskAnimator;
         // public TMP_Dropdown videoDropdown;
         public string playerName;// https://docs.unity3d.com/Packages/com.unity.localization@1.2/manual/QuickStartGuideWithVariants.html
+      
         public TMP_Text loadingText;
         public bool AsyncLoadPass = false;
 
@@ -143,6 +144,7 @@ namespace UIElements
             if (string.IsNullOrEmpty(playerName) && loadingText) { loadingText.GetComponentInChildren<LocalizeStringEvent>().SetEntry("NullPlayerName"); }
             else { loadingText.GetComponentInChildren<LocalizeStringEvent>().SetEntry("PlayerWelecome"); }
         }
+       
 
     }
 }

@@ -21,7 +21,7 @@ public class GlobalRules : MonoBehaviour
     public WaitForSeconds waitTime = new(5);
     public KeyCode Break, Jump, SpeedUp, MoveUp, MoveDown, Rush, PreShoot, Shoot,
         HoldObject, Climb, ExtendHoldObjectDist, CloseHoldObjectDist, SwitchCamera, DestoryHittedObj;
-    public float energyChargeSpeed, holdConsume, holdForce, flyCosume;
+    public float energyChargeSpeed, holdConsume, holdForce, flyConsume, rushConsume;
     public string StartSceneName;
     [Tooltip("CharacterCtrl.cs will allocate below camera")]
     public CinemachineFreeLook cam1;

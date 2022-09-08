@@ -328,6 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 0}
+  Hover: {fileID: 8300000, guid: 26b69ad101ed9ef4fbdae0662ddba5d7, type: 3}
   Clickable: {fileID: 8300000, guid: a0648d9fcec40b342ab875e03da44cee, type: 3}
   UnClickable: {fileID: 8300000, guid: 9629dc670b815194aa6f0a9cf65b99d1, type: 3}
 --- !u!114 &7948162631868634761
@@ -347,9 +348,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5796776904778308170}
-          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-          m_MethodName: Play
+        - m_Target: {fileID: 7401651398565487084}
+          m_TargetAssemblyTypeName: ButtonSoundCtrl, Assembly-CSharp
+          m_MethodName: PlayButtonHoverSound
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -512,17 +513,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonAudio
       objectReference: {fileID: 0}
+    - target: {fileID: 8692676698809994360, guid: d0ebb54e6f8b5494497ee10c2bea68bf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0ebb54e6f8b5494497ee10c2bea68bf, type: 3}
 --- !u!224 &3114279598911816560 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6718140056041360404, guid: d0ebb54e6f8b5494497ee10c2bea68bf,
-    type: 3}
-  m_PrefabInstance: {fileID: 8503785669553393508}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &5796776904778308170 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 2770221621535200558, guid: d0ebb54e6f8b5494497ee10c2bea68bf,
     type: 3}
   m_PrefabInstance: {fileID: 8503785669553393508}
   m_PrefabAsset: {fileID: 0}

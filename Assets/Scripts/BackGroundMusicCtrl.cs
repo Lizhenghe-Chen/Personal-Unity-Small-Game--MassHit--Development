@@ -6,15 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class BackGroundMusicCtrl : MonoBehaviour
 {
+    public AudioSource unAvalibleSound;
     public List<AudioClip> MusicList = new();
-    public bool autoPlay = true, useTargetSound = false;
+    public bool autoPlay = true, randomPlay = false, useTargetSound = false;
     public AudioClip TargetSound;
-    AudioSource audioSource;
-
+    
+    AudioSource audioSource; 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         if (autoPlay) { LoadMusic(); }
+        else if (randomPlay) { RandomPlay(); }
 
     }
     public void Play()
@@ -31,6 +33,14 @@ public class BackGroundMusicCtrl : MonoBehaviour
         audioSource.clip = useTargetSound ? TargetSound : MusicList[SceneManager.GetActiveScene().buildIndex - 1];
         // audioSource.clip = MusicList[TargetSound];
         //audioSource.time = 53f;
+        Invoke("Play", 1f);
+    }
+    public void PlayUnAvalibleSound()
+    {
+        unAvalibleSound.Play();
+    }
+    public void RandomPlay() {
+        audioSource.clip = MusicList[Random.Range(0, MusicList.Count)];
         Invoke("Play", 1f);
     }
 }
