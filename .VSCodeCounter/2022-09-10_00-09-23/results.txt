@@ -1,0 +1,58 @@
+Date : 2022-09-10 00:09:23
+Directory : f:\Unity\The Mass Hit\Assets\Scripts
+Total : 31 files,  2321 codes, 479 comments, 422 blanks, all 3222 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C#       |         31 |      2,321 |        479 |        422 |      3,222 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                    | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                       |         31 |      2,321 |        479 |        422 |      3,222 |
+| MissionScripts                                                          |          1 |         35 |          3 |          7 |         45 |
+| MissionScripts\Level1                                                   |          1 |         35 |          3 |          7 |         45 |
+| UIElements                                                              |          8 |        779 |        143 |        145 |      1,067 |
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                | language | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| f:\Unity\The Mass Hit\Assets\Scripts\AudioPeer.cs                       | C#       |        172 |         24 |         26 |        222 |
+| f:\Unity\The Mass Hit\Assets\Scripts\BackGroundMusicCtrl.cs             | C#       |         35 |          6 |          6 |         47 |
+| f:\Unity\The Mass Hit\Assets\Scripts\BlackHoleAttraction.cs             | C#       |         36 |          8 |          7 |         51 |
+| f:\Unity\The Mass Hit\Assets\Scripts\BlackHoleDestory.cs                | C#       |         31 |          1 |          3 |         35 |
+| f:\Unity\The Mass Hit\Assets\Scripts\BulletDestory.cs                   | C#       |         59 |          7 |         12 |         78 |
+| f:\Unity\The Mass Hit\Assets\Scripts\ButtonSoundCtrl.cs                 | C#       |         43 |          1 |          4 |         48 |
+| f:\Unity\The Mass Hit\Assets\Scripts\CameraDistMain.cs                  | C#       |         77 |         16 |         16 |        109 |
+| f:\Unity\The Mass Hit\Assets\Scripts\CameraDistSecond.cs                | C#       |         59 |          2 |         13 |         74 |
+| f:\Unity\The Mass Hit\Assets\Scripts\CharacterCtrl.cs                   | C#       |        310 |         96 |         51 |        457 |
+| f:\Unity\The Mass Hit\Assets\Scripts\CheckPoint.cs                      | C#       |         53 |          2 |         11 |         66 |
+| f:\Unity\The Mass Hit\Assets\Scripts\FloatOnWater.cs                    | C#       |         54 |         22 |          4 |         80 |
+| f:\Unity\The Mass Hit\Assets\Scripts\GlobalRules.cs                     | C#       |        148 |         52 |         30 |        230 |
+| f:\Unity\The Mass Hit\Assets\Scripts\GravityCubeAction.cs               | C#       |         28 |          4 |          3 |         35 |
+| f:\Unity\The Mass Hit\Assets\Scripts\GunScript.cs                       | C#       |         78 |         14 |         14 |        106 |
+| f:\Unity\The Mass Hit\Assets\Scripts\Interceptor.cs                     | C#       |         41 |          2 |          8 |         51 |
+| f:\Unity\The Mass Hit\Assets\Scripts\JumpPad.cs                         | C#       |         18 |          8 |          4 |         30 |
+| f:\Unity\The Mass Hit\Assets\Scripts\MissionScripts\Level1\GetKernel.cs | C#       |         35 |          3 |          7 |         45 |
+| f:\Unity\The Mass Hit\Assets\Scripts\PlayerBrain.cs                     | C#       |         61 |         28 |         15 |        104 |
+| f:\Unity\The Mass Hit\Assets\Scripts\SavedData.cs                       | C#       |          9 |          0 |          2 |         11 |
+| f:\Unity\The Mass Hit\Assets\Scripts\SpectatorCtrl.cs                   | C#       |         73 |          8 |         22 |        103 |
+| f:\Unity\The Mass Hit\Assets\Scripts\SwitchBlockCtrl.cs                 | C#       |         72 |         26 |         15 |        113 |
+| f:\Unity\The Mass Hit\Assets\Scripts\UIElements\AnimationMessionCtrl.cs | C#       |         12 |          0 |          2 |         14 |
+| f:\Unity\The Mass Hit\Assets\Scripts\UIElements\EscUI.cs                | C#       |        121 |         34 |         27 |        182 |
+| f:\Unity\The Mass Hit\Assets\Scripts\UIElements\GlobalUIFunctions.cs    | C#       |        114 |         16 |         22 |        152 |
+| f:\Unity\The Mass Hit\Assets\Scripts\UIElements\MissionTextCrtl.cs      | C#       |        134 |         39 |         21 |        194 |
+| f:\Unity\The Mass Hit\Assets\Scripts\UIElements\SpectatorUI.cs          | C#       |         71 |          6 |          6 |         83 |
+| f:\Unity\The Mass Hit\Assets\Scripts\UIElements\StartMenuManager.cs     | C#       |         91 |          9 |         12 |        112 |
+| f:\Unity\The Mass Hit\Assets\Scripts\UIElements\UIEffect.cs             | C#       |         12 |          1 |          2 |         15 |
+| f:\Unity\The Mass Hit\Assets\Scripts\UIElements\UIManager.cs            | C#       |        224 |         38 |         53 |        315 |
+| f:\Unity\The Mass Hit\Assets\Scripts\WaterWithCamera.cs                 | C#       |         22 |          1 |          2 |         25 |
+| f:\Unity\The Mass Hit\Assets\Scripts\particleAttractorLinear.cs         | C#       |         28 |          5 |          2 |         35 |
+| Total                                                                   |          |      2,321 |        479 |        422 |      3,222 |
++-------------------------------------------------------------------------+----------+------------+------------+------------+------------+

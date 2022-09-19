@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEditor;
+using UnityEngine.UI;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 namespace UIElements
@@ -14,7 +14,7 @@ namespace UIElements
         public static Animator MaskAnimator;
         // public TMP_Dropdown videoDropdown;
         public string playerName;// https://docs.unity3d.com/Packages/com.unity.localization@1.2/manual/QuickStartGuideWithVariants.html
-      
+
         public TMP_Text loadingText;
         public bool AsyncLoadPass = false;
 
@@ -144,7 +144,18 @@ namespace UIElements
             if (string.IsNullOrEmpty(playerName) && loadingText) { loadingText.GetComponentInChildren<LocalizeStringEvent>().SetEntry("NullPlayerName"); }
             else { loadingText.GetComponentInChildren<LocalizeStringEvent>().SetEntry("PlayerWelecome"); }
         }
-       
+        ///<Summary>
+        /// This funtion can be used fo fill the iamge bar according to the value
+        ///</Summary>
+        ///<param name="image">the target image </param>
+        ///<param name="currentValue">the updated value of the image</param>
+        ///<param name="maxValue">the max value of the image, (percentage)</param>
+        public static float UpdateImageFill(Image image, float currentValue, float maxValue)
+        {
+            currentValue /= maxValue;
+            image.fillAmount = currentValue;
+            return currentValue;
+        }
 
     }
 }
