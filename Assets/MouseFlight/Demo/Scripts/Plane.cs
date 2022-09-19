@@ -20,8 +20,10 @@ namespace MFlight.Demo
         [Header("Components")]
         [SerializeField] private MouseFlightController controller = null;
 
+
         [Header("Physics")]
-        [Tooltip("Force to push plane forwards with")] public float thrust = 100f;
+        [Range(0f, 80f)]
+        [Tooltip("Force to push plane forwards with")] public float thrust = 40;
         [Tooltip("Pitch, Yaw, Roll")] public Vector3 turnTorque = new Vector3(90f, 25f, 45f);
         [Tooltip("Multiplier for all forces")] public float forceMult = 1000f;
 
@@ -30,9 +32,9 @@ namespace MFlight.Demo
         [Tooltip("Angle at which airplane banks fully into target.")] public float aggressiveTurnAngle = 10f;
 
         [Header("Input")]
-        [SerializeField] [Range(-1f, 1f)] private float pitch = 0f;
-        [SerializeField] [Range(-1f, 1f)] private float yaw = 0f;
-        [SerializeField] [Range(-1f, 1f)] private float roll = 0f;
+        [SerializeField][Range(-1f, 1f)] private float pitch = 0f;
+        [SerializeField][Range(-1f, 1f)] private float yaw = 0f;
+        [SerializeField][Range(-1f, 1f)] private float roll = 0f;
 
         public float Pitch { set { pitch = Mathf.Clamp(value, -1f, 1f); } get { return pitch; } }
         public float Yaw { set { yaw = Mathf.Clamp(value, -1f, 1f); } get { return yaw; } }
@@ -50,6 +52,10 @@ namespace MFlight.Demo
             if (controller == null)
                 Debug.LogError(name + ": Plane - Missing reference to MouseFlightController!");
         }
+        private void OnEnable()
+        {
+            Debug.Log("OnEnable");
+        }
 
         private void Update()
         {
@@ -59,18 +65,9 @@ namespace MFlight.Demo
             pitchOverride = false;
 
             float keyboardRoll = Input.GetAxis("Horizontal");
-            if (Mathf.Abs(keyboardRoll) > .25f)
-            {
-                rollOverride = true;
-            }
-
             float keyboardPitch = Input.GetAxis("Vertical");
-            if (Mathf.Abs(keyboardPitch) > .25f)
-            {
-                pitchOverride = true;
-                rollOverride = true;
-            }
-
+            SpeedController(keyboardPitch);
+            Controller(keyboardRoll, keyboardPitch);
             // Calculate the autopilot stick inputs.
             float autoYaw = 0f;
             float autoPitch = 0f;
@@ -83,7 +80,26 @@ namespace MFlight.Demo
             pitch = (pitchOverride) ? keyboardPitch : autoPitch;
             roll = (rollOverride) ? keyboardRoll : autoRoll;
         }
+        private void SpeedController(float keyboardPitch)
+        {
+            //clamp the thrust to a range of 0 to 80
+            thrust = Mathf.Clamp(thrust, 0f, 80f);
+            thrust += keyboardPitch;
+        }
+        private void Controller(float keyboardRoll, float keyboardPitch)
+        {
+            if (Mathf.Abs(keyboardRoll) > .25f)
+            {
+                rollOverride = true;
+            }
 
+
+            // if (Mathf.Abs(keyboardPitch) > .25f)
+            // {
+            //     pitchOverride = true;
+            //     rollOverride = true;
+            // }
+        }
         private void RunAutopilot(Vector3 flyTarget, out float yaw, out float pitch, out float roll)
         {
             // This is my usual trick of converting the fly to position to local space.

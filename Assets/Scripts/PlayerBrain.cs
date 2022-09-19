@@ -6,12 +6,13 @@ public class PlayerBrain : MonoBehaviour
 {
 
     [Tooltip("true if buckyball to rotate in Start Menu")] public bool inMenuRotate = false;
-    public Transform Player;
-    public Transform PlayerKernel;
+    public Transform brainPosition_Player, brainPosition_Plane;
+    [Tooltip("For distance caculate")] public Transform PlayerKernel;
     public static bool is_Charging;
     public float selfRotateSpeed = 1f;
     public Vector3 randomVector;
     public Transform randomTransform;
+    public float chargingRange;
     public float chargeSpeed = 0.01f;
     public static float shootEnergy = 100;
 
@@ -21,15 +22,15 @@ public class PlayerBrain : MonoBehaviour
     public Material chargedMaterial, un_ChargedMaterial;
     // [SerializeField] SphereCollider myCollider;
     private int min = -90, max = 90;
-    float chargingRange;
+    
     private void Start()
     {
         // myCollider = GetComponent<SphereCollider>();
-        if (!inMenuRotate)
-        {
-            PlayerKernel = Player.GetComponent<CharacterCtrl>().PlayerKernel;
-            chargingRange = GetComponent<SphereCollider>().radius - 0.1f;
-        }
+        // if (!inMenuRotate)
+        // {
+        //     PlayerKernel = Player.GetComponent<CharacterCtrl>().PlayerKernel;
+        //     chargingRange = GetComponent<SphereCollider>().radius - 0.1f;
+        // }
         // shootEnergy = 100;
         StartCoroutine(GenerateRandomVector());
     }
@@ -43,7 +44,7 @@ public class PlayerBrain : MonoBehaviour
     {
         if (inMenuRotate) { transform.rotation = Quaternion.Lerp(transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime); return; }
         //  transform.position = Player.position;
-        //  Debug.Log(Vector3.Distance(transform.position, PlayerKernel.transform.position));
+       //   Debug.Log(Vector3.Distance(transform.position, PlayerKernel.transform.position));
         if (Vector3.Distance(transform.position, PlayerKernel.position) <= chargingRange) { is_Charging = true; } else { is_Charging = false; }
         if (is_Charging)
         {

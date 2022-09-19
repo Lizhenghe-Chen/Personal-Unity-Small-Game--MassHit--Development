@@ -19,9 +19,9 @@ public class Interceptor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void LateUpdate()
     {
-        if (!TargetObj) { return; }
+        if (!TargetObj || Time.timeScale < 0.02f) { return; }
         acceleration = (TargetRig.velocity - lastVelocity) / Time.deltaTime;//acceleration
         lastVelocity = TargetRig.velocity;//get the current velocity for next frame acceleration caculation
         distance = Vector3.Distance(transform.position, TargetObj.position);//get the current distance(insufficiently strict)

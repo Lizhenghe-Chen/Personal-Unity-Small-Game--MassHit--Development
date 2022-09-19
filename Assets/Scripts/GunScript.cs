@@ -70,7 +70,7 @@ public class GunScript : MonoBehaviour
         if (!CharacterCtrl._CharacterCtrl.shootAbility) { return; }
 
         // this.transform.forward = Camera.transform.forward;
-        if (Input.GetKey(GlobalRules.instance.PreShoot) || CharacterCtrl._CharacterCtrl.playerActionState == CharacterCtrl.ActionState.AIMING)
+        if (Input.GetKey(GlobalRules.instance.PreShoot) || Input.GetKey(GlobalRules.instance.HoldObject))
         {
             // if (shootTraget.gameObject.activeSelf) { transform.LookAt(shootTraget); }
             transform.LookAt(shootTraget);
@@ -100,6 +100,6 @@ public class GunScript : MonoBehaviour
     }
     void MovePlayerKernel()
     {
-        this.transform.position = Vector3.Lerp(this.transform.position, PlayerKernelTarget.position, PlayerKernelSpeed * 10 / Vector3.Distance(PlayerKernelTarget.position, transform.position) * Time.deltaTime);
+        this.transform.position = Vector3.Lerp(this.transform.position, PlayerKernelTarget.position, PlayerKernelSpeed * Time.deltaTime);
     }
 }

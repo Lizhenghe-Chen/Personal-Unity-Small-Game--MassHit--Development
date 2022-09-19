@@ -44,12 +44,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9712826236710912
-    m_Localized: When the energy is sufficient, press the <color=#00FFFF>Space Button</color> 
-      for a short flight
+    m_Localized: When the energy is sufficient, press the <sprite=1>  for a short
+      flight
     m_Metadata:
       m_Items: []
   - m_Id: 9719034767126528
     m_Localized: Special skills cost <color="orange">Energy</color>, Use them wisely~
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21983288320765952
+    m_Localized: "\u5927\u8349\u539F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21983472299716608
+    m_Localized: asd
     m_Metadata:
       m_Items: []
   references:

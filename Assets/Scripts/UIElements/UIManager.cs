@@ -21,10 +21,10 @@ namespace UIElements
 
         public Image holdAim;
         public Transform aimRay, HoldTarget, MainCamera;
-        private Camera mainCamera;
+        public Camera mainCamera;
         public LayerMask ShootRaycastIgnore;
         public Transform Traget, shootTraget;
-        public Image targetSceenIcion;
+        public Image targetSceenIcon;
         public LayerMask HoldRaycastIgnore;
         [Serializable]
         public struct Range
@@ -37,27 +37,38 @@ namespace UIElements
         [SerializeField] Rigidbody holdingObject;
         [SerializeField] private float kernelValue, healthValue;
         [SerializeField] private bool isHoldKeyPressing = false;
-        [SerializeField] Vector2 screenBound;
-
+        
+        [SerializeField] PositionConstraint shootTargetpositionConstraint;
         void Start()
         {
-            Debug.Log(screenBound.x);
-            screenBound = new Vector2(Screen.width, Screen.height);
+           
             holdAim.enabled = false;
             mainCamera = MainCamera.GetComponent<Camera>();
-
+            shootTargetpositionConstraint = shootTraget.GetComponent<PositionConstraint>();
         }
 
         private void LateUpdate()
         {
-            if (!targetSceenIcion.gameObject.activeSelf) { return; }
-            var screenPosition = mainCamera.WorldToScreenPoint(shootTraget.position);
-            //if (screenPosition.x <= 0 || screenPosition.x >= screenBound.x || screenPosition.y <= 0 || screenPosition.y >= screenBound.y) return;
-            //targetSceenIcion.transform.position = screenPosition;
-            if (screenPosition.z < 0) { screenPosition.z = 0; }
-            targetSceenIcion.transform.position = new Vector2(Mathf.Clamp(screenPosition.x, 50, screenBound.x - 50), Mathf.Clamp(screenPosition.y, 50, screenBound.y - 50));//https://docs.unity3d.com/ScriptReference/Mathf.Clamp.html
-                                                                                                                                                                            // Debug.Log(screenPosition);
+           // screenBound = new Vector2(Screen.width, Screen.height);
+            if (!targetSceenIcon.gameObject.activeSelf) { return; }
+            if (!shootTargetpositionConstraint.GetSource(0).sourceTransform) { targetSceenIcon.gameObject.SetActive(false); return; }
+            ObjectToScreenPosition(mainCamera,shootTraget, targetSceenIcon, 50, 50);
+            // var screenPosition = mainCamera.WorldToScreenPoint(shootTraget.position);
+            // Debug.Log(screenPosition);
+            // //if (screenPosition.x <= 0 || screenPosition.x >= screenBound.x || screenPosition.y <= 0 || screenPosition.y >= screenBound.y) return;
+            // //targetSceenIcon.transform.position = screenPosition;
+            // if (screenPosition.z < 0)
+            // {
+            //     screenPosition.y = 0;
+            //     screenPosition.x = -screenPosition.x;
+            // }
+
+            // targetSceenIcon.transform.position = new Vector2(Mathf.Clamp(screenPosition.x, 50, screenBound.x - 50), Mathf.Clamp(screenPosition.y, 50, screenBound.y - 50));
+            //                                                                                                                                                                // Debug.Log(screenPosition);
         }
+      
+
+
         // Update is called once per frame
         void Update()
         {
@@ -94,6 +105,7 @@ namespace UIElements
         {
 
             if (!CharacterCtrl._CharacterCtrl.catchObjAbility) { return; }
+            // if (!holdingObject) { holdAim.enabled = false; return; }
             if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || PlayerBrain.shootEnergy <= 0)//set object free~
             {
                 holdAim.enabled = false;
@@ -102,7 +114,6 @@ namespace UIElements
 
                 if (holdingObject)
                 {
-
                     holdingObject.drag = originalDrag;//change back it's drag
                     kernelParticle.target = originalKernelParticleTarget;
                     holdingObject = null;
@@ -216,7 +227,7 @@ namespace UIElements
                 SetConstrantTarget(shoot_hit.transform);
                 //shootTraget.GetComponent<PositionConstraint>().enabled = true;
                 shootTraget.gameObject.SetActive(true);
-                targetSceenIcion.gameObject.SetActive(true);
+                targetSceenIcon.gameObject.SetActive(true);
 
             }
             else
@@ -227,7 +238,7 @@ namespace UIElements
         void AlignCameraView()
         {
             shootTraget.position = mainCamera.transform.position + 1000 * mainCamera.transform.forward;
-            targetSceenIcion.gameObject.SetActive(false);
+            targetSceenIcon.gameObject.SetActive(false);
             shootTraget.gameObject.SetActive(false);
         }
         void SetConstrantTarget(Transform target)
@@ -238,7 +249,7 @@ namespace UIElements
                 sourceTransform = target,
                 weight = 1
             };
-            shootTraget.GetComponent<PositionConstraint>().SetSource(0, constraintSource);
+            shootTargetpositionConstraint.SetSource(0, constraintSource);
         }
         public void SpectatorHoldObject()
         {

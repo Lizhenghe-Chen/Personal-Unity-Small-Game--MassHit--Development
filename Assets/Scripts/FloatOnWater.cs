@@ -46,12 +46,12 @@ namespace Bitgem.VFX.StylisedWater
                 //Debug.Log("In Water" + other.gameObject.layer + " " + other.gameObject.name);
                 rb.drag = 3;
                 //rb.angularDrag = 2;
-                var instance = WaterVolumeHelper ? WaterVolumeHelper : WaterVolumeHelper.Instance;
-                if (!instance)
+                WaterVolumeHelper = other.gameObject.GetComponent<WaterVolumeHelper>();
+                if (!WaterVolumeHelper)
                 {
                     return;
                 }
-                test = instance.GetHeight(transform.position) ?? transform.position.y;
+                test = WaterVolumeHelper.GetHeight(transform.position) ?? transform.position.y;
                 //  Vector3 floatTarget = new Vector3(transform.position.x, test, transform.position.z);
                 if (transform.position.y < test && (test - transform.position.y) <= radius)
                 {

@@ -17,7 +17,7 @@ namespace UIElements
 
         public TMP_Text loadingText;
         public bool AsyncLoadPass = false;
-
+        public static Vector2 screenBound;
 
         [System.Serializable]
         public struct MissionTextUpper_Lower
@@ -29,16 +29,11 @@ namespace UIElements
         }
         private void OnEnable()
         {
-
-
             try { MaskAnimator = GameObject.Find("Mask").GetComponent<Animator>(); }
             catch (System.Exception)
             {
                 Debug.LogWarning("MaskAnimator not found");
             }
-
-
-
             playerName = PlayerPrefs.GetString("PlayerName");
         }
         public void LoadVideoDropdown(TMP_Dropdown videoDropdown)
@@ -156,7 +151,29 @@ namespace UIElements
             image.fillAmount = currentValue;
             return currentValue;
         }
+        ///<Summary>
+        /// This funtion can be used fo locate the screen position of the target object according to the target object's physical position
+        ///</Summary>
+        /// (<paramref name="mainCamera"/>,paramref name="target"/>,<paramref name="screenIcon"/>,<paramref name="screenIconWidth"/>,<paramref name="screenIconHeight"/>).
+        ///<param name="mainCamera">the current active Camera </param>
+        ///<param name="target">the target object </param>
+        ///<param name ="screenIcon">the target object's screen Icon</param>
+        ///<param name ="screenIconWidth">the screen Icon width</param>
+        ///<param name ="screenIconHeight">the screen Icon height</param>
+        public static void ObjectToScreenPosition(Camera mainCamera, Transform target, Image screenIcon, int screenIconWidth, int screenIconHeight)
+        {
 
+            var screenPosition = mainCamera.WorldToScreenPoint(target.position);
+            Debug.Log(screenBound);
+            if (screenPosition.z < 0)
+            {
+                screenPosition.y = 0;
+                screenPosition.x = -screenPosition.x + screenBound.x;
+            }//https://docs.unity3d.com/ScriptReference/Mathf.Clamp.html
+            screenIcon.transform.position = new Vector2(
+                Mathf.Clamp(screenPosition.x, screenIconWidth, screenBound.x - screenIconWidth),
+                Mathf.Clamp(screenPosition.y, screenIconHeight, screenBound.y - screenIconHeight));//https://docs.unity3d.com/ScriptReference/Mathf.Clamp.html
+        }
     }
 }
 

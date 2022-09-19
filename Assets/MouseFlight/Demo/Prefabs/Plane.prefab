@@ -249,21 +249,21 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.49295807
-        inSlope: 1.5534891
-        outSlope: 1.5534891
+        value: 0.11529541
+        inSlope: 1.2259754
+        outSlope: 1.2259754
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.12289157
       - serializedVersion: 3
         time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
+        value: 0.52659607
+        inSlope: 1.5223813
+        outSlope: 1.5223813
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.06987953
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
-  thrust: 50
+  thrust: 40
   turnTorque: {x: 90, y: 25, z: 45}
   forceMult: 50
   sensitivity: 1
@@ -546,21 +546,21 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.49295807
-        inSlope: 1.5534891
-        outSlope: 1.5534891
+        value: 0.11529541
+        inSlope: 1.2259754
+        outSlope: 1.2259754
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.12289157
       - serializedVersion: 3
         time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
+        value: 0.52659607
+        inSlope: 1.5223813
+        outSlope: 1.5223813
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.06987953
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -773,6 +773,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1440348249414805471}
+  - component: {fileID: 5769915306618117695}
   m_Layer: 0
   m_Name: PlayerBrain
   m_TagString: Untagged
@@ -795,6 +796,21 @@ Transform:
   m_Father: {fileID: 8881441621336372723}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5769915306618117695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2959646720089567901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377360ba0634aab48abb544aabeae123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerBrain: {fileID: 0}
+  Player: {fileID: 0}
+  Plane: {fileID: 0}
 --- !u!1 &4956453762755790150
 GameObject:
   m_ObjectHideFlags: 0

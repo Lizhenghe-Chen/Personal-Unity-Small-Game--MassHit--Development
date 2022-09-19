@@ -40,22 +40,25 @@ public class BulletDestory : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Time.timeScale = scaleOfTime;
-        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
         if (isPlayerBullet)
         {
+            Time.timeScale = scaleOfTime;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
             SetHitParticle(playerHitParticleSystem, other, 0.1f);
+            Destroy(this.gameObject, 1f);
         }
         else
         {
             if (other.gameObject.layer == GlobalRules.instance.playerLayerID)
             {
                 SetHitParticle(hitParticleSystem, other, 0.01f);
-                CharacterCtrl._CharacterCtrl.PlayerHealth -= other.relativeVelocity.magnitude * rb.mass;
+                
             }
+            Destroy(this.gameObject,0.1f);
         }
         this.GetComponent<MeshRenderer>().enabled = false;
-        Destroy(this.gameObject, 2f);
+
         if (other.gameObject.name == "Target") { Debug.Log("hit"); }
     }
 

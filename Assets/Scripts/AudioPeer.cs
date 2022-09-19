@@ -5,25 +5,27 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class AudioPeer : MonoBehaviour
 {
-
+    public int filterTest, filterTestValue;
     private AudioSource audioSource;
     public Transform FollowTarget, playerBrain;
     public Transform Audiovisualparent;
+    public CharacterCtrl characterCtrl;
+    public GameObject cubePrefab;
     //========== variables for the FFT analysis ==========
     [Header("Aduio Visualizer Settings")]
     public int num_Samples = 512;
     public FFTWindowType fftWindowType;
     public enum FFTWindowType { Blackman, Triangle, Hamming, Hanning, BlackmanHarris }
-    public int channels = 1;
+    public int channels = 1, buffer = 10;
 
-
+    [Header("Below for Audio Tuple Test")]
     public Transform AuidioTestParent;
-    public int multiplier = 500, buffer = 10;
+    public int multiplier = 500;
 
     [Header("Below for Audio Circle")]
     public bool showCircle;
     public bool isVertical;
-    public GameObject cubePrefab;
+
     [Tooltip("0 < begainSameplIndex < num_Samples - endSampleMinus < num_Samples")]
     public int begainSampleIndex, endSampleMinus;
     public float cubeScale = 0.05f;
@@ -46,6 +48,7 @@ public class AudioPeer : MonoBehaviour
 
     void Start()
     {
+        if (!characterCtrl.AudioTail) { return; }
         audioSource = GetComponent<AudioSource>();
         samples = new float[num_Samples];
         InstantiateCubes();
@@ -54,12 +57,15 @@ public class AudioPeer : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {GetAverageSpectrum();
+        if (!characterCtrl.AudioTail) { return; }
         samples = GetSpectrumAudioSource(samples);
-        SimpleAudioVisualize();
+       // SimpleAudioVisualize();
+       
+        AudioVisualizeRepeat();
         if (AuidioTestParent) { GetAverageSpectrum(); AudioVisualize(); }
         if (Input.GetKeyDown(KeyCode.T)) { showCircle = !showCircle; }
-        
+
         //samples = GetSpectrumAudioSource(samples);
         //GetAverageSpectrum();
         //if (showCircle) { SimpleCircle(); }
@@ -119,7 +125,7 @@ public class AudioPeer : MonoBehaviour
     void GetAverageSpectrum()
     {
         int sampleCount = samples.Length / averageSamples.Length;
-        for (int i = 0; i < averageSamples.Length; i++)
+        for (int i = 0; i < averageSamples.Length - begainSampleIndex; i++)
         {
             float average = 0f;
 
@@ -146,19 +152,35 @@ public class AudioPeer : MonoBehaviour
 
     int SimpleAudioVisualizeCounter;
     float range;
+    int rangeCounter;
     public void SimpleAudioVisualize()
     {
         SimpleAudioVisualizeCounter = 0;
         foreach (Transform child in _cubesSamples)
         {
-            range = samples[SimpleAudioVisualizeCounter + begainSampleIndex] * rangeTimer * PlayerBrain.shootEnergy;
-            if (range > 3) { range = 3; }
-            if (range <= 0) { range = 0.1f; }
+            rangeCounter = SimpleAudioVisualizeCounter + begainSampleIndex;
+            range = samples[rangeCounter] * PlayerBrain.shootEnergy;
+            if (rangeCounter > samples.Length / 3 && range < 0.5f) { range *= rangeTimer; }
+            range = Mathf.Clamp(range, 0.01f, 3f);
             //else if (range < 1) { range *= 10; }
             if (isVertical) { child.localScale = new Vector3(cubeScale, Mathf.Lerp(child.localScale.y, range, Time.deltaTime * buffer), cubeScale); }
             else { child.localScale = new Vector3(cubeScale, cubeScale, Mathf.Lerp(child.localScale.z, range, Time.deltaTime * buffer)); }
             SimpleAudioVisualizeCounter++;
         }
+    }
+    public void AudioVisualizeRepeat()
+    {
+        int counter = 3;
+        float range;
+        foreach (Transform child in _cubesSamples)
+        {
+            if (counter >= averageSamples.Length) { counter = 3; }
+            range = averageSamples[counter] *multiplier* PlayerBrain.shootEnergy;
+            if (isVertical) { child.localScale = new Vector3(cubeScale, Mathf.Lerp(child.localScale.y, range, Time.deltaTime * buffer), cubeScale); }
+            else { child.localScale = new Vector3(cubeScale, cubeScale, Mathf.Lerp(child.localScale.z, range, Time.deltaTime * buffer)); }
+            counter++;
+        }
+
     }
     GameObject Ins_cube;
     void InstantiateCubes()
@@ -173,6 +195,12 @@ public class AudioPeer : MonoBehaviour
             Ins_cube = Instantiate(cubePrefab, this.transform.position, Quaternion.Euler(0, averangeEulerAng * i, 0));
 
             Ins_cube.transform.parent = Audiovisualparent;
+            if (i == 0)
+            {
+                Ins_cube.GetComponent<Renderer>().material.color = Color.blue;
+                Ins_cube.GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.blue);
+
+            }
             // Ins_cube.transform.position = this.transform.position;
             // this.transform.eulerAngles = new Vector3(0, averangeEulerAng * i, 0);
 

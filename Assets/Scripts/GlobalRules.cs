@@ -39,7 +39,7 @@ public class GlobalRules : MonoBehaviour
         {
             instance = this;
         }
-
+        Physics.IgnoreLayerCollision(GlobalRules.instance.playerLayerID, GlobalRules.instance.playerLayerID);
         try
         {
             MaskImage = GlobalUIFunctions.MaskAnimator.GetComponentInChildren<Image>();
@@ -114,6 +114,7 @@ public class GlobalRules : MonoBehaviour
         }
         TimeCtrl();
         AudioListenerCtrl();
+        GlobalUIFunctions.screenBound = new Vector2(Screen.width, Screen.height);
     }
     private void TimeCtrl()
     {
@@ -186,7 +187,7 @@ public class GlobalRules : MonoBehaviour
     public void FitCameraDirection(bool isCam1ToCam2)
     {
         var (A, B) = GetCamerasDetails();
-        Debug.Log(A.m_XAxis.Value + ", " + B.m_XAxis.Value);
+       // Debug.Log(A.m_XAxis.Value + ", " + B.m_XAxis.Value);
         if (isCam1ToCam2)
         {
             B.m_XAxis.Value = A.m_XAxis.Value;
@@ -195,7 +196,7 @@ public class GlobalRules : MonoBehaviour
         {
             A.m_XAxis.Value = B.m_XAxis.Value;
         }
-        Debug.Log("->" + A.m_XAxis.Value + ", " + B.m_XAxis.Value);
+       // Debug.Log("->" + A.m_XAxis.Value + ", " + B.m_XAxis.Value);
     }
     public (CinemachineFreeLook, CinemachineOrbitalTransposer) GetCamerasDetails()
     {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2039442730308905882}
   - component: {fileID: 2039442730308905883}
   - component: {fileID: 2039442730308905956}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8390782384032210144}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AudioCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

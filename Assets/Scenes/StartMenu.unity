@@ -3174,7 +3174,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 5
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -17629,11 +17629,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inMenuRotate: 1
-  Player: {fileID: 555249177}
+  brainPosition_Player: {fileID: 0}
+  brainPosition_Plane: {fileID: 0}
   PlayerKernel: {fileID: 1195881689}
   selfRotateSpeed: 1
   randomVector: {x: 0, y: 0, z: 0}
   randomTransform: {fileID: 1328070493}
+  chargingRange: 0
   chargeSpeed: 20
   BuckyBallAtoms: {fileID: 0}
   chargedMaterial: {fileID: 2100000, guid: 57757ea40ab5ae8458ecfa5ec66d8726, type: 2}
@@ -32586,17 +32588,17 @@ PrefabInstance:
     - target: {fileID: 5297087521302815385, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.025645256
+      value: 0.024244785
       objectReference: {fileID: 0}
     - target: {fileID: 5297087521302815385, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.4147539
+      value: -0.4129715
       objectReference: {fileID: 0}
     - target: {fileID: 5297087521302815385, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.012390137
+      value: 0.014490128
       objectReference: {fileID: 0}
     - target: {fileID: 5370912608817578043, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
@@ -32716,17 +32718,17 @@ PrefabInstance:
     - target: {fileID: 6847052310339850547, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.25630948
+      value: -0.24631497
       objectReference: {fileID: 0}
     - target: {fileID: 6847052310339850547, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.038948055
+      value: -0.029225348
       objectReference: {fileID: 0}
     - target: {fileID: 6847052310339850547, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.016784666
+      value: -0.025749205
       objectReference: {fileID: 0}
     - target: {fileID: 6946485530470651696, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
@@ -35318,7 +35320,7 @@ PrefabInstance:
         type: 3}
       propertyPath: TargetSound
       value: 
-      objectReference: {fileID: 8300000, guid: 51b4025724c34554bbbe093737e2c958, type: 3}
+      objectReference: {fileID: 8300000, guid: f7abcfc8126dcc0489c7e212e927d586, type: 3}
     - target: {fileID: 4746600860174338684, guid: 0423c642c27c5ea4db7e307eaffa4907,
         type: 3}
       propertyPath: useTargetSound

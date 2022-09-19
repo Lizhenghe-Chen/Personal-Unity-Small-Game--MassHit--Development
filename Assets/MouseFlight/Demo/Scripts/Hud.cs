@@ -45,7 +45,7 @@ namespace MFlight.Demo
             {
                 boresight.position = playerCam.WorldToScreenPoint(controller.BoresightPos);
                 boresight.gameObject.SetActive(boresight.position.z > 1f);
-                holdAim.rectTransform.position = boresight.position;
+                holdAim.rectTransform.position = mousePos.position;
             }
 
             if (mousePos != null)

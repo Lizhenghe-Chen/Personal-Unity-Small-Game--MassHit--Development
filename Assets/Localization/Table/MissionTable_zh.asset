@@ -39,11 +39,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9712826236710912
-    m_Localized: "\u80FD\u91CF\u5145\u8DB3\u65F6\uFF0C\u957F\u6309<color=#00FFFF>\u7A7A\u683C\u952E</color>\u53EF\u4EE5\u77ED\u6682\u98DE\u884C"
+    m_Localized: "\u80FD\u91CF\u5145\u8DB3\u65F6\uFF0C\u957F\u6309<sprite=1>\u53EF\u4EE5\u77ED\u6682\u98DE\u884C"
     m_Metadata:
       m_Items: []
   - m_Id: 9719034767126528
     m_Localized: "\u7279\u6B8A\u80FD\u529B\u90FD\u8981\u6D88\u8017<color=\"orange\">\u80FD\u91CF</color>\uFF0C\u8981\u59A5\u5584\u5229\u7528\u54E6~"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21983288320765952
+    m_Localized: Prairie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21983472299716608
+    m_Localized: "\u963F\u65AF\u987F"
     m_Metadata:
       m_Items: []
   references:

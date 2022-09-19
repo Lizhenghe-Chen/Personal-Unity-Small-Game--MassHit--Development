@@ -54,7 +54,6 @@ namespace UIElements
             if (Input.GetKeyDown(GlobalRules.instance.MoveUp))
             {
                 NextMissionText();
-
             }
 
             if (Input.GetKeyDown(GlobalRules.instance.MoveDown))
@@ -82,10 +81,10 @@ namespace UIElements
         }
         public void NextMissionTextNow()
         {
-            // if (!CheckNextAvailability()) return;
+             //if (!CheckNextAvailability()) return;
             missionAnimator.Play("FadeAway", 0, 0);
             Mission_Text_Progress++;
-            try { MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress]; }
+            try { MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress];CheckNextAvailability(); }
             catch (System.Exception)
             {
                 Debug.LogWarning("MissionTextList out of range");

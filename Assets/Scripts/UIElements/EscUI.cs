@@ -62,26 +62,26 @@ namespace UIElements
         }
         public void InGameMenu()
         {
-            Time.timeScale = 0.0001f;
-            Time.fixedDeltaTime = Time.timeScale * 0.02f;
+            TimeSettings();
 
             CancelInvoke();
             if (escCanvas.enabled)//if menu is active, switch it inactive
             {
+                if (PlayerBunbleHUD.activeSelf) GlobalRules.instance.isPause = false;
                 escCanvas.enabled = false;
 
-                Cursor.visible = false;
-
-
-                Cursor.lockState = CursorLockMode.Locked;
                 //  SpectatorBunbleHUD.SetActive(false);
-                PlayerTips.SetActive(false); SpectatorBundleCanavs.enabled = false;
+                PlayerTips.SetActive(false);
+                SpectatorBundleCanavs.enabled = false;
                 //PlayerBunbleHUD.SetActive(false);
-                if (characterCtrl.enabled) { GlobalRules.instance.isPause = false; }
+                //if (characterCtrl.enabled) { GlobalRules.instance.isPause = false; }
                 cameraBrain.enabled = true;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }
             else// if menu is inactive, switch it active,open the menu
             {
+                GlobalRules.instance.isPause = true; TimeSettings();
                 escCanvas.enabled = true;
                 cameraBrain.enabled = false;
                 GlobalRules.instance.isPause = true;
@@ -96,7 +96,15 @@ namespace UIElements
             }
 
         }
+        public void TimeSettings()
+        {
+            if (GlobalRules.instance.isPause)
+            {
+                Time.timeScale = 0;
+                Time.fixedDeltaTime = Time.timeScale * 0.02f;
+            }
 
+        }
         public void SwitchBunble()
         {
             CancelInvoke();
@@ -105,23 +113,20 @@ namespace UIElements
             {
                 GlobalRules.instance.isPause = true;
                 characterCtrl.enabled = false;
-                PlayervCam.gameObject.SetActive(false);
-                PlayerfreeLook.gameObject.SetActive(false);
                 PlayerBunbleHUD.SetActive(false);
                 if (MissionCanvas) { MissionCanvas.SetActive(false); }
                 SpectatorBunble.SetActive(true);
                 resumeButton.interactable = false;
                 //PlayerBunble.SetActive(false);
-                SwitchBubleWithCamera();
+                //SwitchBubleWithCamera();
                 //  var a = SwitchButton.GetComponentInChildren(typeof(Text)) as Text;
                 //SwitchButton.GetComponentInChildren<TextMeshProUGUI>().text = "Player Mode";
                 SwitchButton.GetComponentInChildren<LocalizeStringEvent>().SetEntry("Player Mode");
             }
             else
             {
+                GlobalRules.instance.isPause = true;
                 characterCtrl.enabled = true;
-                // PlayervCam.gameObject.SetActive(true);
-                PlayerfreeLook.gameObject.SetActive(true);
                 PlayerBunbleHUD.SetActive(true);
                 if (MissionCanvas) { MissionCanvas.SetActive(true); }
                 resumeButton.interactable = true;
