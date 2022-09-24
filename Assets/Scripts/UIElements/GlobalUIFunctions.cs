@@ -134,6 +134,16 @@ namespace UIElements
             LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[choosedLangIndex];
 
         }
+        public static void HideCrusor()
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        public static void ShowCrusor()
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
         public void UpdateText()
         {
             if (string.IsNullOrEmpty(playerName) && loadingText) { loadingText.GetComponentInChildren<LocalizeStringEvent>().SetEntry("NullPlayerName"); }

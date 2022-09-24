@@ -6,25 +6,28 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Splash.unity
+    path: Assets/Scenes/-1 Splash.unity
     guid: d07127362762a3b41b4521868f47de21
   - enabled: 1
     path: Assets/Scenes/TestScene.unity
     guid: 6af75d9f24f4d3c4f83c5ee365efeae0
   - enabled: 1
-    path: Assets/Scenes/StartMenu.unity
+    path: Assets/Scenes/0 StartMenu.unity
     guid: f8efb08dc8b832946862e09f9b506b73
   - enabled: 1
-    path: Assets/Scenes/Beginning.unity
+    path: Assets/Scenes/1 Beginning.unity
     guid: 164791c3e6433ff44962b2400d78fa30
   - enabled: 1
-    path: Assets/Scenes/Grass Scene.unity
+    path: Assets/Scenes/2 Grass Scene.unity
     guid: 98fc6980a02c7c5469c580150499a616
   - enabled: 1
-    path: Assets/Scenes/Castle.unity
+    path: Assets/Scenes/3 BlackHole.unity
+    guid: 437f41964fc06a841a9dc8cba4075f80
+  - enabled: 1
+    path: Assets/Scenes/4 Castle.unity
     guid: 82a8510089041104d9aecdd417d9faf4
   - enabled: 1
-    path: Assets/Scenes/Forest.unity
+    path: Assets/Scenes/5 Forest.unity
     guid: 5af227f30f74cf8438a862026e24f329
   - enabled: 1
     path: Assets/Scenes/Acknowledgements.unity

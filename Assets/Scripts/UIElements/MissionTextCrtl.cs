@@ -81,15 +81,26 @@ namespace UIElements
         }
         public void NextMissionTextNow()
         {
-             //if (!CheckNextAvailability()) return;
+            //if (!CheckNextAvailability()) return;
             missionAnimator.Play("FadeAway", 0, 0);
             Mission_Text_Progress++;
-            try { MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress];CheckNextAvailability(); }
+            try { MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress]; CheckNextAvailability(); }
             catch (System.Exception)
             {
                 Debug.LogWarning("MissionTextList out of range");
             }
-
+        }
+        public void SetTotargetMissionText(int target)
+        {
+            try
+            {
+                Mission_Text_Progress = target;
+                MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress]; CheckNextAvailability();
+            }
+            catch (System.Exception)
+            {
+                Debug.LogWarning("MissionTextList out of range");
+            }
         }
         bool CheckNextAvailability()
         {

@@ -13,7 +13,7 @@ scopes = {
 	"last_search.B655092D" = "st:grass"
 	"OpenInspectorPreview.B655092D" = "0"
 	"currentGroup.B655092D" = "all"
-	"last_search.DA94955A" = "Sprite Editor"
+	"last_search.DA94955A" = "auto simulat"
 	"OpenInspectorPreview.DA94955A" = "0"
 	"currentGroup.DA94955A" = "all"
 	"last_search.21382318" = ""
@@ -75,6 +75,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"a"
 	"Sprite Editor"
 	"2"
 	"s"

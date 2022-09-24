@@ -76,8 +76,7 @@ namespace UIElements
                 //PlayerBunbleHUD.SetActive(false);
                 //if (characterCtrl.enabled) { GlobalRules.instance.isPause = false; }
                 cameraBrain.enabled = true;
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                 GlobalUIFunctions.HideCrusor();
             }
             else// if menu is inactive, switch it active,open the menu
             {
@@ -87,8 +86,7 @@ namespace UIElements
                 GlobalRules.instance.isPause = true;
                 PlayerTips.SetActive(true);
                 SpectatorBundleCanavs.enabled = true;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                GlobalUIFunctions.ShowCrusor();
                 //SpectatorBunbleHUD.SetActive(true);
                 //PlayerBunbleHUD.SetActive(true);
 

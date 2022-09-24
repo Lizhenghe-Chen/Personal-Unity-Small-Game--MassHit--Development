@@ -55,6 +55,7 @@ namespace UIElements
 
         public void LateOpenMenu()
         {
+            GlobalUIFunctions.ShowCrusor();
             OpenMenu(StartMenu);
         }
 
@@ -73,11 +74,13 @@ namespace UIElements
             for (int i = 0; i < LevelButtons.Length; i++)
             {
                 if (i <= unlockedLevel) { LevelButtons[i].interactable = true; }
-                else { LevelButtons[i].interactable = false;
+                else
+                {
+                    LevelButtons[i].interactable = false;
                     LevelButtons[i].GetComponentInChildren<LocalizeStringEvent>().enabled = false;
-                
 
-                LevelButtons[i].GetComponentInChildren<TMP_Text>().text = "?";
+
+                    LevelButtons[i].GetComponentInChildren<TMP_Text>().text = "?";
                 }
             }
         }
