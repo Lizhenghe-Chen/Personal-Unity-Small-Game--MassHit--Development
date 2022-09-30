@@ -100,7 +100,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2245656607543296
-    m_Localized: "\u4F60\u597D\uFF0C {GlobalUIFunctions.playerName} (^\u03C9^)"
+    m_Localized: "\u4F60\u597D\uFF0C {Splash.playerName_} (^\u03C9^)"
     m_Metadata:
       m_Items:
       - rid: 8416390117241126914
@@ -116,6 +116,10 @@ MonoBehaviour:
     m_Localized: "Q\u3001E\uFF1A\u4EFB\u52A1\u6587\u672C\r\nA\u3001S\u3001D\u3001W\uFF1A\u79FB\u52A8\r\n<sprite=1>:
       \u8DF3\u8DC3\r\n\u9F20\u6807\u6EDA\u8F6E\uFF1A\u6444\u50CF\u673A\u8DDD\u79BB\r\nR\uFF1A\u4FDD\u6301\u5E76\u7784\u51C6\u7269\u4F53\r\nR+Q\uFF0CE\uFF0CZ\uFF0CX\u3002\u4FDD\u6301\u76EE\u6807\u79FB\u52A8\r\n\u53F3\u51FB\uFF1A\u65AD\u5F00\r\nCrtl
       + LeftMouse: \u5C04\u51FB\r\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32064295057141760
+    m_Localized: "\u9ED1\u6D1E"
     m_Metadata:
       m_Items: []
   references:

@@ -10,9 +10,11 @@ Material:
   m_Name: MCGrass
   m_Shader: {fileID: 4800000, guid: d7dd1c3f4cba1d441a7d295a168bac0d, type: 3}
   m_ValidKeywords:
+  - _ANGLE_FADING
   - _SIMPLE_LIGHTING
   m_InvalidKeywords:
   - _ALPHATOCOVERAGE_ON
+  - _ANGLEFADING_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -37,7 +39,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaToCoverage: 1
-    - _AngleFading: 0
+    - _AngleFading: 1
     - _BendFlattenStrength: 1
     - _BendMode: 0
     - _BendPushStrength: 1
@@ -73,7 +75,7 @@ Material:
     - _BaseColor: {r: 0.57894707, g: 0.8301887, b: 0, a: 1}
     - _BendTint: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _FadeParams: {r: 16.02564, g: 87.577354, b: 0, a: 0}
+    - _FadeParams: {r: 16.02564, g: 87.577354, b: 1, a: 0}
     - _HueVariation: {r: 0.6836691, g: 1, b: 0.3058823, a: 0.08627451}
     - _LODDebugColor: {r: 1, g: 1, b: 1, a: 1}
     - _NormalParams: {r: 0.5, g: 1, b: 0.8, a: 1}

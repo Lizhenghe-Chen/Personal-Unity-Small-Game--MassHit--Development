@@ -17,8 +17,7 @@ namespace UIElements
         public void NextMissionText() { missionTextCrtl.NextMissionText(); }
         public void PreviousMissionText() { missionTextCrtl.PreviousMissionText(); }
         public void SetTotargetMissionText(int target) { missionTextCrtl.SetTotargetMissionText(target); }
-        public void EnableAnimationCtrl() { MessionCtrlAnimator.enabled = true; }
-        public void DisableAnimationCtrl() { MessionCtrlAnimator.enabled = false; }
+        public void EnableAnimationCtrl() { MessionCtrlAnimator.enabled = true; }        public void DisableAnimationCtrl() { MessionCtrlAnimator.enabled = false; }
     }
 }
 

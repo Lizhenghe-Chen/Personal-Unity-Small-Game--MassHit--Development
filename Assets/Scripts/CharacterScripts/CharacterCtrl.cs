@@ -151,7 +151,7 @@ public class CharacterCtrl : MonoBehaviour
     {
         DamageCaculate(other);
         if (landBendEffect) landBendEffect.Emit(1);
-        if (currentOutLookState == OutLookState.AIRCRAFT) SwitchAircraftMode();
+        // if (currentOutLookState == OutLookState.AIRCRAFT) SwitchAircraftMode();
         SetPlayerSkinStateByCollision(other);
         if (other.collider.name == "FinnishPoint" || other.collider.name == "CheckPoint")
         {
@@ -366,9 +366,10 @@ public class CharacterCtrl : MonoBehaviour
 
     public void AircraftModeDetect()
     {
-        if (IsDoubleClick(GlobalRules.instance.Jump) && !ableToJump)
+        if ((IsDoubleClick(GlobalRules.instance.Jump) && !ableToJump) || PlayerBrain.shootEnergy <= 0)
         {
             SwitchAircraftMode();
+            PlayerBrain.shootEnergy += 1;
         }
     }
     public void SwitchAircraftMode()
@@ -484,12 +485,16 @@ public class CharacterCtrl : MonoBehaviour
             yield return new WaitForSeconds(3f);
         }
     }
-    public void SetAircraftMode(int isAircraftActive)//0 is false,1 is true
+    public void SetPlayerCam1(int isActive)//0 is false,1 is true
     {
-        Player_Camera1.SetActive(IntToBool(isAircraftActive));
-        playerSkinList[0].SetActive(!Player_Camera1.activeSelf);//set normal skin 
-        playerSkinList[1].SetActive(!Player_Camera1.activeSelf);//set diamond skin
-        playerSkinList[2].SetActive(Player_Camera1.activeSelf);//set aircraft skin
+        if (isActive == 0)
+        {
+            Player_Camera1.SetActive(false);
+        }
+        else
+        {
+            Player_Camera1.SetActive(true);
+        }
     }
     bool IntToBool(int number)
     {

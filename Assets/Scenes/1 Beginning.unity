@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 0390510663f4d494ab4f3b949c7a01b8, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e6b856644e2213e4a92d1d08948c91fc, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.31910878, g: 0.6803908, b: 0.94016224, a: 1}
+  m_IndirectSpecularColor: {r: 0.1468459, g: 0.06732038, b: 0.099428624, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 395706b049f6db543b6fe86c738ea390,
+  m_LightingDataAsset: {fileID: 112000000, guid: d5aeabc659b1b444abef5a2ade34a637,
     type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 8b8704af3bbb6834983494547fa71f1c,
     type: 2}
@@ -631,8 +631,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3081270ae54434f439207530381f101e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: 
-  loadingText: {fileID: 0}
   AsyncLoadPass: 0
   MissionTextEvent: {fileID: 1161103715}
   missionTextCrtl: {fileID: 1161103718}
@@ -928,17 +926,17 @@ PrefabInstance:
     - target: {fileID: 2681632626629864255, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 1.0037376
       objectReference: {fileID: 0}
     - target: {fileID: 2681632626629864255, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 1.0037376
       objectReference: {fileID: 0}
     - target: {fileID: 2681632626629864255, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 1.0037376
       objectReference: {fileID: 0}
     - target: {fileID: 2681632627392622039, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
@@ -1083,17 +1081,17 @@ PrefabInstance:
     - target: {fileID: 2967526077525225327, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.053610116
+      value: -0.05361013
       objectReference: {fileID: 0}
     - target: {fileID: 2967526077525225327, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.013460133
+      value: 0.013460134
       objectReference: {fileID: 0}
     - target: {fileID: 2967526077525225327, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000068851085
+      value: 0.000068851245
       objectReference: {fileID: 0}
     - target: {fileID: 3210905888713395728, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
@@ -1323,17 +1321,17 @@ PrefabInstance:
     - target: {fileID: 5297087521302815385, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0055446625
+      value: 0.0049130917
       objectReference: {fileID: 0}
     - target: {fileID: 5297087521302815385, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.416356
+      value: -0.41628176
       objectReference: {fileID: 0}
     - target: {fileID: 5297087521302815385, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.01723671
+      value: 0.01700592
       objectReference: {fileID: 0}
     - target: {fileID: 5370912608817578043, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
@@ -1558,17 +1556,17 @@ PrefabInstance:
     - target: {fileID: 6847052310339850547, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.03881454
+      value: 0.035831925
       objectReference: {fileID: 0}
     - target: {fileID: 6847052310339850547, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.060241215
+      value: -0.05672693
       objectReference: {fileID: 0}
     - target: {fileID: 6847052310339850547, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.050392147
+      value: 0.047912594
       objectReference: {fileID: 0}
     - target: {fileID: 6887517887025840958, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
@@ -1598,17 +1596,17 @@ PrefabInstance:
     - target: {fileID: 6946485530470651696, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.13617568
+      value: 0.13617563
       objectReference: {fileID: 0}
     - target: {fileID: 6946485530470651696, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.013230538
+      value: 0.013230291
       objectReference: {fileID: 0}
     - target: {fileID: 6946485530470651696, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.002477852
+      value: -0.002477807
       objectReference: {fileID: 0}
     - target: {fileID: 7090951509035669862, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
@@ -1733,12 +1731,12 @@ PrefabInstance:
     - target: {fileID: 7916521723808790746, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.008640085
+      value: 0.008640084
       objectReference: {fileID: 0}
     - target: {fileID: 7916521723808790746, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0012253843
+      value: -0.0012253844
       objectReference: {fileID: 0}
     - target: {fileID: 8072818882269581367, guid: 6ee3719f3d84b2f4bb5c1004b4a2b722,
         type: 3}

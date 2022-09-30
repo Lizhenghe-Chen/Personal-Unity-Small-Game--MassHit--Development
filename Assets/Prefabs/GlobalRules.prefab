@@ -79,7 +79,7 @@ MonoBehaviour:
   holdForce: 10
   flyConsume: 40
   rushConsume: 40
-  StartSceneName: StartMenu
+  StartSceneName: 0 StartMenu
   cam1: {fileID: 0}
   cam2: {fileID: 0}
   recoverTimeSpeed: 1

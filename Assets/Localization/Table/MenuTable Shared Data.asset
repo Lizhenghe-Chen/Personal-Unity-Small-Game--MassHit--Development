@@ -71,6 +71,10 @@ MonoBehaviour:
     m_Key: PrairieLevel
     m_Metadata:
       m_Items: []
+  - m_Id: 32064295057141760
+    m_Key: BlackHoleLevel
+    m_Metadata:
+      m_Items: []
   - m_Id: 890390372765696
     m_Key: CastleLevel
     m_Metadata:

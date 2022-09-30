@@ -52,11 +52,10 @@ namespace MFlight.Demo
             if (controller == null)
                 Debug.LogError(name + ": Plane - Missing reference to MouseFlightController!");
         }
-        private void OnEnable()
+        private void OnCollisionEnter(Collision other)
         {
-            Debug.Log("OnEnable");
+            PlayerBrain.shootEnergy = 0;
         }
-
         private void Update()
         {
             // When the player commands their own stick input, it should override what the

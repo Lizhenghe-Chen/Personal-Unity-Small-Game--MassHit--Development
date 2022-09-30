@@ -57,12 +57,13 @@ public class AudioPeer : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {GetAverageSpectrum();
+    {
+        GetAverageSpectrum();
         if (!characterCtrl.AudioTail) { return; }
         samples = GetSpectrumAudioSource(samples);
-       // SimpleAudioVisualize();
-       
-        AudioVisualizeRepeat();
+        SimpleAudioVisualize();
+
+        //AudioVisualizeRepeat();
         if (AuidioTestParent) { GetAverageSpectrum(); AudioVisualize(); }
         if (Input.GetKeyDown(KeyCode.T)) { showCircle = !showCircle; }
 
@@ -156,11 +157,14 @@ public class AudioPeer : MonoBehaviour
     public void SimpleAudioVisualize()
     {
         SimpleAudioVisualizeCounter = 0;
+        if (samples[begainSampleIndex] > 3) { rangeTimer = 0.01f; } else { rangeTimer = 10; }
         foreach (Transform child in _cubesSamples)
         {
             rangeCounter = SimpleAudioVisualizeCounter + begainSampleIndex;
-            range = samples[rangeCounter] * PlayerBrain.shootEnergy;
-            if (rangeCounter > samples.Length / 3 && range < 0.5f) { range *= rangeTimer; }
+            range = samples[rangeCounter] * PlayerBrain.shootEnergy * rangeTimer;
+            //if (rangeCounter > samples.Length / 3 && range < 0.5f) { range *= rangeTimer; }
+            if (range >= 3) { range *= 0.01f; }
+            if (range <= 0.1) { range *= 10; }
             range = Mathf.Clamp(range, 0.01f, 3f);
             //else if (range < 1) { range *= 10; }
             if (isVertical) { child.localScale = new Vector3(cubeScale, Mathf.Lerp(child.localScale.y, range, Time.deltaTime * buffer), cubeScale); }
@@ -175,7 +179,7 @@ public class AudioPeer : MonoBehaviour
         foreach (Transform child in _cubesSamples)
         {
             if (counter >= averageSamples.Length) { counter = 3; }
-            range = averageSamples[counter] *multiplier* PlayerBrain.shootEnergy;
+            range = averageSamples[counter] * multiplier * PlayerBrain.shootEnergy;
             if (isVertical) { child.localScale = new Vector3(cubeScale, Mathf.Lerp(child.localScale.y, range, Time.deltaTime * buffer), cubeScale); }
             else { child.localScale = new Vector3(cubeScale, cubeScale, Mathf.Lerp(child.localScale.z, range, Time.deltaTime * buffer)); }
             counter++;

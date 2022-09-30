@@ -103,7 +103,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2245656607543296
-    m_Localized: "Hello, {GlobalUIFunctions.playerName} (^\u03C9^)"
+    m_Localized: "Hello, {Splash.playerName_} (^\u03C9^)"
     m_Metadata:
       m_Items:
       - rid: 8416390117241126945
@@ -150,6 +150,10 @@ MonoBehaviour:
 
       Mouse Scroll Wheel: Quick Field
       Of View'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32064295057141760
+    m_Localized: Black Hole
     m_Metadata:
       m_Items: []
   references:

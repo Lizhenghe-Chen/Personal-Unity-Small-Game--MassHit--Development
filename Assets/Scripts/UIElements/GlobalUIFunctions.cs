@@ -13,9 +13,8 @@ namespace UIElements
         [Header("Below Are From GlobalUIFunctions")]
         public static Animator MaskAnimator;
         // public TMP_Dropdown videoDropdown;
-        public string playerName;// https://docs.unity3d.com/Packages/com.unity.localization@1.2/manual/QuickStartGuideWithVariants.html
-
-        public TMP_Text loadingText;
+        public static string playerName;// https://docs.unity3d.com/Packages/com.unity.localization@1.2/manual/QuickStartGuideWithVariants.html
+  
         public bool AsyncLoadPass = false;
         public static Vector2 screenBound;
 
@@ -26,6 +25,9 @@ namespace UIElements
             public int UpperLimit;
             public int LowerLimit;
 
+        }
+        private void Awake() {
+            
         }
         private void OnEnable()
         {
@@ -93,6 +95,7 @@ namespace UIElements
             }
 
         }
+   
         public void FinnishAsyncLoad()
         {
             AsyncLoadPass = true;
@@ -104,7 +107,6 @@ namespace UIElements
             //   Destroy(StartCharacterBundle);
             SceneManager.LoadScene(SceneName);
             GlobalRules.instance = null;
-
         }
         public IEnumerator DelayLoadLevel(int SceneIndex)
         {
@@ -144,11 +146,7 @@ namespace UIElements
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-        public void UpdateText()
-        {
-            if (string.IsNullOrEmpty(playerName) && loadingText) { loadingText.GetComponentInChildren<LocalizeStringEvent>().SetEntry("NullPlayerName"); }
-            else { loadingText.GetComponentInChildren<LocalizeStringEvent>().SetEntry("PlayerWelecome"); }
-        }
+
         ///<Summary>
         /// This funtion can be used fo fill the iamge bar according to the value
         ///</Summary>
