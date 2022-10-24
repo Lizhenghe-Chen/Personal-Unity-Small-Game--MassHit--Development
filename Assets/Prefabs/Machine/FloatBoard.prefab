@@ -48,13 +48,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd82f88229cee34b8e0e3e4f2bc6891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isParent: 0
   isVertical: 0
-  floatMaterial: {fileID: 2100000, guid: 51bc256c6d03f9a4287acd75f2ccde72, type: 2}
-  VerticalFloatMaterial: {fileID: 2100000, guid: 866bb9aa040051c42b608f04088acc81,
-    type: 2}
   originialPos: {x: 0, y: 0, z: 0}
   originalRot: {x: 0, y: 0, z: 0}
   VericalOffset: {x: 0, y: 2, z: 0}
+  floatMaterial: {fileID: 2100000, guid: 51bc256c6d03f9a4287acd75f2ccde72, type: 2}
+  VerticalFloatMaterial: {fileID: 2100000, guid: 866bb9aa040051c42b608f04088acc81,
+    type: 2}
   rb: {fileID: 1679246910069141506}
 --- !u!33 &1679246910069141505
 MeshFilter:
@@ -127,9 +128,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679246910069141516}
   serializedVersion: 2
-  m_Mass: 8
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 5
+  m_Drag: 0.3
+  m_AngularDrag: 0.1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0

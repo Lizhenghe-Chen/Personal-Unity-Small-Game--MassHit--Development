@@ -253,8 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc4596408f6545408bca060b563d95a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: 
-  loadingText: {fileID: 0}
   AsyncLoadPass: 0
   levelDropdown: {fileID: 4481280709134908851}
   videoDropdown: {fileID: 8415655743013313012}
@@ -716,12 +714,12 @@ PrefabInstance:
     - target: {fileID: 5148025682401543300, guid: 603b147551f616b49828fd7d7468fddf,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BackToStartMenu
+      value: LoadStartMenu
       objectReference: {fileID: 0}
     - target: {fileID: 5148025682401543300, guid: 603b147551f616b49828fd7d7468fddf,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Menu, Assembly-CSharp
+      value: UIElements.GlobalUIFunctions, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5148025682401543300, guid: 603b147551f616b49828fd7d7468fddf,
         type: 3}

@@ -12,10 +12,11 @@ namespace UIElements
     {
         [Header("Below Are From GlobalUIFunctions")]
         public static Animator MaskAnimator;
+        public static LevelList levelList;
         // public TMP_Dropdown videoDropdown;
         public static string playerName;// https://docs.unity3d.com/Packages/com.unity.localization@1.2/manual/QuickStartGuideWithVariants.html
-  
-        public bool AsyncLoadPass = false;
+
+        [HideInInspector] public bool AsyncLoadPass = false;
         public static Vector2 screenBound;
 
         [System.Serializable]
@@ -26,9 +27,7 @@ namespace UIElements
             public int LowerLimit;
 
         }
-        private void Awake() {
-            
-        }
+
         private void OnEnable()
         {
             try { MaskAnimator = GameObject.Find("Mask").GetComponent<Animator>(); }
@@ -37,6 +36,7 @@ namespace UIElements
                 Debug.LogWarning("MaskAnimator not found");
             }
             playerName = PlayerPrefs.GetString("PlayerName");
+            levelList = Resources.Load<LevelList>("LevelList");
         }
         public void LoadVideoDropdown(TMP_Dropdown videoDropdown)
         {
@@ -49,24 +49,35 @@ namespace UIElements
             catch (System.Exception e)
             {
                 Debug.LogError("Load Scene failed: \n" + e);
-                SceneManager.LoadScene("StartMenu");
+                LoadStartMenu();
             }
             //   StartCoroutine(DelayLoadLevel(SceneObj));
         }
-        public void LoadLevelByIndex(int SceneIndex)
+        // public void LoadLevelByIndex(int SceneIndex)
+        // {
+        //     LoadScene(levelList.List[SceneIndex].levelName);
+        // }
+        public void LoadLevelBy_LevelList_Index(int Index)
+        {
+            LoadScene(levelList.List[Index].levelName);
+        }
+        public void LoadScene(string sceneName)
         {
             if (MaskAnimator) { PlayMaskAnimatorLeave(); }
-            try { StartCoroutine(DelayLoadLevel(SceneIndex)); }
+            try { StartCoroutine(DelayLoadLevel(sceneName)); }
             catch (System.Exception e)
             {
                 Debug.LogError("Load Scene failed: \n" + e);
-                SceneManager.LoadScene("StartMenu");
+                LoadStartMenu();
             }
-            //   StartCoroutine(DelayLoadLevel(SceneObj));
         }
-        public void LoadSceneAsync(string NextSceneName)
+        public void LoadStartMenu() { LoadScene(levelList.List[0].levelName); }
+        /// <summary>
+        /// the index in the level list from the Recource folder
+        /// </summary>
+        public void LoadSceneAsync(int index)
         {
-            StartCoroutine(AsyncLoadScene(NextSceneName));
+            StartCoroutine(AsyncLoadScene(levelList.List[index].levelName));
             //SceneManager.LoadScene(NextSceneIndex);
         }
 
@@ -95,7 +106,7 @@ namespace UIElements
             }
 
         }
-   
+
         public void FinnishAsyncLoad()
         {
             AsyncLoadPass = true;
@@ -170,9 +181,8 @@ namespace UIElements
         ///<param name ="screenIconHeight">the screen Icon height</param>
         public static void ObjectToScreenPosition(Camera mainCamera, Transform target, Image screenIcon, int screenIconWidth, int screenIconHeight)
         {
-
             var screenPosition = mainCamera.WorldToScreenPoint(target.position);
-            Debug.Log(screenBound);
+            //Debug.Log(screenBound);
             if (screenPosition.z < 0)
             {
                 screenPosition.y = 0;

@@ -7,12 +7,13 @@ public class AirCraftModeSwitch : MonoBehaviour
     [Header("For PlayerBrain PositionConstraint target")][SerializeField] private Transform PlayerBrain;
     [Header("For Player switch Positoin Rest")][SerializeField] private Transform Player, Plane;
 
-  
+
     private void OnEnable()//when aircraft is enabled, 
     {
         // StartCoroutine(LockPosition());
         Player.GetComponent<Rigidbody>().isKinematic = true;
-        Plane.forward = this.transform.parent.parent.GetComponent<Rigidbody>().velocity = Player.GetComponent<Rigidbody>().velocity;
+        //Plane.forward = this.transform.parent.parent.GetComponent<Rigidbody>().velocity = Player.GetComponent<Rigidbody>().velocity;
+        Plane.forward = CharacterCtrl._CharacterCtrl.Camera.forward;
         PlayerBrain.GetComponent<PositionConstraint>().SetSource(0, new ConstraintSource() { sourceTransform = this.transform, weight = 1 });
         Plane.position = Player.position;
     }

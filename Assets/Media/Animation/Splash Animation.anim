@@ -707,7 +707,7 @@ AnimationClip:
     messageOptions: 0
   - time: 0.033333335
     functionName: LoadSceneAsync
-    data: 0 StartMenu
+    data: StartMenu
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

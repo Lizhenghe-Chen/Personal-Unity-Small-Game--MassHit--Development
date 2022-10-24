@@ -4,29 +4,38 @@ using UnityEngine;
 
 public class FloatBoard : MonoBehaviour
 {
+    public bool isParent = false;//if the object is parent, need to check the child is in their position
     public bool isVertical = false;
+    public Vector3 originialPos, originalRot, VericalOffset = new Vector3(0, 2, 0);
     [SerializeField] Material floatMaterial, VerticalFloatMaterial;
-    [SerializeField] private Vector3 originialPos, originalRot, VericalOffset = new Vector3(0, 2, 0);
+
     [SerializeField] Rigidbody rb;
     private void OnValidate()
     {
-        rb = GetComponent<Rigidbody>();
-        if (isVertical)
+        if (!isParent)
         {
-            SetToVerticalFloat();
+            rb = GetComponent<Rigidbody>();
+            if (isVertical)
+            {
+                SetToVerticalFloat();
+            }
+            else
+            {
+                SetToFloat();
+            }
         }
-        else
-        {
-            SetToFloat();
-        }
+
     }
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        originialPos = transform.position;
-        originalRot = transform.eulerAngles;
-        StartCoroutine(ReturnToOriginPosSelfCheck());
+        if (isParent) StartCoroutine(ChildReturnToOriginPosSelfCheck());
+        else
+        {
+            rb = GetComponent<Rigidbody>();
+            originialPos = transform.position;
+            originalRot = transform.eulerAngles;
+        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -50,27 +59,40 @@ public class FloatBoard : MonoBehaviour
         StartCoroutine(ReturnToOriginPos());
     }
     float speed = 1f;
-    IEnumerator ReturnToOriginPos()
+    public IEnumerator ReturnToOriginPos()
     {
-        rb.isKinematic = true;
-        while (transform.position != originialPos)
+        while ((transform.position - originialPos).magnitude > 0.001f)
         {
-            speed = ((transform.position - originialPos).magnitude < 0.1f) ? 0.5f : Time.deltaTime;
-            rb.MovePosition(Vector3.Lerp(transform.position, originialPos, speed));
-            rb.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.Euler(originalRot), speed));
+            this.rb.isKinematic = true;
+            // this.speed = ((transform.position - originialPos).magnitude < 0.1f) ? 0.5f : Time.deltaTime;
+            speed = Time.deltaTime;
+            if ((transform.position - originialPos).magnitude <= 0.1f)
+            {
+                transform.position = originialPos;
+                transform.eulerAngles = originalRot;
+            }
+            this.rb.MovePosition(Vector3.Lerp(transform.position, originialPos, speed));
+            this.rb.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.Euler(originalRot), speed));
             //transform.eulerAngles = originalRot;
             yield return new WaitForFixedUpdate();
         }
-        rb.isKinematic = false;
+        this.rb.isKinematic = false;
         Debug.Log("Returned to origin pos");
-        StopCoroutine(ReturnToOriginPos());
+        this.StopCoroutine(ReturnToOriginPos());
     }
-    IEnumerator ReturnToOriginPosSelfCheck()
+    IEnumerator ChildReturnToOriginPosSelfCheck()
     {
         while (true)
         {
-            if (transform.position != originialPos) { Debug.Log("Not in origin pos"); StartCoroutine(ReturnToOriginPos()); }
-            yield return new WaitForSeconds(5f);
+            foreach (Transform child in transform)
+            {
+
+                var childFloatBoard = child.GetComponent<FloatBoard>();
+                if (child.position != childFloatBoard.originialPos) { Debug.Log("Not in origin pos"); childFloatBoard.StartCoroutine(childFloatBoard.ReturnToOriginPos()); }
+
+
+            }
+            yield return new WaitForSeconds(10f);
         }
     }
     private void SetToFloat()

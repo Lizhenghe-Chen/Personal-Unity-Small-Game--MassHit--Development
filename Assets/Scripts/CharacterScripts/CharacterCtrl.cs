@@ -39,18 +39,13 @@ public class CharacterCtrl : MonoBehaviour
     public GunScript gunScript;
     public GameObject Player_Camera1, Player_Camera2;// cam1 is CinemachineFreeLook with Orbits, cam2 is CinemachineVirtualCamera with CinemachineTransposer
     public ParticleSystem landBendEffect;
-
-
     //public List<GameObject> HitObjects = new();
     public Queue<GameObject> HitObjectsQueue = new();
-
     [Header("For Status Debuging")]
-
     public bool isDoubleClick, isCliming, ableToJump = false;
     [SerializeField] MeshRenderer playerMeshRenderer;
     // [SerializeField] List<GameObject> TransparentChangeList = new();
     //[SerializeField] List<Material> OriginalMaterialList = new();
-
     Rigidbody rb; // player
     float horizontalInput, verticalInput;
     private void Awake()
@@ -70,7 +65,6 @@ public class CharacterCtrl : MonoBehaviour
         //  Debug.Log("Awake");
 
         //DontDestroyOnLoad(this.transform.parent.parent);
-
     }
 
     void OnEnable()
@@ -456,13 +450,13 @@ public class CharacterCtrl : MonoBehaviour
         }
 
     }
-    public void BackToStartMenu()
-    {
+    // public void BackToStartMenu()
+    // {
 
-        StartCoroutine(DelayBackToStartMenu());
+    //     StartCoroutine(DelayBackToStartMenu());
 
-        //  DelayLoadLevel(0);
-    }
+    //     //  DelayLoadLevel(0);
+    // }
     public IEnumerator DelayLoadLevel(int leveID)
     {
         PlayMaskLeaveClip();

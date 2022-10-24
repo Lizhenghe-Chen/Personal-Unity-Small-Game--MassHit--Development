@@ -19,7 +19,12 @@ namespace UIElements
         public Button[] LevelButtons;
         public GameObject StartMenu;
         public GameObject StartCharacterBundle;
-        //public Animator MaskAnimator;
+        public GameObject[] EnvironmentList;
+
+        private void Awake()
+        {
+            SetEnvironment();
+        }
         void Start()
         {
             Time.timeScale = 0.5f;
@@ -28,10 +33,25 @@ namespace UIElements
             LoadVideoDropdown(videoDropdown);
             // videoDropdown.value = QualitySettings.GetQualityLevel();
             ChangeStart_ContinueButton();
+
             // OpenMenu(StartMenu);
             Invoke("LateOpenMenu", 1f);
         }
-
+        void SetEnvironment()
+        {
+            var random = Random.Range(0, EnvironmentList.Length);
+            for (int i = 0; i < EnvironmentList.Length; i++)
+            {
+                if (i == random)
+                {
+                    EnvironmentList[i].SetActive(true);
+                }
+                else
+                {
+                    EnvironmentList[i].SetActive(false);
+                }
+            }
+        }
         public void OpenMenu(GameObject targetMenu)
         {
             LoadLevelData();
@@ -59,10 +79,10 @@ namespace UIElements
             OpenMenu(StartMenu);
         }
 
-        public void Continue(string StartScene)
+        public void New_Continue()
         {
             // LoadLevelByName(PlayerPrefs.GetString("SavedCheckPointScene"));
-            if (string.IsNullOrEmpty(PlayerPrefs.GetString("SavedCheckPointScene"))) { LoadLevelByName(StartScene); }
+            if (string.IsNullOrEmpty(PlayerPrefs.GetString("SavedCheckPointScene"))) { LoadLevelByName(GlobalUIFunctions.levelList.List[1].levelName); }
             else { LoadLevelByName(PlayerPrefs.GetString("SavedCheckPointScene")); }
 
         }

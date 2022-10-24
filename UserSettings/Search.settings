@@ -13,12 +13,15 @@ scopes = {
 	"last_search.B655092D" = "st:black"
 	"OpenInspectorPreview.B655092D" = "0"
 	"currentGroup.B655092D" = "all"
-	"last_search.DA94955A" = "auto simulat"
+	"last_search.DA94955A" = "statis"
 	"OpenInspectorPreview.DA94955A" = "0"
 	"currentGroup.DA94955A" = "all"
 	"last_search.21382318" = ""
 	"OpenInspectorPreview.21382318" = "0"
 	"currentGroup.21382318" = "asset"
+	"last_search.DD5CDDE4" = "airc"
+	"OpenInspectorPreview.DD5CDDE4" = "0"
+	"currentGroup.DD5CDDE4" = "asset"
 }
 providers = {
 	adb = {
@@ -75,6 +78,9 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"ai"
+	"st"
+	"r"
 	"a"
 	"Sprite Editor"
 	"2"
