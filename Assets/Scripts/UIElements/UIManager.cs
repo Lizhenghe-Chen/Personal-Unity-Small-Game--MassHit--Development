@@ -37,11 +37,16 @@ namespace UIElements
         [SerializeField] Rigidbody holdingObject;
         [SerializeField] private float kernelValue, healthValue;
         [SerializeField] private bool isHoldKeyPressing = false;
-        
+
         [SerializeField] PositionConstraint shootTargetpositionConstraint;
+
+        private void OnValidate()
+        {
+            UpdateKernelStateBar();
+        }
         void Start()
         {
-           
+
             holdAim.enabled = false;
             mainCamera = MainCamera.GetComponent<Camera>();
             shootTargetpositionConstraint = shootTraget.GetComponent<PositionConstraint>();
@@ -49,10 +54,10 @@ namespace UIElements
 
         private void LateUpdate()
         {
-           // screenBound = new Vector2(Screen.width, Screen.height);
+            // screenBound = new Vector2(Screen.width, Screen.height);
             if (!targetSceenIcon.gameObject.activeSelf) { return; }
             if (!shootTargetpositionConstraint.GetSource(0).sourceTransform) { targetSceenIcon.gameObject.SetActive(false); return; }
-            ObjectToScreenPosition(mainCamera,shootTraget, targetSceenIcon, 50, 50);
+            ObjectToScreenPosition(mainCamera, shootTraget, targetSceenIcon, 50, 50);
             // var screenPosition = mainCamera.WorldToScreenPoint(shootTraget.position);
             // Debug.Log(screenPosition);
             // //if (screenPosition.x <= 0 || screenPosition.x >= screenBound.x || screenPosition.y <= 0 || screenPosition.y >= screenBound.y) return;
@@ -66,7 +71,7 @@ namespace UIElements
             // targetSceenIcon.transform.position = new Vector2(Mathf.Clamp(screenPosition.x, 50, screenBound.x - 50), Mathf.Clamp(screenPosition.y, 50, screenBound.y - 50));
             //                                                                                                                                                                // Debug.Log(screenPosition);
         }
-      
+
 
 
         // Update is called once per frame
@@ -120,17 +125,13 @@ namespace UIElements
                 }
                 return;
             }
-
-
-            if (Input.GetKeyDown(GlobalRules.instance.HoldObject))
+            else if (Input.GetKeyDown(GlobalRules.instance.HoldObject))//middle mouse button
             {
 
                 holdAim.enabled = true;
                 isHoldKeyPressing = holdAim.enabled;
 
             }
-
-
         }
         public void SpectatorHoldObjectCommand()
         {
@@ -215,7 +216,12 @@ namespace UIElements
         }
         void LockTarget()
         {
-            if (holdingObject) { SetConstrantTarget(holdingObject.transform); Debug.LogWarning("holdingObject"); return; }
+            if (holdingObject)
+            {
+                SetConstrantTarget(holdingObject.transform);
+                //   Debug.LogWarning("holdingObject"); 
+                return;
+            }
             if (Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(holdAim.rectTransform.position.x / Screen.width, holdAim.rectTransform.position.y / Screen.height, 0)), out RaycastHit shoot_hit, Mathf.Infinity, ~HoldRaycastIgnore))
             {
 
@@ -289,27 +295,23 @@ namespace UIElements
 
         public void UpdateKernelStateBar()
         {
-            KernelState.color = (UpdateImageFill(KernelState, PlayerBrain.shootEnergy, 100) >= 0.9) ? chargedColor : unchargedColor;
+            KernelState.color = (UpdateImageFill(KernelState, PlayerBrain.shootEnergy, 100) >= 0.3) ? chargedColor : unchargedColor;
         }
         public void UpdatePlayerHealthBar()
         {
-            switch (UpdateImageFill(HealthState, CharacterCtrl._CharacterCtrl.PlayerHealth, 100))
+            switch (GlobalUIFunctions.UpdateImageFill(HealthState, CharacterCtrl._CharacterCtrl.PlayerHealth, 100))
             {
-                case >= .9f:
+                case >= .8f:
                     HealthState.color = GoodHealthColor;
                     break;
-                case >= .4f and < .9f:
+                case >= .25f and < .8f:
                     HealthState.color = NormalHealthColor;
                     break;
-                case < .4f:
+                case < .25f:
                     HealthState.color = BadHealthColor;
                     break;
             }
 
         }
-
-
-
-
     }
 }

@@ -46,7 +46,7 @@ public class CharacterCtrl : MonoBehaviour
     [SerializeField] MeshRenderer playerMeshRenderer;
     // [SerializeField] List<GameObject> TransparentChangeList = new();
     //[SerializeField] List<Material> OriginalMaterialList = new();
-    Rigidbody rb; // player
+    public Rigidbody rb; // player
     float horizontalInput, verticalInput;
     private void Awake()
     {
@@ -95,7 +95,7 @@ public class CharacterCtrl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        ONBelowDeathAltitude();
+
         if (moveAbility) { TurningTorque(); }
         GiveForce();//swimming
     }
@@ -104,7 +104,7 @@ public class CharacterCtrl : MonoBehaviour
         AnimatorCtrl();
         if (AircraftAility) AircraftModeDetect();
         if (!moveAbility) { return; }
-        PlayerHealth = Mathf.Clamp(PlayerHealth, 0, 100);
+        PlayerHealth = Mathf.Clamp(PlayerHealth, -0.1f, 100);
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         JumpCommand(); RushCommand();
@@ -158,8 +158,21 @@ public class CharacterCtrl : MonoBehaviour
         {
             Debug.Log("Hit" + other.relativeVelocity.magnitude);
             PlayerHealth -= other.relativeVelocity.magnitude * other.rigidbody.mass;
+            if (PlayerHealth <= 0) OnHealthRunOut();
         }
 
+    }
+    void OnHealthRunOut()
+    {
+
+        MaskAnimator.Play("Enter", 0, 0);
+        currentOutLookState = OutLookState.NORMAL;
+        Debug.LogWarning("Player is dead");
+        transform.position = CheckPoint;
+        rb.velocity = Vector3.zero;
+        PlayerHealth = 100;
+        // LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // this.transform.position = new Vector3(0, 5, 0);
     }
     private void SetPlayerSkinStateByCollision(Collision other)
     {
@@ -195,11 +208,7 @@ public class CharacterCtrl : MonoBehaviour
                 break;
         }
     }
-    private void SavePriviousOutlookState()
-    {
-        //if (priviousOutlookState == currentOutLookState) { return; }
-        priviousOutlookState = currentOutLookState;
-    }
+
     public void ResetAnimateParamater() { PlayerAnimator.SetBool("ToDiamond", false); PlayerAnimator.SetBool("ToNormal", false); }
     private void OnCollisionExit(Collision other)
     {
@@ -233,8 +242,8 @@ public class CharacterCtrl : MonoBehaviour
     {
         if (Input.GetKeyDown(keyCode))
         {
-            isDoubleClick = ((Time.fixedTime - lastClickTime) <= doubleClickTimetThreshold);
-            lastClickTime = Time.fixedTime;
+            isDoubleClick = ((Time.time - lastClickTime) <= doubleClickTimetThreshold);
+            lastClickTime = Time.time;
         }
         else { isDoubleClick = false; }
         return isDoubleClick;
@@ -284,7 +293,7 @@ public class CharacterCtrl : MonoBehaviour
         {
             if (ableToJump)
             {
-                Debug.Log("Jump");
+                //  Debug.Log("Jump");
                 rb.AddForce(Vector3.up * jumpForce);
             }
 
@@ -340,7 +349,7 @@ public class CharacterCtrl : MonoBehaviour
     }
     void Break_Aim()
     {
-        if (Input.GetMouseButton(1)) { rb.angularVelocity = Vector3.zero; }
+        if (Input.GetKey(GlobalRules.instance.Break)) { rb.angularVelocity = Vector3.zero; }
         if (!shootAbility) { return; }
         if (Input.GetKey(GlobalRules.instance.HoldObject))
         {
@@ -360,7 +369,11 @@ public class CharacterCtrl : MonoBehaviour
 
     public void AircraftModeDetect()
     {
-        if ((IsDoubleClick(GlobalRules.instance.Jump) && !ableToJump) || PlayerBrain.shootEnergy <= 0)
+        if (PlayerBrain.shootEnergy <= 25)
+        {
+            currentOutLookState = OutLookState.NORMAL; return;
+        }
+        if ((IsDoubleClick(GlobalRules.instance.Jump) && !ableToJump))
         {
             SwitchAircraftMode();
             PlayerBrain.shootEnergy += 1;
@@ -377,7 +390,11 @@ public class CharacterCtrl : MonoBehaviour
         else { currentOutLookState = priviousOutlookState; }
         //PlayerAnimator.SetBool("ToPlane", !PlayerAnimator.GetBool("ToPlane"));
     }
-
+    private void SavePriviousOutlookState()
+    {
+        //if (priviousOutlookState == currentOutLookState) { return; }
+        priviousOutlookState = currentOutLookState;
+    }
     public void ChangeMaterialsToTransparent()
     {
         playerActionState = ActionState.AIMING;
@@ -406,20 +423,7 @@ public class CharacterCtrl : MonoBehaviour
     //        playerMeshRenderer.materials[i] = OriginalMaterialList[i];
     //    }
     //}
-    void ONBelowDeathAltitude()
-    {
-        if (transform.position.y < GlobalRules.instance.DeathAltitude)
-        {
-            MaskAnimator.Play("Enter", 0, 0);
-            currentOutLookState = OutLookState.NORMAL;
-            Debug.LogWarning("Below Death Altitude");
-            this.transform.position = CheckPoint;
-            rb.velocity = Vector3.zero;
 
-            // LoadScene(SceneManager.GetActiveScene().buildIndex);
-            // this.transform.position = new Vector3(0, 5, 0);
-        }
-    }
     public void LoadScene(int sceneIndex)
     {
         //Time.timeScale = 1f;
@@ -496,6 +500,7 @@ public class CharacterCtrl : MonoBehaviour
     }
     public void PlayerParticle()//play the particle cover
     {
+        SwitchParticleSystem.Stop();
         SwitchParticleSystem.Play();
         //OriginalMaterialList.Clear();
         //foreach (var item in playerMeshRenderer.materials)

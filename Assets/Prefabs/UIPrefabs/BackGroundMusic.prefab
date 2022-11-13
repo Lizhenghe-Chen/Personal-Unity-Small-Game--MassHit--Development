@@ -153,8 +153,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4746600860174338685}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.84277, y: 5.634364, z: 24.914005}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -270,14 +270,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e9858ef246dc846b043177327d72cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unAvalibleSound: {fileID: 2731198031123939052}
   MusicList:
   - {fileID: 8300000, guid: 51b4025724c34554bbbe093737e2c958, type: 3}
   - {fileID: 8300000, guid: 85292c4ae84cfbb41934dcba411c808d, type: 3}
   - {fileID: 8300000, guid: 24d38673a12937e40a245232bdf2a3f5, type: 3}
   - {fileID: 8300000, guid: 3f7f596f8222304408b761bde1ef6b85, type: 3}
   - {fileID: 8300000, guid: 0a42f6f6c8d27774cbb49088672f2b3e, type: 3}
-  - {fileID: 8300000, guid: 6beefee8ce93f174096f1079bdf53d7a, type: 3}
+  - {fileID: 8300000, guid: 8f92b794c1f806b43af51b411c8f1aa2, type: 3}
   autoPlay: 1
-  useTargetSound: 0
-  TargetSound: {fileID: 0}
-  unAvalibleSound: {fileID: 2731198031123939052}
+  randomPlay: 0
+  useTargetSound: 1
+  TargetSound: {fileID: 8300000, guid: 8f92b794c1f806b43af51b411c8f1aa2, type: 3}

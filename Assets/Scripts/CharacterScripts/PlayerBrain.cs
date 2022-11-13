@@ -22,7 +22,7 @@ public class PlayerBrain : MonoBehaviour
     public Material chargedMaterial, un_ChargedMaterial;
     // [SerializeField] SphereCollider myCollider;
     private int min = -90, max = 90;
-    
+
     private void Start()
     {
         // myCollider = GetComponent<SphereCollider>();
@@ -42,9 +42,10 @@ public class PlayerBrain : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        OnBelowDeathAltitude();
         if (inMenuRotate) { transform.rotation = Quaternion.Lerp(transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime); return; }
         //  transform.position = Player.position;
-       //   Debug.Log(Vector3.Distance(transform.position, PlayerKernel.transform.position));
+        //   Debug.Log(Vector3.Distance(transform.position, PlayerKernel.transform.position));
         if (Vector3.Distance(transform.position, PlayerKernel.position) <= chargingRange) { is_Charging = true; } else { is_Charging = false; }
         if (is_Charging)
         {
@@ -61,8 +62,20 @@ public class PlayerBrain : MonoBehaviour
                 transform.RotateAround(transform.position, PlayerKernel.forward, 500 * Time.deltaTime);
             }
         }
+    }
+    void OnBelowDeathAltitude()
+    {
+        if (transform.position.y < GlobalRules.instance.DeathAltitude)
+        {
+            CharacterCtrl._CharacterCtrl.MaskAnimator.Play("Enter", 0, 0);
+            CharacterCtrl._CharacterCtrl.currentOutLookState = CharacterCtrl.OutLookState.NORMAL;
+            Debug.LogWarning("Below Death Altitude");
+            CharacterCtrl._CharacterCtrl.transform.position = CharacterCtrl._CharacterCtrl.CheckPoint;
+            CharacterCtrl._CharacterCtrl.rb.velocity = Vector3.zero;
 
-
+            // LoadScene(SceneManager.GetActiveScene().buildIndex);
+            // this.transform.position = new Vector3(0, 5, 0);
+        }
     }
     // private void OnTriggerStay(Collider other)
     // {

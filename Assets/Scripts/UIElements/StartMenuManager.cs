@@ -40,11 +40,13 @@ namespace UIElements
         void SetEnvironment()
         {
             var random = Random.Range(0, EnvironmentList.Length);
+            if (EnvironmentList[random].name == PlayerPrefs.GetString("currentStartEnvironment")) { SetEnvironment(); return; }
             for (int i = 0; i < EnvironmentList.Length; i++)
             {
                 if (i == random)
                 {
                     EnvironmentList[i].SetActive(true);
+                    PlayerPrefs.SetString("currentStartEnvironment", EnvironmentList[i].name);
                 }
                 else
                 {

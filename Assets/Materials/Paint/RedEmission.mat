@@ -141,7 +141,7 @@ Material:
     - _LightAngle: 3.1416
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
-    - _Metallic: 1
+    - _Metallic: 0.8
     - _OcclusionStrength: 1
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0

@@ -11,13 +11,12 @@ GameObject:
   - component: {fileID: 1739640717805016590}
   - component: {fileID: 1739640717805016588}
   - component: {fileID: 1739640717805016589}
-  - component: {fileID: 1739640717805016587}
   m_Layer: 0
   m_Name: JumpPadBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1739640717805016590
 Transform:
@@ -84,20 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1739640717805016587
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1739640717805016591}
-  m_Material: {fileID: 13400000, guid: 82ee09d6465b88246b6acab24e61c70f, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2432090755550338912, guid: c4fce71d05a347f4bb1ab0e39ea96fc7, type: 3}
 --- !u!1 &1739640719118155624
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +101,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1739640719118155639
 Transform:
@@ -206,7 +191,7 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1739640719118155624}
   m_Material: {fileID: 13400000, guid: 82ee09d6465b88246b6acab24e61c70f, type: 2}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
@@ -228,7 +213,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1739640719434948763
 Transform:

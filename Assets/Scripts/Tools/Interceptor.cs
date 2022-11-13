@@ -5,19 +5,37 @@ public class Interceptor : MonoBehaviour
 {
     public Transform TargetObj, PredictedObj;//assigin target 
     public GameObject bullet;// bullet prefab
-    public float FiringRate = .3f, bulletSpeed = 10f, followSpeed = 1f, accurancy = 0.5f;
+    public float attackRange = 50, FiringRate = .3f, bulletSpeed = 10f, followSpeed = 1f, accurancy = 0.5f;
 
     public float flyingTime, distance;
     [SerializeField] Rigidbody TargetRig;
     [SerializeField] Vector3 lastVelocity, acceleration;
 
-
-    void Start()
+    private void OnValidate() { this.GetComponent<SphereCollider>().radius = attackRange; }
+    // void Start()
+    // {
+    //     TargetRig = TargetObj.GetComponent<Rigidbody>();
+    //     //StartCoroutine(Shoot());// start shooting
+    // }
+    private void OnTriggerEnter(Collider other)
     {
-        TargetRig = TargetObj.GetComponent<Rigidbody>();
-        StartCoroutine(Shoot());// start shooting
+        if (other.gameObject.CompareTag("Respawn"))// buckeyball is the tag of the player
+        {
+            TargetObj = other.gameObject.transform;
+            TargetRig = TargetObj.GetComponent<Rigidbody>();
+            StartCoroutine(Shoot());// start shooting
+        }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Respawn"))
+        {
+            TargetObj = null;
+            TargetRig = null;
+            StopAllCoroutines();
+        }
+    }
     // Update is called once per frame
     private void LateUpdate()
     {

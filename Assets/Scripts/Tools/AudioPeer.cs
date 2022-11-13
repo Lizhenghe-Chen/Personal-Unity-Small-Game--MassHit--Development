@@ -164,7 +164,7 @@ public class AudioPeer : MonoBehaviour
             range = samples[rangeCounter] * PlayerBrain.shootEnergy * rangeTimer;
             //if (rangeCounter > samples.Length / 3 && range < 0.5f) { range *= rangeTimer; }
             if (range >= 3) { range *= 0.01f; }
-            if (range <= 0.1) { range *= 10; }
+           // if (range <= 0.1) { range *= 5; }
             range = Mathf.Clamp(range, 0.01f, 3f);
             //else if (range < 1) { range *= 10; }
             if (isVertical) { child.localScale = new Vector3(cubeScale, Mathf.Lerp(child.localScale.y, range, Time.deltaTime * buffer), cubeScale); }

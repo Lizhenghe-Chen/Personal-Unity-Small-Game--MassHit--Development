@@ -24,7 +24,6 @@ public class FloatBoard : MonoBehaviour
                 SetToFloat();
             }
         }
-
     }
     // Start is called before the first frame update
     void Awake()
@@ -88,7 +87,11 @@ public class FloatBoard : MonoBehaviour
             {
 
                 var childFloatBoard = child.GetComponent<FloatBoard>();
-                if (child.position != childFloatBoard.originialPos) { Debug.Log("Not in origin pos"); childFloatBoard.StartCoroutine(childFloatBoard.ReturnToOriginPos()); }
+                if (child.position != childFloatBoard.originialPos)
+                {
+                    //Debug.Log("Not in origin pos");
+                    childFloatBoard.StartCoroutine(childFloatBoard.ReturnToOriginPos());
+                }
 
 
             }
