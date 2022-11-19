@@ -28,14 +28,13 @@ namespace UIElements
             // MissionTextEvent.GetComponent<LocalizeStringEvent>();
             // TMP_MissionText = this.GetComponent<TextMeshProUGUI>();
             // soundEffect = this.GetComponent<AudioSource>();
-
+            if (MissionTextList.Count == 0)
+            {
+                Debug.LogWarning("Opss, MissionTextList is empty");
+                return;
+            }
             Mission_Text_Progress = 0;
-
             MissionTextEvent.StringReference = MissionTextList[Mission_Text_Progress];
-
-
-
-
             // Invoke("SetEnable", 2);
             //Debug.Log("SetEnable");
         }

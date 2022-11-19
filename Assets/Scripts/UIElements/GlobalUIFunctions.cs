@@ -84,7 +84,7 @@ namespace UIElements
         AsyncOperation asyncOperation;
         IEnumerator AsyncLoadScene(string NextSceneName)//https://docs.unity3d.com/ScriptReference/AsyncOperation-allowSceneActivation.html
         {
-            // yield return null;
+             yield return null;
             //Begin to load the Scene you specify
             asyncOperation = SceneManager.LoadSceneAsync(NextSceneName);
             //Don't let the Scene activate until you allow it to
@@ -109,8 +109,8 @@ namespace UIElements
 
         public void FinnishAsyncLoad()
         {
-            AsyncLoadPass = true;
-            asyncOperation.allowSceneActivation = AsyncLoadPass;
+          //  AsyncLoadPass = true;
+            asyncOperation.allowSceneActivation = true;
         }
         public IEnumerator DelayLoadLevel(string SceneName)
         {

@@ -50,6 +50,7 @@ MonoBehaviour:
   playerLayerID: 3
   bulletLayerID: 3
   groundLayerID: 0
+  IgnoreHoldObjectID: 7
   GoundLayer:
     serializedVersion: 2
     m_Bits: 129

@@ -3,14 +3,20 @@ using UnityEngine;
 
 public class Interceptor : MonoBehaviour
 {
-    public Transform TargetObj, PredictedObj;//assigin target 
-    public GameObject bullet;// bullet prefab
-    public float attackRange = 50, FiringRate = .3f, bulletSpeed = 10f, followSpeed = 1f, accurancy = 0.5f;
 
-    public float flyingTime, distance;
-    [SerializeField] Rigidbody TargetRig;
-    [SerializeField] Vector3 lastVelocity, acceleration;
+    public Animator cannonAnimation;
+    [SerializeField] private Transform PredictedObj, FirePoint;//assigin target 
+    [SerializeField] private GameObject bullet;// bullet prefab
+    [SerializeField] private ParticleSystem muzzleFlash;//muzzle flash
+    [SerializeField] private float attackRange = 50, FiringRate = .3f, bulletSpeed = 10f, followSpeed = 1f, accurancy = 0.5f;
+    [SerializeField] private string ratgetTag = "Respawn";
 
+    [Header("Below For Debug Use:")]
+    [SerializeField] private float flyingTime;
+    [SerializeField] private float distance;
+    [SerializeField] private Rigidbody TargetRig;
+    [SerializeField] private Vector3 lastVelocity, acceleration;
+    [SerializeField] private Transform TargetObj;
     private void OnValidate() { this.GetComponent<SphereCollider>().radius = attackRange; }
     // void Start()
     // {
@@ -19,7 +25,7 @@ public class Interceptor : MonoBehaviour
     // }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Respawn"))// buckeyball is the tag of the player
+        if (other.gameObject.CompareTag(ratgetTag))// buckeyball is the tag of the player
         {
             TargetObj = other.gameObject.transform;
             TargetRig = TargetObj.GetComponent<Rigidbody>();
@@ -29,7 +35,7 @@ public class Interceptor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Respawn"))
+        if (other.gameObject.CompareTag(ratgetTag))
         {
             TargetObj = null;
             TargetRig = null;
@@ -60,9 +66,21 @@ public class Interceptor : MonoBehaviour
         while (TargetObj)
         {
             //  for (int i = 0; i <= num_bullets_pertime; i++) { Instantiate(bullet, transform.position, transform.rotation).GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed * Random.Range(0.1f, 2f); }
-            Instantiate(bullet, transform.position, transform.rotation).GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed;
+            // Invoke("ShootWithMuzzleFlash", 2f);
+            cannonAnimation.Play("Shoot", 0, 0);
+            Debug.Log("Shoot");
+            //   Instantiate(bullet, FirePoint.position, Quaternion.identity).GetComponent<Rigidbody>().velocity = FirePoint.forward * bulletSpeed;
             yield return new WaitForSeconds(FiringRate);
 
         }
     }
+    void ShootBullet()
+    {
+        Instantiate(bullet, FirePoint.position, Quaternion.identity).GetComponent<Rigidbody>().velocity = FirePoint.forward * bulletSpeed;
+    }
+    void PlayMuzzleFlash()
+    {
+        muzzleFlash.Play();
+    }
+
 }

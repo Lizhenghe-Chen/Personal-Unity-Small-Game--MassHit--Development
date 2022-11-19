@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4729638353243057881}
   - component: {fileID: 6212919835090545635}
   - component: {fileID: 9015764242906923464}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -200,25 +200,25 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: -0
-        value: 0.098933116
-        inSlope: 0
-        outSlope: 0
+        time: 0
+        value: 0.21339278
+        inSlope: -2.029771
+        outSlope: -2.029771
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 1
       - serializedVersion: 3
-        time: 0.10482025
-        value: 0.09893799
-        inSlope: 0.3970074
-        outSlope: 0.3970074
+        time: 0.094097905
+        value: 0.038696654
+        inSlope: -0.3721312
+        outSlope: -0.3721312
         tangentMode: 0
         weightedMode: 0
         inWeight: 1
-        outWeight: 0.079406805
+        outWeight: 0.2763529
       - serializedVersion: 3
-        time: 1
+        time: 0.6461126
         value: 0
         inSlope: 0
         outSlope: 0
@@ -263,7 +263,7 @@ TrailRenderer:
     alignment: 0
     textureMode: 0
     shadowBias: 0.5
-    generateLightingData: 1
+    generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 1
   m_Emitting: 1
@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 7772609646962769014}
   - component: {fileID: 6470883706708180686}
   - component: {fileID: 8374087443153641493}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}

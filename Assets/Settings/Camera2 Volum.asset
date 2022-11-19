@@ -102,7 +102,7 @@ MonoBehaviour:
     m_Value: 31.61
   aperture:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 5
   focalLength:
     m_OverrideState: 1
     m_Value: 200

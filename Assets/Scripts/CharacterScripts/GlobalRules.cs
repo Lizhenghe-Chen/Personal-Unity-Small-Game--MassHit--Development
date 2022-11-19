@@ -10,7 +10,7 @@ public class GlobalRules : MonoBehaviour
 {
     public static GlobalRules instance;
     public bool isPause = false;
-    public int waterLayerID, playerLayerID, bulletLayerID, groundLayerID;
+    public int waterLayerID, playerLayerID, bulletLayerID, groundLayerID,IgnoreHoldObjectID;
     public LayerMask GoundLayer;
     public int DeathAltitude;
     public EscUI escMenu;

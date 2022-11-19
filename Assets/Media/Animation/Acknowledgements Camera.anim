@@ -230,7 +230,7 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0
+  - time: 4.9166665
     functionName: LoadSceneAsync
     data: 0 StartMenu
     objectReferenceParameter: {fileID: 0}

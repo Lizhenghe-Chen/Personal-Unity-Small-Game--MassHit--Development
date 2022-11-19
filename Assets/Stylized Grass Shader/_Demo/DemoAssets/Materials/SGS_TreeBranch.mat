@@ -100,7 +100,7 @@ Material:
     - _ColorMapHeight: 1
     - _ColorMapStrength: 0
     - _ColorMode: 0
-    - _Cull: 0
+    - _Cull: 1
     - _Cutoff: 0.717
     - _DisableBending: 1
     - _DisableDecals: 0

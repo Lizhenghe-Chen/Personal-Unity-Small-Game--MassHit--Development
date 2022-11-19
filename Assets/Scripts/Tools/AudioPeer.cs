@@ -51,6 +51,7 @@ public class AudioPeer : MonoBehaviour
         if (!characterCtrl.AudioTail) { return; }
         audioSource = GetComponent<AudioSource>();
         samples = new float[num_Samples];
+         Physics.IgnoreLayerCollision(GlobalRules.instance.IgnoreHoldObjectID, GlobalRules.instance.IgnoreHoldObjectID);
         InstantiateCubes();
         // StartCoroutine(SimpleSnake());
     }
