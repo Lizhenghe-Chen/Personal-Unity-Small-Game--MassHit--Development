@@ -4,6 +4,9 @@
 
 //Global parameters
 float4 _BendMapUV;
+//XY: Bounds min corner
+//Z: Bounds size (uniform)
+//W: Bool if renderer is enabled
 TEXTURE2D(_BendMap); SAMPLER(sampler_BendMap);
 float4 _BendMap_TexelSize;
 
@@ -35,14 +38,19 @@ BendSettings PopulateBendSettings(uint mode, float mask, float pushStrength, flo
 }
 
 //Bend map UV
-float2 GetBendMapUV(in float3 wPos) {
+float2 GetBendMapUV(in float3 wPos)
+{
+	#if defined(SHADERGRAPH_PREVIEW)
+	return 0;
+	#else
 	float2 uv = _BendMapUV.xy / _BendMapUV.z + (_BendMapUV.z / (_BendMapUV.z * _BendMapUV.z)) * wPos.xz;
 
-#ifdef FLIP_UV
-	uv.y = 1 - uv.y;
+#if	VERSION_GREATER_EQUAL(10,0)
+	uv.y = 1-uv.y;
 #endif
 
-	return uv;			
+	return uv;
+	#endif
 }
 
 //https://github.com/Unity-Technologies/Graphics/blob/4641000674e63d10e2f7693e919c78b611f9de27/com.unity.render-pipelines.universal/ShaderLibrary/GlobalIllumination.hlsl#L170
@@ -63,75 +71,43 @@ float BoundsEdgeMask(float2 position)
 //Texture sampling
 float4 GetBendVector(float3 wPos) 
 {
-#if _DISABLE_BENDING
-	return 0;
-#else
-	if (_BendMapUV.w == 0) return float4(0.5, wPos.y, 0.5, 0.0);
-
-	float2 uv = GetBendMapUV(wPos);
-
-	float4 v = SAMPLE_TEXTURE2D(_BendMap, sampler_BendMap, uv).rgba;
-
-	v.xz = v.xz * 2.0 - 1.0;
-
-	float edgeMask = BoundsEdgeMask(wPos.xz);
-	
-	return v * edgeMask;
-#endif
-}
-
-float4 GetBendVectorLOD(float3 wPos) 
-{
-#if _DISABLE_BENDING
-	return 0;
-#else
-	if (_BendMapUV.w == 0) return float4(0.5, wPos.y, 0.5, 0.0);
-
 	float2 uv = GetBendMapUV(wPos);
 
 	float4 v = SAMPLE_TEXTURE2D_LOD(_BendMap, sampler_BendMap, uv, 0).rgba;
 
-	//Remap from 0.1 to -1.1
 	v.xz = v.xz * 2.0 - 1.0;
 
-	float edgeMask = BoundsEdgeMask(wPos.xz);
-
-	return v * edgeMask;
-#endif
+	v.a *= BoundsEdgeMask(wPos.xz);
+	
+	return v;
 }
 
-float CreateDirMask(float2 uv) {
-	float center = pow((uv.y * (1 - uv.y)) * 4, 4);
+#define BENDING_END_DIST 3.0
 
-	return saturate(center);
-}
-
-//Creates a tube mask from the trail UV.y. Red vertex color represents lifetime strength
-float CreateTrailMask(float2 uv, float lifetime)
+float HeightDistanceWeight(float3 obstaclePos, float3 surfacePos)
 {
-	float center = saturate((uv.y * (1.0 - uv.y)) * 8.0);
+	const float grassHeight = obstaclePos.y;
+	const float bendHeight = surfacePos.y;
 
-	//Mask out the start of the trail, avoids grass instantly bending (assumes UV mode is set to "Stretch")
-	float tip = saturate(uv.x * 16.0);
+	const float pixelDist = -(bendHeight - grassHeight);
 
-	return center * lifetime * tip;
+	//Ensure the weight tapers off once the obstacle start to go lower than 3 units from the grass.
+	const float falloff = 1-saturate((pixelDist - BENDING_END_DIST) / (grassHeight));
+
+	return saturate((grassHeight - bendHeight) * falloff);
 }
 
 float4 GetBendOffset(float3 wPos, BendSettings b)
 {
-#if _DISABLE_BENDING
-	return 0;
-#else
+	float4 offset = 0;
+	
+#if !defined(DISABLE_BENDING)
+	//Render feature not present
+	if (_BendMapUV.w == 0) return 0;
+	
+	float4 vec = GetBendVector(wPos);
 
-	float4 vec = GetBendVectorLOD(wPos);
-
-	float4 offset = float4(wPos, vec.a);
-
-	const float grassHeight = wPos.y;
-	const float bendHeight = vec.y;
-	const float dist = grassHeight - bendHeight;
-
-	const float weight = saturate(dist);
+	const float weight = HeightDistanceWeight(wPos.y, vec.y);
 
 	offset.xz = vec.xz * b.mask * weight * b.pushStrength;
 	offset.y = b.mask * (vec.a * 0.75) * weight * b.flattenStrength;
@@ -141,7 +117,56 @@ float4 GetBendOffset(float3 wPos, BendSettings b)
 
 	//Apply mask
 	offset.xyz *= offset.a;
-
-	return offset;
 #endif
+	
+	return offset;
+}
+
+void ApplyPerspectiveCorrection(inout float3 offset, float3 wPos, float3 viewDir, float mask, float strength)
+{
+	float dist = 1;
+	
+	if(_CameraForwardVector.w > 0)
+	{
+		viewDir = _CameraForwardVector.xyz;
+	}
+	else
+	{
+		//Avoid pushing grass straight underneath the camera in a falloff of 4 units (1.0/4.0)
+		dist = saturate(distance(wPos.xz, GetCameraPositionWS().xz) * 0.25);
+	}
+	
+	float NdotV = dot(float3(0, 1, 0), viewDir);
+
+	const float perspMask = mask * strength * dist * NdotV;
+	
+	offset.xz += -viewDir.xz * perspMask;
+}
+
+
+//Shader Graph and Amplify Shader Editor
+
+void GetBendOffset_float(float3 wPos, float mask, float pushStrength, float flattenStrength, out float4 offset)
+{
+	//Note: Mode and PerspCorrection parameters aren't used for just the grass bending
+	BendSettings b = PopulateBendSettings(0, mask, pushStrength, flattenStrength, 0);
+
+	offset = GetBendOffset(wPos, b);
+
+	//Negate component so the entire vector can just be additively applied
+	offset.y = -offset.y;
+
+	//SG and ASE work in Object-space offsets.
+	offset.xyz = TransformWorldToObjectDir(offset.xyz, false);
+}
+
+//Backwards compatibility with 1.2.2
+float CreateTrailMask(float2 uv, float mask)
+{
+	return 0;
+}
+
+float CreateDirMask(float2 uv)
+{
+	return 0;
 }

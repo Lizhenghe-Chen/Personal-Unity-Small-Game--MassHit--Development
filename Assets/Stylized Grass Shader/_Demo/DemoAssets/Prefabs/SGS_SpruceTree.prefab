@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7082611042288848995}
   - component: {fileID: 3564304835197611162}
   - component: {fileID: 8547548354974549271}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SGS_SpruceTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 45
+  m_Radius: 0.97
+  m_Height: 46.530003
   m_Direction: 1
-  m_Center: {x: 0, y: 21, z: 0}
+  m_Center: {x: -0.15721583, y: 14.9, z: -0.0014667511}

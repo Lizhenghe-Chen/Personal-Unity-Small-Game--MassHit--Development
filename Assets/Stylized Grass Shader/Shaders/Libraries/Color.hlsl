@@ -19,17 +19,21 @@ float3 BlendOverlay(float3 a, float3 b)
 }
 
 
-float4 SampleColorMapTexture(in float3 wPos) 
+float4 SampleColorMapTexture(in float3 positionWS) 
 {
-	float2 uv = GetColorMapUV(wPos);
+	#ifndef GRASS_COMMON_INCLUDED
+	return 0;
+	#else
+	float2 uv = GetColorMapUV(positionWS);
 
 	return SAMPLE_TEXTURE2D(_ColorMap, sampler_ColorMap, uv).rgba;
+	#endif
 }
 
 //---------------------------------------------------------------//
 
 //Shading (RGB=hue - A=brightness)
-float4 ApplyVertexColor(in float4 vertexPos, in float3 wPos, in float3 baseColor, in float mask, in float aoAmount, in float darkening, in float4 hue, in float posOffset)
+float4 ApplyVertexColor(in float4 vertexPos, in float3 positionWS, in float3 baseColor, in float mask, in float aoAmount, in float darkening, in float4 hue, in float posOffset)
 {
 	float4 col = float4(baseColor, 1);
 
@@ -50,28 +54,24 @@ float4 ApplyVertexColor(in float4 vertexPos, in float3 wPos, in float3 baseColor
 	return col;
 }
 
-float3 ApplyAmbientOcclusion(in float3 color, in float mask, in float amount) {
-	return lerp(color, color * mask, amount);
-}
-
-float3 ApplyDarkening(in float3 vertexPos, in float3 color, in float amount)
+float3 ApplyColorMap(float3 positionWS, float3 iColor, float s) 
 {
-	float rand = frac(vertexPos.r * 4.0);
-
-	return lerp(color, color * rand, amount);
+	return lerp(iColor, SampleColorMapTexture(positionWS).rgb, s);
 }
 
-float3 ApplyColorMap(float3 wPos, float3 iColor, float s) 
+//Shader Graph and Amplify Shader Editor
+
+//Common.hlsl cannot be included, as this redefines vert/frag structs
+#ifndef GRASS_COMMON_INCLUDED
+float4 _ColorMapUV;
+TEXTURE2D(_ColorMap); SAMPLER(sampler_ColorMap);
+#endif
+
+//SG & ASE
+void SampleColorMapTexture_float(in float3 positionWS, out float4 color) 
 {
-	return lerp(iColor, SampleColorMapTexture(wPos).rgb, s);
-}
-
-//Apply object and vertex hue colors
-float3 ApplyHue(in float4 iColor, in float3 oColor)
-{
-	return lerp(oColor, iColor.rgb, ObjectPosRand01() * iColor.a);
-}
-
-void ApplyObjectHueVariation(in float4 hue, in float3 color, out float3 output) {
-	output = lerp(color.rgb, hue.rgb, hue.a * ObjectPosRand01());
+	//Note: Unrolled from the GetColorMapUV, check that these are always in sync!
+	float2 uv = (positionWS.xz * _ColorMapUV.z) - (_ColorMapUV.xy * _ColorMapUV.z);
+	
+	color = SAMPLE_TEXTURE2D(_ColorMap, sampler_ColorMap, uv).rgba;
 }

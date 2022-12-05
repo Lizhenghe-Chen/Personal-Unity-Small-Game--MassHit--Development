@@ -15,17 +15,14 @@ MonoBehaviour:
   version: 1
 --- !u!21 &2100000
 Material:
-  serializedVersion: 8
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SGS_TreeBranch
   m_Shader: {fileID: 4800000, guid: d7dd1c3f4cba1d441a7d295a168bac0d, type: 3}
-  m_ValidKeywords:
-  - _SIMPLE_LIGHTING
-  m_InvalidKeywords:
-  - _ALPHATOCOVERAGE_ON
+  m_ShaderKeywords: _FADING _SIMPLE_LIGHTING
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
@@ -79,12 +76,23 @@ Material:
         m_Texture: {fileID: 2800000, guid: 58ee3d953f2ad1d4bb6dce9e0821b8c0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Ints: []
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AdvancedLighting: 1
     - _AlphaClip: 1
     - _AlphaToCoverage: 1
-    - _AngleFading: 0
+    - _AngleFading: 1
     - _BendFlattenStrength: 0
     - _BendMode: 0
     - _BendPushStrength: 0
@@ -100,16 +108,19 @@ Material:
     - _ColorMapHeight: 1
     - _ColorMapStrength: 0
     - _ColorMode: 0
-    - _Cull: 1
-    - _Cutoff: 0.717
+    - _Cull: 0
+    - _Cutoff: 0.5
     - _DisableBending: 1
     - _DisableDecals: 0
+    - _DistanceFadingOn: 0
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0.1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
+    - _FadeAngleThreshold: 15
+    - _FadingOn: 1
     - _FlipbookBlending: 0
     - _FlipbookMode: 0
     - _GlossMapScale: 0
@@ -121,7 +132,12 @@ Material:
     - _LightingMode: 1
     - _Metallic: 0
     - _Mode: 0
+    - _NormalFlattenDepthNormals: 0
+    - _NormalFlattening: 1
     - _NormalMapKwToggle: 0
+    - _NormalSpherify: 0
+    - _NormalSpherifyDepthNormals: 0
+    - _NormalSpherifyMask: 0
     - _OcclusionIndirectStrength: 0.25
     - _OcclusionStrength: 1
     - _PerspectiveCorrection: 0
@@ -144,11 +160,12 @@ Material:
     - _SubsurfaceKwToggle: 0
     - _Surface: 0
     - _Translucency: 0.459
+    - _TranslucencyDirect: 1
     - _TranslucencyFalloff: 4
-    - _TranslucencyIndirect: 0
-    - _TranslucencyOffset: 0
+    - _TranslucencyIndirect: 0.072
+    - _TranslucencyOffset: 1
     - _TwoSided: 2
-    - _VertexDarkening: 0.147
+    - _VertexDarkening: 0
     - _WindAmbientStrength: 0.053
     - _WindGustFreq: 9.75
     - _WindGustStrength: 0.3
@@ -162,15 +179,17 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.93372107, g: 1, b: 0, a: 1}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _BendTint: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _CameraFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FadeFar: {r: 1000, g: 1000, b: 0, a: 0}
+    - _FadeNear: {r: 0, g: 0, b: 0, a: 0}
     - _FadeParams: {r: 50, g: 100, b: 0, a: 0}
     - _HeightmapScaleInfluence: {r: 0, g: 1, b: 0, a: 0}
-    - _HueVariation: {r: 1, g: 0.84278667, b: 0, a: 1}
+    - _HueVariation: {r: 1, g: 0.84278667, b: 0, a: 0}
     - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _LODDebugColor: {r: 1, g: 1, b: 1, a: 1}
     - _NormalParams: {r: 0, g: 0, b: 0, a: 0}

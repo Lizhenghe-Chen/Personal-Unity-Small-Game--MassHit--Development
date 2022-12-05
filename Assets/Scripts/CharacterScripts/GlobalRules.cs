@@ -10,7 +10,7 @@ public class GlobalRules : MonoBehaviour
 {
     public static GlobalRules instance;
     public bool isPause = false;
-    public int waterLayerID, playerLayerID, bulletLayerID, groundLayerID,IgnoreHoldObjectID;
+    public int waterLayerID, playerLayerID, bulletLayerID, groundLayerID, IgnoreHoldObjectID;
     public LayerMask GoundLayer;
     public int DeathAltitude;
     public EscUI escMenu;
@@ -59,12 +59,12 @@ public class GlobalRules : MonoBehaviour
         //Debug.Log("OnEnable called");
         //if (SceneManager.GetActiveScene().buildIndex == 0) return;
         SceneManager.sceneLoaded += OnSceneLoaded;
-
+        ReallocateCheckDestoryList();
     }
     void Start()
     {
 
-        ReallocateCheckDestoryList();
+
 
         //Player = GameObject.Find("Player").transform;
         // cam1 = Player.GetComponent<CharacterCtrl>().Player_Camera1.GetComponent<CinemachineFreeLook>();
@@ -187,7 +187,7 @@ public class GlobalRules : MonoBehaviour
     public void FitCameraDirection(bool isCam1ToCam2)
     {
         var (A, B) = GetCamerasDetails();
-       // Debug.Log(A.m_XAxis.Value + ", " + B.m_XAxis.Value);
+        // Debug.Log(A.m_XAxis.Value + ", " + B.m_XAxis.Value);
         if (isCam1ToCam2)
         {
             B.m_XAxis.Value = A.m_XAxis.Value;
@@ -196,7 +196,7 @@ public class GlobalRules : MonoBehaviour
         {
             A.m_XAxis.Value = B.m_XAxis.Value;
         }
-       // Debug.Log("->" + A.m_XAxis.Value + ", " + B.m_XAxis.Value);
+        // Debug.Log("->" + A.m_XAxis.Value + ", " + B.m_XAxis.Value);
     }
     public (CinemachineFreeLook, CinemachineOrbitalTransposer) GetCamerasDetails()
     {

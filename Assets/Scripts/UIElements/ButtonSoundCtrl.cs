@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ButtonSoundCtrl : MonoBehaviour
 {
     [SerializeField] AudioSource buttonSound;
-    public AudioClip Hover,Clickable, UnClickable;
+    public AudioClip Hover, Clickable, UnClickable;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,12 +24,14 @@ public class ButtonSoundCtrl : MonoBehaviour
         }
         buttonSound.Play();
     }
-    public void PlayButtonHoverSound() {
+    public void PlayButtonHoverSound()
+    {
         if (this.GetComponent<Button>().interactable)
         {
             buttonSound.clip = Hover;
         }
-        
+        else { buttonSound.clip = UnClickable; }
+
         buttonSound.Play();
     }
     void LoadButtonClickSound()

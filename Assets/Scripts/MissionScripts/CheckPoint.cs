@@ -1,15 +1,32 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class CheckPoint : MonoBehaviour
 {
     [Tooltip("False if wnat it to be the finnish point")]
     public bool isCheckPoint = true;
+    public string playerTag = "Respawn";
+    public Material checkPointMaterial, finnishPointMaterial;
+    public Color checkPointColor, finnishPointColor;
+   [SerializeField] TMP_Text display_Text;
     [SerializeField] Animator animator;
-    int HitCount;
+    [SerializeField] bool HitOnce = false;
     public bool isLoading = false;
-    [SerializeField] Image MaskImage;
+    [SerializeField] private Image MaskImage;
+    private void OnValidate()
+    {
+     
+        if (isCheckPoint)
+        {
+            SetToChecnkPoint();
+        }
+        else
+        {
+            SetToFinnishPoint();
+        }
+    }
+ 
     private void Update()
     {
         if (isLoading)
@@ -21,7 +38,7 @@ public class CheckPoint : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag(playerTag))
         {
 
             if (isCheckPoint)//if it is checkpoint
@@ -38,22 +55,34 @@ public class CheckPoint : MonoBehaviour
             }
             else
             {
-                if (HitCount > 0) { return; }
+                if (HitOnce) { return; }
                 PlayerPrefs.SetFloat("SavedCheckPoint_X", 0);
                 PlayerPrefs.SetFloat("SavedCheckPoint_Y", 0);
                 PlayerPrefs.SetFloat("SavedCheckPoint_Z", 0);
                 Time.timeScale = 0;
                 Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 animator.Play("Mission Accomplished", 0, 0);
-
-
                 PlayerPrefs.SetInt("UnlockedLevel", SceneManager.GetActiveScene().buildIndex - 1);
+                HitOnce = true;
                 // Debug.Log("FinishPoint now unlocked level" + ((Resources.Load("Data") as GameObject).GetComponent<SavedData>().UnlockedLevel = SceneManager.GetActiveScene().buildIndex - 1));
             }
-            HitCount++;
+
         }
 
-
+    }
+    void SetToChecnkPoint()
+    {
+        GetComponent<MeshRenderer>().sharedMaterial = checkPointMaterial;
+        GetComponent<MeshRenderer>().sharedMaterial.color = checkPointColor;
+        GetComponent<Light>().color = checkPointColor;
+        display_Text.text = "Check Point Checked";
+    }
+    void SetToFinnishPoint()
+    {
+        GetComponent<MeshRenderer>().sharedMaterial = finnishPointMaterial;
+        GetComponent<MeshRenderer>().sharedMaterial.color = finnishPointColor;
+        GetComponent<Light>().color = finnishPointColor;
+        display_Text.text = "Finnished";
     }
     public void LoadNextLevel()
     {

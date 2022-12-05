@@ -2,23 +2,20 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 7
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TerrainMat
   m_Shader: {fileID: 4800000, guid: 69c1f799e772cb6438f56c23efccb782, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ShaderKeywords: _SPECULAR_SETUP _TERRAIN_BLEND_HEIGHT _TERRAIN_INSTANCED_PERPIXEL_NORMAL
+  m_ShaderKeywords: _SPECULAR_SETUP _TERRAIN_INSTANCED_PERPIXEL_NORMAL
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -106,7 +103,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Ints: []
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
@@ -114,13 +110,13 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _DstBlend: 0
-    - _EnableHeightBlend: 1
+    - _EnableHeightBlend: 0
     - _EnableInstancedPerPixelNormal: 1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.4
     - _GlossyReflections: 1
-    - _HeightTransition: 1
+    - _HeightTransition: 0.106
     - _Metallic: 0
     - _Metallic0: 0
     - _Metallic1: 0

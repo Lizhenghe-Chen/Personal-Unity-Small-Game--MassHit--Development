@@ -43,19 +43,22 @@ LODGroup:
   serializedVersion: 2
   m_LocalReferencePoint: {x: 0, y: 0, z: 0}
   m_Size: 1
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
   - screenRelativeHeight: 0.6
     fadeTransitionWidth: 0
-    renderers: []
+    renderers:
+    - renderer: {fileID: 6126826525999478987}
   - screenRelativeHeight: 0.3
     fadeTransitionWidth: 0
-    renderers: []
+    renderers:
+    - renderer: {fileID: 6126826525999478987}
   - screenRelativeHeight: 0.1
     fadeTransitionWidth: 0
-    renderers: []
+    renderers:
+    - renderer: {fileID: 6126826525999478987}
   m_Enabled: 1
 --- !u!1001 &4958706225821852073
 PrefabInstance:
@@ -126,6 +129,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa7425a98790e6a448d1d8d8908b4975, type: 3}
+--- !u!23 &6126826525999478987 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1285216159473506658, guid: aa7425a98790e6a448d1d8d8908b4975,
+    type: 3}
+  m_PrefabInstance: {fileID: 4958706225821852073}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8032682391926170668 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3146062417627858309, guid: aa7425a98790e6a448d1d8d8908b4975,

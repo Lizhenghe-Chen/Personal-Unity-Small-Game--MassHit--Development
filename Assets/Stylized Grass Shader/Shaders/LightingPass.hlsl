@@ -2,8 +2,8 @@
 //Staggart Creations (http://staggart.xyz)
 //Copyright protected under Unity Asset Store EULA
 
-//#define DEBUG_BEND_VECTORS
 //#define DEBUG_BEND_AREA
+//#define DEBUG_BEND_VECTORS
 
 #if VERSION_GREATER_EQUAL(12,0)
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
@@ -61,24 +61,24 @@ Varyings LitPassVertex(Attributes input)
 	BendSettings bending = PopulateBendSettings(_BendMode, BEND_MASK, _BendPushStrength, _BendFlattenStrength, _PerspectiveCorrection);
 
 	//Object space position, normals (and tangents)
-	VertexInputs vertexInputs = GetVertexInputs(input, _NormalParams.y);
+	VertexInputs vertexInputs = GetVertexInputs(input, _NormalFlattening);
 
 	//Original vertex normals should be perpendicular to the vertex face!
 	//For lighting, force the normals straight up. Later in the LitPassVertex the normals can be modified through parameters
 
-	vertexInputs.normalOS = lerp(vertexInputs.normalOS, normalize(vertexInputs.positionOS.xyz), _NormalParams.x * lerp(1, BEND_MASK, _NormalParams.z));
+	vertexInputs.normalOS = lerp(vertexInputs.normalOS, normalize(vertexInputs.positionOS.xyz), _NormalSpherify * lerp(1, BEND_MASK, _NormalSpherifyMask));
 	//Apply transformations and bending/wind (Can't use GetVertexPositionInputs, because it would amount to double matrix transformations)
 	VertexOutput vertexData = GetVertexOutput(vertexInputs, posOffset, wind, bending);
 	
+	//#if defined(REQUIRES_WORLD_SPACE_POS_INTERPOLATOR)
+	output.positionWS = vertexData.positionWS;
+	//#endif
+	output.normalWS = vertexData.normalWS;
+	
 	//Vertex color
-	output.color = input.color;
 	output.color = ApplyVertexColor(input.positionOS, vertexData.positionWS.xyz, _BaseColor.rgb, AO_MASK, _OcclusionStrength, _VertexDarkening, _HueVariation, posOffset);
 
 	half fogFactor = ComputeFogFactor(vertexData.positionCS.z);
-
-	half3 viewDirWS = GetWorldSpaceViewDir(vertexData.positionWS);
-	output.normalWS = vertexData.normalWS;
-	//output.viewDirWS = viewDirWS;
 
 #if defined(REQUIRES_WORLD_SPACE_TANGENT_INTERPOLATOR) || defined(REQUIRES_TANGENT_SPACE_VIEW_DIR_INTERPOLATOR)
 	real sign = input.tangentOS.w * GetOddNegativeScale();
@@ -89,6 +89,7 @@ Varyings LitPassVertex(Attributes input)
 #endif
 	
 #if defined(REQUIRES_TANGENT_SPACE_VIEW_DIR_INTERPOLATOR)
+	half3 viewDirWS = GetWorldSpaceViewDir(vertexData.positionWS);
 	half3 viewDirTS = GetViewDirectionTangentSpace(tangentWS, output.normalWS, viewDirWS);
 	output.viewDirTS = viewDirTS;
 #endif
@@ -109,10 +110,6 @@ Varyings LitPassVertex(Attributes input)
 	output.fogFactorAndVertexLight.x = fogFactor;
 	output.fogFactorAndVertexLight.yzw = 0;
 #endif
-
-	//#if defined(REQUIRES_WORLD_SPACE_POS_INTERPOLATOR)
-	output.positionWS = vertexData.positionWS;
-	//#endif
 	
 #if _NORMALMAP || defined(CURVEDWORLD_NORMAL_TRANSFORMATION_ON)
 	output.uv.zw = TRANSFORM_TEX(input.uv, _BumpMap);
@@ -123,7 +120,8 @@ Varyings LitPassVertex(Attributes input)
 #endif
 
 #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
-	output.shadowCoord = TransformWorldToShadowCoord(vertexData.positionWS);
+	//GetShadowCoord function must be used, in order for normalized screen coords to be calculated (Screen-space shadows)
+	output.shadowCoord = GetShadowCoord((VertexPositionInputs)vertexData);
 #endif
 
 	output.uv.xy = TRANSFORM_TEX(input.uv, _BaseMap);
@@ -135,35 +133,41 @@ Varyings LitPassVertex(Attributes input)
 void ModifySurfaceData(Varyings input, out SurfaceData surfaceData)
 {
 	float4 albedoAlpha = SampleAlbedoAlpha(input.uv.xy, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
-	#ifdef _ALPHATEST_ON
-	AlphaClip(albedoAlpha.a, _Cutoff, input.positionCS.xyz, input.positionWS.xyz, _FadeParams);
-	#endif
 	
+	
+
+	//If MSAA is enabled an issue occurs where any vertex interpolated values are abnormal if the geometry occupies 1px on screen
+	//Clamping the value resolves these artefacts for the most part, otherwise causes fireflies
+	half mask = saturate(input.color.a);
+
 	//Apply hue var and ambient occlusion from vertex stage
 	albedoAlpha.rgb *= input.color.rgb;
 
 	//Apply color map per-pixel
-	if (_ColorMapUV.w == 1) {
-		float mask = smoothstep(_ColorMapHeight, 1.0 + _ColorMapHeight, sqrt(input.color.a));
-		albedoAlpha.rgb = lerp(ApplyColorMap(input.positionWS.xyz, albedoAlpha.rgb, _ColorMapStrength), albedoAlpha.rgb, mask);
+	if (_ColorMapParams.x == 1) {
+		float colorMapMask = smoothstep(_ColorMapHeight, 1.0 + _ColorMapHeight, saturate(sqrt(mask)));
+		albedoAlpha.rgb = lerp(ApplyColorMap(input.positionWS.xyz, albedoAlpha.rgb, _ColorMapStrength), albedoAlpha.rgb, colorMapMask);
 	}
 
-	float bendingMask = saturate(GetBendVector(input.positionWS.xyz).a);
-	albedoAlpha.rgb = lerp(albedoAlpha.rgb, albedoAlpha.rgb * _BendTint.rgb, bendingMask * sqrt(input.color.a) * _BendTint.a);
+	if(_BendPushStrength > 0 || _BendFlattenStrength > 0)
+	{
+		float4 bendVector = GetBendVector(input.positionWS.xyz);
+		float bendingMask = saturate(bendVector.a * HeightDistanceWeight(input.positionWS, bendVector.xyz));
+		albedoAlpha.rgb = lerp(albedoAlpha.rgb, albedoAlpha.rgb * _BendTint.rgb, saturate(bendingMask * sqrt(mask) * _BendTint.a));
+	}
 
-	//Albedo must be saturated, may cause sparkles otherwise
-	surfaceData.albedo = saturate(albedoAlpha.rgb) * _LODDebugColor.rgb;
+	surfaceData.albedo = saturate(albedoAlpha.rgb * _LODDebugColor.rgb);
 	//Not using specular setup, free to use this to pass data
 	surfaceData.specular = float3(0, 0, 0);
 	surfaceData.metallic = 0.0;
-	surfaceData.smoothness = lerp(0.0, _Smoothness, input.color.a);
+	surfaceData.smoothness = lerp(0.0, _Smoothness, mask);
 #ifdef _NORMALMAP
-	surfaceData.normalTS = SampleNormal(input.uv.zw, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap));
+	surfaceData.normalTS = SampleNormal(input.uv.zw, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
 #else
 	surfaceData.normalTS = float3(0.5, 0.5, 1.0);
 #endif
-	surfaceData.emission = lerp(0.0, _EmissionColor.rgb, input.color.a);
-	surfaceData.occlusion = 1;
+	surfaceData.emission = lerp(0.0, _EmissionColor.rgb, mask);
+	surfaceData.occlusion = 1.0;
 	surfaceData.alpha = albedoAlpha.a;
 	
 	#if VERSION_GREATER_EQUAL(10,0)
@@ -184,7 +188,8 @@ void PopulateLightingInputData(Varyings input, half3 normalTS, out InputData inp
 	inputData.positionWS = input.positionWS.xyz;
 	//#endif
 
-	half3 viewDirWS = normalize(GetCameraPositionWS() - input.positionWS);
+	//Using GetWorldSpaceViewDir returns a constant vector for orthographic camera's, which isn't useful
+	half3 viewDirWS = normalize(_WorldSpaceCameraPos - (input.positionWS.xyz));
 	
 	half3x3 tangentToWorld = 0;
 	#if defined(_NORMALMAP)
@@ -217,11 +222,6 @@ void PopulateLightingInputData(Varyings input, half3 normalTS, out InputData inp
 
 	inputData.fogCoord = input.fogFactorAndVertexLight.x;
 	inputData.vertexLighting = input.fogFactorAndVertexLight.yzw;
-
-	#if VERSION_GREATER_EQUAL(10,0)
-	inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
-	inputData.shadowMask = SAMPLE_SHADOWMASK(input.bakedLightmapUV);
-	#endif
 	
 	#if defined(DYNAMICLIGHTMAP_ON) && VERSION_GREATER_EQUAL(12,0)
 	inputData.bakedGI = SAMPLE_GI(input.bakedLightmapUV, input.dynamicLightmapUV, input.vertexSH, inputData.normalWS);
@@ -262,6 +262,10 @@ half4 LightingPassFragment(Varyings input) : SV_Target
 	SurfaceData surfaceData;
 	//Can't use standard function, since including LitInput.hlsl breaks the SRP batcher
 	ModifySurfaceData(input, surfaceData);
+
+	#ifdef _ALPHATEST_ON
+	AlphaClip(surfaceData.alpha, _Cutoff, input.positionCS.xyz, input.positionWS.xyz, _FadeNear, _FadeFar, _FadeAngleThreshold);
+	#endif
 	
 	InputData inputData;
 	//Standard URP function barely changes, but adds things like clear coat and detail normals
@@ -273,13 +277,18 @@ half4 LightingPassFragment(Varyings input) : SV_Target
 	#endif
 	#endif
 
-	
+	//Debugging
+	//return float4(AngleFadeFactor(input.positionWS, _FadeAngleThreshold).xxx, 1.0);
+	//return float4(DistanceFadeFactor(input.positionWS, _FadeNear, _FadeFar).xxx, 1.0);
+	//return float4(HeightDistanceWeight(input.positionWS.y, GetBendVector(input.positionWS).y).xxx * GetBendVector(input.positionWS).a, 1.0);
 
 	#ifdef DEBUG_BEND_AREA
 	float2 bendUV = GetBendMapUV(input.positionWS);
+	return float4(any(bendUV.xy) ? bendUV.xy : float2(0,0), 0, 1.0);
+
 	float edgeMask = BoundsEdgeMask(input.positionWS.xz);
-	return float4(lerp(float3(1,0,0), float3(0,1,0), edgeMask > 0 ? 1 : 0), 1.0);
 	return float4(edgeMask.xxx, 1.0);
+	return float4(lerp(float3(1,0,0), float3(0,1,0), edgeMask > 0 ? 1 : 0), 1.0);
 	#endif
 
 	//Get main light first, need attenuation to mask wind gust
@@ -288,18 +297,22 @@ half4 LightingPassFragment(Varyings input) : SV_Target
 	//Tint by wind gust
 	if(_WindGustTint > 0)
 	{
+		float gustStrength = wind.gustStrength;
 		wind.gustStrength = 1;
 		float gust = SampleGustMap(input.positionWS.xyz, wind);
-		surfaceData.albedo += gust * _WindGustTint * 10 * (mainLight.shadowAttenuation) * input.color.a;
+		surfaceData.albedo += gust * _WindGustTint * gustStrength * (mainLight.shadowAttenuation) * saturate(input.color.a);
 		surfaceData.albedo = saturate(surfaceData.albedo);
 	}
 
 	#ifdef DEBUG_BEND_VECTORS
-	surfaceData.albedo = saturate(GetBendVector(input.positionWS).xyz * 0.5 + 0.5);
+	float4 bendVector = GetBendVector(input.positionWS).xyzw;
+
+	float dist = HeightDistanceWeight(input.positionWS, bendVector.xyz);
+	//return float4(bendVector.aaa, 1.0);
+	//return float4(saturate(bendVector.yyy), 1.0);
+	surfaceData.albedo = saturate(bendVector * 0.5 + 0.5);
 	#endif
 	
-	float translucencyMask = input.color.a * _Translucency;
-
 	#if VERSION_GREATER_EQUAL(12,0)
 	#ifdef _DBUFFER
 	#if !_DISABLE_DECALS
@@ -309,12 +322,14 @@ half4 LightingPassFragment(Varyings input) : SV_Target
 	#endif
 
 	TranslucencyData tData = (TranslucencyData)0;
-	tData.strengthDirect = _Translucency;
+	tData.strengthDirect = _TranslucencyDirect;
 	tData.strengthIndirect = _TranslucencyIndirect;
 	tData.exponent = _TranslucencyFalloff;
-	tData.thickness = input.color.a;
+	tData.thickness = saturate(input.color.a);
 	tData.offset = _TranslucencyOffset;
 	tData.light = mainLight;
+
+	surfaceData.alpha = 1.0;
 	
 	//Deferred
 #if defined(SHADERPASS_DEFERRED) && VERSION_GREATER_EQUAL(12,0)

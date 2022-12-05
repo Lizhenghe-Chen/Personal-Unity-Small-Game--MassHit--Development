@@ -1,6 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class CharacterCtrl : MonoBehaviour
@@ -32,13 +33,16 @@ public class CharacterCtrl : MonoBehaviour
     public bool towardWithCamera = true, moveAbility = true, climbAbility = true, shootAbility = true,
     catchObjAbility = true, jumpAbility = true, rushAbility = true, flyAbility = true, AircraftAility = true, AudioTail = true;
     public float initial_torque, speedUp_torque, jumpForce, rushForce, sliteForce = 5f;
-    public Material TramsparentMaterial;
+    public Material TransparentMaterial;
     public Animator MaskAnimator, PlayerAnimator;
     public List<GameObject> playerSkinList = new();
     public ParticleSystem SwitchParticleSystem;
     public GunScript gunScript;
     public GameObject Player_Camera1, Player_Camera2;// cam1 is CinemachineFreeLook with Orbits, cam2 is CinemachineVirtualCamera with CinemachineTransposer
     public ParticleSystem landBendEffect;
+    public ParticleSystem frictionParticleSystem;
+
+    public Vector3 PlayerRotationDirection, PlayerFrictionDirection;
     //public List<GameObject> HitObjects = new();
     public Queue<GameObject> HitObjectsQueue = new();
     [Header("For Status Debuging")]
@@ -78,10 +82,9 @@ public class CharacterCtrl : MonoBehaviour
     void Start()
     {
 
-        CheckPoint = new Vector3(PlayerPrefs.GetFloat("SavedCheckPoint_X"), PlayerPrefs.GetFloat("SavedCheckPoint_Y"), PlayerPrefs.GetFloat("SavedCheckPoint_Z"));
-        PlayerPrefs.SetString("SavedCheckPointScene", SceneManager.GetActiveScene().name);//save player's current scene
-        if (CheckPoint == Vector3.zero) { CheckPoint = this.transform.position; }
-        else { this.transform.position = CheckPoint; }
+
+
+
         rb = GetComponent<Rigidbody>();
         //GlobalRules.instance.cam1 = Player_Camera1.GetComponent<Cinemachine.CinemachineFreeLook>();
         //GlobalRules.instance.cam2 = Player_Camera2.GetComponent<Cinemachine.CinemachineVirtualCamera>();
@@ -90,6 +93,12 @@ public class CharacterCtrl : MonoBehaviour
         //gunScript.PlayerKernelTarget = this.gameObject.transform;
 
         StartCoroutine(AutoDestory());
+
+        if (SceneManager.GetActiveScene().name == GlobalUIFunctions.levelList.StartMenu.levelName) return;
+        CheckPoint = new Vector3(PlayerPrefs.GetFloat("SavedCheckPoint_X"), PlayerPrefs.GetFloat("SavedCheckPoint_Y"), PlayerPrefs.GetFloat("SavedCheckPoint_Z"));
+        PlayerPrefs.SetString("SavedCheckPointScene", SceneManager.GetActiveScene().name);//save player's current scene
+        if (CheckPoint == Vector3.zero) { CheckPoint = this.transform.position; }
+        else { this.transform.position = CheckPoint; }
     }
 
     // Update is called once per frame
@@ -152,11 +161,49 @@ public class CharacterCtrl : MonoBehaviour
             other.gameObject.GetComponent<CheckPoint>().enabled = true;
         }
     }
+    private void OnCollisionStay(Collision collision)
+    {
+        ClimbWall(collision);
+
+        GetSpeed_Friction_Direction(collision);
+        // Debug.Log((transform.position - collision.GetContact(0).point).normalized);
+
+        //if (GlobalRules.IsGameObjInLayerMask(collision.gameObject, GlobalRules.instance.GoundLayer))
+        //{
+        //    ableToJump = true;
+        //}
+        //var temp = (transform.position - collision.GetContact(0).point);
+        // Debug.Log(temp.normalized + ", " + temp.normalized.y);
+        if ((transform.position - collision.GetContact(0).point).normalized.y >= 0.2) { ableToJump = true; }
+    }
+    private void GetSpeed_Friction_Direction(Collision collision)
+    {
+        // PlayerSpeedDirection.forward = rb.velocity.normalized;
+        //draw a line to show the direction of rigidbody
+        PlayerRotationDirection = Vector3.Cross(rb.angularVelocity, Vector3.up).normalized;
+        PlayerFrictionDirection = collision.relativeVelocity.normalized;
+        // if PlayerRotationDirection and PlayerFrictionDirection are not in the same line, then the player is sliding
+        // Debug.Log(Vector3.Dot(PlayerRotationDirection, PlayerFrictionDirection));
+        var emission = frictionParticleSystem.emission;
+        if (Vector3.Dot(PlayerRotationDirection, PlayerFrictionDirection) > -0.9f || (int)(transform.localScale.x * rb.angularVelocity.magnitude) != (int)(collision.relativeVelocity.magnitude))
+        {
+            emission.rateOverDistance = 6;
+            frictionParticleSystem.transform.position = collision.GetContact(0).point;
+        }
+
+        else emission.rateOverDistance = 0;
+
+        Debug.DrawLine(transform.position, transform.position + PlayerFrictionDirection * 10, Color.green);
+        Debug.DrawLine(transform.position, transform.position + PlayerRotationDirection * 10, Color.red);
+//        Debug.Log((int)(transform.localScale.x * rb.angularVelocity.magnitude) + "," + (int)(collision.relativeVelocity.magnitude));
+    }
+
     private void DamageCaculate(Collision other)
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
             Debug.Log("Hit" + other.relativeVelocity.magnitude);
+              MaskAnimator.Play("Injured", 0, 0);
             PlayerHealth -= other.relativeVelocity.magnitude * other.rigidbody.mass;
             if (PlayerHealth <= 0) OnHealthRunOut();
         }
@@ -222,19 +269,6 @@ public class CharacterCtrl : MonoBehaviour
     }
 
 
-    private void OnCollisionStay(Collision collision)
-    {
-        ClimbWall(collision);
-        // Debug.Log((transform.position - collision.GetContact(0).point).normalized);
-
-        //if (GlobalRules.IsGameObjInLayerMask(collision.gameObject, GlobalRules.instance.GoundLayer))
-        //{
-        //    ableToJump = true;
-        //}
-        //var temp = (transform.position - collision.GetContact(0).point);
-        // Debug.Log(temp.normalized + ", " + temp.normalized.y);
-        if ((transform.position - collision.GetContact(0).point).normalized.y >= 0.2) { ableToJump = true; }
-    }
 
     float doubleClickTimetThreshold = 0.5f, lastClickTime;
 
@@ -270,7 +304,7 @@ public class CharacterCtrl : MonoBehaviour
     }
     private void GiveForce()
     {
-        if (PlayerBrain.shootEnergy <= 0) { return; }
+        if (PlayerBrain.shootEnergy <= 0||ableToJump) { return; }
         //  Debug.Log("GiveForce");
         var force = (Input.GetKey(GlobalRules.instance.SpeedUp) ? sliteForce * 2 : sliteForce);
         rb.AddForce(force * verticalInput * Camera.transform.forward);
@@ -288,14 +322,22 @@ public class CharacterCtrl : MonoBehaviour
     }
     void JumpCommand()
     {
+        if (!ableToJump)
+        {
+            var emission = frictionParticleSystem.emission;
+            emission.rateOverDistance = 0;
+        }
+
         if (!jumpAbility) { return; }
         if (Input.GetKeyDown(GlobalRules.instance.Jump))
         {
             if (ableToJump)
             {
                 //  Debug.Log("Jump");
+
                 rb.AddForce(Vector3.up * jumpForce);
             }
+
 
         }
         else if (!isCliming && !ableToJump && PlayerBrain.shootEnergy > 0)
@@ -399,18 +441,18 @@ public class CharacterCtrl : MonoBehaviour
     {
         playerActionState = ActionState.AIMING;
 
-        // Material[] newMaterials = new Material[] { TramsparentMaterial };
+        // Material[] newMaterials = new Material[] { TransparentMaterial };
 
         if (PlayerBrain.is_Charging)
         {
             playerMeshRenderer = GetComponent<MeshRenderer>();
 
-            playerMeshRenderer.materials = new Material[] { TramsparentMaterial };
+            playerMeshRenderer.materials = new Material[] { TransparentMaterial };
 
             //for (int i = 0; i < playerMeshRenderer.materials.Length; i++)
             //{
             //    OriginalMaterialList.Add(playerMeshRenderer.materials[i]);
-            //    playerMeshRenderer.materials[i] = new Material[] { TramsparentMaterial };
+            //    playerMeshRenderer.materials[i] = new Material[] { TransparentMaterial };
             //}
         }
     }

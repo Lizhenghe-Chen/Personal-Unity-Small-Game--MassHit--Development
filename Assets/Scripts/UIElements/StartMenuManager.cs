@@ -24,6 +24,14 @@ namespace UIElements
         private void Awake()
         {
             SetEnvironment();
+            foreach (var item in MenuList)
+            {
+                item.SetActive(false);
+            }
+            // foreach (var item in EnvironmentList)
+            // {
+            //     item.SetActive(false);
+            // }
         }
         void Start()
         {

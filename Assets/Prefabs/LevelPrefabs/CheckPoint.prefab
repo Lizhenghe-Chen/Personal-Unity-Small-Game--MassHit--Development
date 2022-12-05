@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Check Point
+  m_text: Check Point Checked
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 87debe9ce98b8a44f8720227b7da32f0, type: 2}
   m_sharedMaterial: {fileID: 3464735935111213153, guid: 87debe9ce98b8a44f8720227b7da32f0,
@@ -145,7 +145,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7353863938493327140}
-  - component: {fileID: 7563791575123781889}
   - component: {fileID: 7353863938493327143}
   - component: {fileID: 7353863938493327142}
   - component: {fileID: 7353863938493327145}
@@ -175,22 +174,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7563791575123781889
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7353863938493327144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6010d8fc9fee5d542aa9b8a3a59185b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isCheckPoint: 1
-  animator: {fileID: 188128366484646124}
-  isLoading: 0
-  MaskImage: {fileID: 0}
 --- !u!33 &7353863938493327143
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -219,7 +202,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1ea03b9aa5f6f2e418e2a91e17f41d1b, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

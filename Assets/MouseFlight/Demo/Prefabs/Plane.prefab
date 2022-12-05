@@ -355,7 +355,7 @@ Rigidbody:
   m_Mass: 50
   m_Drag: 1
   m_AngularDrag: 15
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
@@ -373,7 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
-  thrust: 40
+  thrust: 10
   turnTorque: {x: 90, y: 25, z: 45}
   forceMult: 50
   sensitivity: 1
@@ -381,6 +381,8 @@ MonoBehaviour:
   pitch: 0
   yaw: 0
   roll: 0
+  MainCamera: {fileID: 0}
+  Player: {fileID: 0}
 --- !u!65 &4029327658504278771
 BoxCollider:
   m_ObjectHideFlags: 0

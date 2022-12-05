@@ -52,8 +52,10 @@ Varyings ShadowPassVertex(Attributes input)
 	output.positionCS.z = max(positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE);
 #endif
 
+	#ifdef _ALPHATEST_ON
 	output.positionWS = vertexData.positionWS;
-
+	#endif
+	
 	return output;
 }
 
@@ -63,7 +65,7 @@ half4 ShadowPassFragment(Varyings input) : SV_TARGET
 
 #ifdef _ALPHATEST_ON
 	float alpha = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv).a;
-	AlphaClip(alpha, _Cutoff, input.positionCS.xyz, input.positionWS.xyz, _FadeParams);
+	AlphaClip(alpha, _Cutoff, input.positionCS.xyz, input.positionWS.xyz, _FadeNear, _FadeFar, _FadeAngleThreshold);
 #endif
 	return 0;
 }

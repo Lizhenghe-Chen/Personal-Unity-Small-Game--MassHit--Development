@@ -166,10 +166,8 @@ GameObject:
   - component: {fileID: 2379559655574388339}
   - component: {fileID: 2413626268406871741}
   - component: {fileID: 2403347118752505303}
-  - component: {fileID: 2381226744664391413}
   - component: {fileID: 6457670927924339837}
   - component: {fileID: 8232522891533551304}
-  - component: {fileID: 2381226744664391418}
   m_Layer: 8
   m_Name: gunpoint
   m_TagString: Untagged
@@ -244,19 +242,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2381226744664391413
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2380254220978292533}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 10
-  m_Center: {x: 0.000000009313226, y: 0.0000001209487, z: 0.30836463}
 --- !u!64 &6457670927924339837
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -295,35 +280,6 @@ AimConstraint:
   m_Sources:
   - sourceTransform: {fileID: 2381226744963254991}
     weight: 1
---- !u!114 &2381226744664391418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2380254220978292533}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a491f49fa0998b0428f09fbed44419fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cannonAnimation: {fileID: 754261833581178493}
-  PredictedObj: {fileID: 2381226744963254991}
-  FirePoint: {fileID: 2484417531738189477}
-  bullet: {fileID: 1710411021089273418, guid: 6b23ddab9b71b1446bf0cbeef14f9c3a, type: 3}
-  muzzleFlash: {fileID: 3886002869105554556}
-  attackRange: 10
-  FiringRate: 1
-  bulletSpeed: 100
-  followSpeed: 20
-  accurancy: 0
-  ratgetTag: Respawn
-  flyingTime: 0
-  distance: 0
-  TargetRig: {fileID: 0}
-  lastVelocity: {x: 0, y: 0, z: 0}
-  acceleration: {x: 0, y: 0, z: 0}
-  TargetObj: {fileID: 0}
 --- !u!1 &2380254221206955049
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +307,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2380254221206955049}
-  m_LocalRotation: {x: -0.04269149, y: 0.00000028462128, z: 0.00000010553259, w: 0.99908835}
+  m_LocalRotation: {x: -0.04269112, y: 0.00000028462125, z: 0.000000105532486, w: 0.99908835}
   m_LocalPosition: {x: 0, y: 0.40662718, z: 0.07390854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -802,7 +758,7 @@ MonoBehaviour:
   attackRange: 25
   FiringRate: 1
   bulletSpeed: 100
-  followSpeed: 20
+  followSpeed: 5
   accurancy: 0
   ratgetTag: Respawn
   flyingTime: 0

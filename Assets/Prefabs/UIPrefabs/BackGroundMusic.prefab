@@ -137,8 +137,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4746600860174338686}
-  - component: {fileID: 4746600860174338687}
   - component: {fileID: 4746600860174338684}
+  - component: {fileID: 4746600860174338687}
   m_Layer: 0
   m_Name: BackGroundMusic
   m_TagString: Untagged
@@ -162,6 +162,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4746600860174338684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4746600860174338685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e9858ef246dc846b043177327d72cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unAvalibleSound: {fileID: 2731198031123939052}
+  MusicList:
+  - {fileID: 8300000, guid: 51b4025724c34554bbbe093737e2c958, type: 3}
+  - {fileID: 8300000, guid: 85292c4ae84cfbb41934dcba411c808d, type: 3}
+  - {fileID: 8300000, guid: 24d38673a12937e40a245232bdf2a3f5, type: 3}
+  - {fileID: 8300000, guid: 3f7f596f8222304408b761bde1ef6b85, type: 3}
+  - {fileID: 8300000, guid: 0a42f6f6c8d27774cbb49088672f2b3e, type: 3}
+  - {fileID: 8300000, guid: 8f92b794c1f806b43af51b411c8f1aa2, type: 3}
+  autoPlay: 1
+  randomPlay: 0
+  useTargetSound: 1
+  TargetSound: {fileID: 8300000, guid: 8f92b794c1f806b43af51b411c8f1aa2, type: 3}
 --- !u!82 &4746600860174338687
 AudioSource:
   m_ObjectHideFlags: 0
@@ -258,27 +282,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4746600860174338684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4746600860174338685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02e9858ef246dc846b043177327d72cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unAvalibleSound: {fileID: 2731198031123939052}
-  MusicList:
-  - {fileID: 8300000, guid: 51b4025724c34554bbbe093737e2c958, type: 3}
-  - {fileID: 8300000, guid: 85292c4ae84cfbb41934dcba411c808d, type: 3}
-  - {fileID: 8300000, guid: 24d38673a12937e40a245232bdf2a3f5, type: 3}
-  - {fileID: 8300000, guid: 3f7f596f8222304408b761bde1ef6b85, type: 3}
-  - {fileID: 8300000, guid: 0a42f6f6c8d27774cbb49088672f2b3e, type: 3}
-  - {fileID: 8300000, guid: 8f92b794c1f806b43af51b411c8f1aa2, type: 3}
-  autoPlay: 1
-  randomPlay: 0
-  useTargetSound: 1
-  TargetSound: {fileID: 8300000, guid: 8f92b794c1f806b43af51b411c8f1aa2, type: 3}

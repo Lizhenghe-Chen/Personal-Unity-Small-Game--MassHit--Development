@@ -2,9 +2,19 @@
 //Staggart Creations (http://staggart.xyz)
 //Copyright protected under Unity Asset Store EULA
 
+#ifndef GRASS_COMMON_INCLUDED
+#define GRASS_COMMON_INCLUDED
+
 float4 _ColorMapUV;
+float4 _ColorMapParams;
+//X: Color map available
+//Y: Color map has scale data
 TEXTURE2D(_ColorMap); SAMPLER(sampler_ColorMap);
 float4 _ColorMap_TexelSize;
+
+float4 _PlayerSphere;
+//XYZ: Position
+//W: Radius
 
 #if !defined(SHADERPASS_SHADOWCASTER ) || !defined(SHADERPASS_DEPTHONLY)
 #define LIGHTING_PASS
@@ -46,54 +56,10 @@ struct Attributes
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
-//7.1.8: true
-//7.2.0: false
-//7.3.1: false
-//7.4.1: false
-//8.0.1: true
-//8.1.0: true
-//9.0.1: true
-#if VERSION_EQUAL(8,0) || VERSION_EQUAL(8,1) || VERSION_EQUAL(9,0) || VERSION_GREATER_EQUAL(13,0)
-#define FLIP_UV
-#endif
-#if VERSION_EQUAL(7,2) || VERSION_EQUAL(7,3) || VERSION_EQUAL(7,4) 
-#undef FLIP_UV
-#endif
-
 #include "Bending.hlsl"
 #include "Wind.hlsl"
 
 //---------------------------------------------------------------//
-//Utils
-
-float3 CameraPositionWS(float3 wPos)
-{
-	return GetCameraPositionWS();
-
-	/*
-	//_WorldSpaceCameraPos doesn't have correct values during shadow and vertex passes, fixed in URP 8.1.0
-	// Shadows will flicker if Distance Fading or Perspective Correction is used *shrug*
-	//https://issuetracker.unity3d.com/issues/shadows-flicker-by-moving-the-camera-when-shader-is-using-worldspacecamerpos-and-terrain-has-draw-enabled-for-trees-and-details
-	*/
-}
-
-#if VERSION_LOWER(9,0) //Not already available in earlier versions
-// Computes the world space view direction (pointing towards the viewer).
-float3 GetWorldSpaceViewDir(float3 positionWS)
-{
-	if (unity_OrthoParams.w == 0)
-	{
-		// Perspective
-		return GetCameraPositionWS() - positionWS;
-	}
-	else
-	{
-		// Orthographic
-		float4x4 viewMat = GetWorldToViewMatrix();
-		return -viewMat[2].xyz;
-	}
-}
-#endif
 
 float ObjectPosRand01() {
 	return frac(UNITY_MATRIX_M[0][3] + UNITY_MATRIX_M[1][3] + UNITY_MATRIX_M[2][3]);
@@ -103,19 +69,46 @@ float3 GetPivotPos() {
 	return float3(UNITY_MATRIX_M[0][3], UNITY_MATRIX_M[1][3] + 0.25, UNITY_MATRIX_M[2][3]);
 }
 
-float DistanceFadeFactor(float3 wPos, float4 params)
+float DistanceFadeFactor(float3 wPos, float4 near, float4 far)
 {
-	if (params.z == 0) return 0;
-
-	float pixelDist = length(CameraPositionWS(wPos).xyz - wPos.xyz);
+	float pixelDist = length(GetCameraPositionWS().xyz - wPos.xyz);
 
 	//Distance based scalar
-	float f = saturate((pixelDist - params.x) / params.y);
+	float nearFactor = saturate((pixelDist - near.x) / near.y);
+	float farFactor = saturate((pixelDist - far.x) / far.y);
 
-	//Invert
-	if(params.w == 1) f = 1-f;
+	return 1-saturate(nearFactor - farFactor);
+}
 
-	return f;
+float PlayerFaceFactor(float3 wPos)
+{
+	if(_PlayerSphere.w > 0)
+	{
+		const float pixelDist = length(_PlayerSphere.xyz - wPos.xyz);
+
+		const float nearFactor = saturate((pixelDist - (_PlayerSphere.w * 0.5)) / _PlayerSphere.w);
+
+		return 1-nearFactor;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+float3 DeriveNormal(float3 positionWS)
+{
+	float3 dpx = ddx(positionWS);
+	float3 dpy = ddy(positionWS);
+	return normalize(cross(dpx, dpy));
+}
+
+float AngleFadeFactor(float3 positionWS, float angleThreshold)
+{
+	float viewAngle = (dot(DeriveNormal(positionWS), -normalize(GetCameraPositionWS() - positionWS))) * 90;
+
+	float factor = saturate(viewAngle / (angleThreshold));
+	return factor;
 }
 
 void ApplyLODCrossfade(float2 clipPos)
@@ -136,13 +129,6 @@ void ApplyLODCrossfade(float2 clipPos)
 #endif
 }
 
-float3 DeriveNormal(float3 positionWS)
-{
-	float3 dpx = ddx(positionWS);
-	float3 dpy = ddy(positionWS);
-	return normalize(cross(dpx, dpy));
-}
-
 float InterleavedNoise(float2 coords, float t)
 {
 	return t * (InterleavedGradientNoise(coords, 0) + t);
@@ -150,30 +136,37 @@ float InterleavedNoise(float2 coords, float t)
 
 #define ANGLE_FADE_DITHER_SIZE 0.49
 
-void AlphaClip(float alpha, float cutoff, float3 clipPos, float3 wPos, float4 fadeParams)
+void AlphaClip(float alpha, float cutoff, float3 clipPos, float3 wPos, float4 fadeParamsNear, float4 fadeParamsFar, float angleThreshold)
 {
-	float f = 1;
-
-	f -= DistanceFadeFactor(wPos, fadeParams);
+	float f = 1.0;
 
 	#if defined(SHADERPASS_SHADOWCASTER)
 	//Using clip-space position causes pixel swimming as the camera moves
-	ApplyLODCrossfade(wPos.xz * 32);
+	ApplyLODCrossfade(wPos.xz * 32.0);
 	#else
-	ApplyLODCrossfade(clipPos.xy * 4);
+	ApplyLODCrossfade(clipPos.xy * 4.0);
 	#endif
 
-	//Don't perform for cast shadows
-	#if _ANGLE_FADING && (defined(SHADERPASS_FORWARD) || defined(SHADERPASS_DEFERRED))
+	#if _FADING
+	f -= DistanceFadeFactor(wPos, fadeParamsNear, fadeParamsFar);
+	f -= PlayerFaceFactor(wPos);
+
+	//Don't perform for cast shadows. Otherwise fading is calculated based on the light direction relative to the surface, not the camera
+	#if !defined(SHADERPASS_SHADOWCASTER)
+	float NdotV = AngleFadeFactor(wPos, angleThreshold);
+
+	f *= NdotV;
+	#endif
 	
-	float NdotV = saturate(dot(DeriveNormal(wPos), -normalize(GetCameraPositionWS() - wPos)));
+	float dither = InterleavedNoise(clipPos.xy, f);
+	f = dither;
 
-	float dither = InterleavedNoise(clipPos.xy, NdotV);
-
-	alpha *= lerp(dither, 1, NdotV);
+	alpha = min((alpha - cutoff), (dither - 0.5));
+	#else
+	alpha -= cutoff;
 	#endif
 
-	clip((alpha * f) - cutoff);
+	clip(alpha);
 }
 
 //UV Utilities
@@ -235,32 +228,8 @@ struct VertexOutput {
 	float3 normalWS;
 };
 
-void ApplyPerspectiveCorrection(inout float3 offset, float3 wPos, float3 viewDir, float mask, float strength)
-{
-	float dist = 1;
-	
-	if(_CameraForwardVector.w > 0)
-	{
-		viewDir = _CameraForwardVector.xyz;
-	}
-	else
-	{
-		//Avoid pushing grass straight underneath the camera in a falloff of 4 units (1.0/4.0)
-		dist = saturate(distance(wPos.xz, CameraPositionWS(wPos).xz) * 0.25);
-	}
-	
-	float NdotV = dot(float3(0, 1, 0), viewDir);
-
-	const float perspMask = mask * strength * dist * NdotV;
-	
-	offset.xz += -viewDir.xz * perspMask;
-}
-
 //Physically correct, but doesn't look great
 //#define RECALC_NORMALS
-
-//Debug
-//#define DEFAULT_VERTEX
 
 //Combination of GetVertexPositionInputs and GetVertexNormalInputs with bending
 VertexOutput GetVertexOutput(VertexInputs input, float rand, WindSettings s, BendSettings b)
@@ -297,19 +266,21 @@ VertexOutput GetVertexOutput(VertexInputs input, float rand, WindSettings s, Ben
 	
 	float3 wPos = TransformObjectToWorld(input.positionOS.xyz);
 
-#if _SCALEMAP 
-	float scaleMap = SampleColorMapTextureLOD(wPos).a;
-
-	//Scale axes in object-space
-	input.positionOS.x = lerp(input.positionOS.x, input.positionOS.x * scaleMap, _ScalemapInfluence.x);
-	input.positionOS.y = lerp(input.positionOS.y, input.positionOS.y * scaleMap, _ScalemapInfluence.y);
-	input.positionOS.z = lerp(input.positionOS.z, input.positionOS.z * scaleMap, _ScalemapInfluence.z);
-	wPos = TransformObjectToWorld(input.positionOS.xyz);
-#else
 	float scaleMap = 1.0;
+#if _SCALEMAP
+	if(_ColorMapParams.y > 0)
+	{
+		scaleMap = SampleColorMapTextureLOD(wPos).a;
+
+		//Scale axes in object-space
+		input.positionOS.x = lerp(input.positionOS.x, input.positionOS.x * scaleMap, _ScalemapInfluence.x);
+		input.positionOS.y = lerp(input.positionOS.y, input.positionOS.y * scaleMap, _ScalemapInfluence.y);
+		input.positionOS.z = lerp(input.positionOS.z, input.positionOS.z * scaleMap, _ScalemapInfluence.z);
+		wPos = TransformObjectToWorld(input.positionOS.xyz);
+	}
+#else
 #endif
 
-	#if !defined(DEFAULT_VERTEX)
 	float3 worldPos = lerp(wPos, GetPivotPos(), b.mode);
 	float4 windVec = GetWindOffset(input.positionOS.xyz, wPos, rand, s) * scaleMap; //Less wind on shorter grass
 	float4 bendVec = GetBendOffset(worldPos, b);
@@ -317,14 +288,13 @@ VertexOutput GetVertexOutput(VertexInputs input, float rand, WindSettings s, Ben
 	float3 offsets = lerp(windVec.xyz, bendVec.xyz, bendVec.a);
 
 	//Perspective correction
-	data.viewDir = normalize(CameraPositionWS(wPos).xyz - wPos);
+	data.viewDir = normalize(GetCameraPositionWS().xyz - wPos);
 
 	ApplyPerspectiveCorrection(offsets, wPos, data.viewDir, b.mask, b.perspectiveCorrection);
 	
 	//Apply bend offset
 	wPos.xz += offsets.xz;
 	wPos.y -= offsets.y;
-	#endif
 
 	//Vertex positions in various coordinate spaces
 	data.positionWS = wPos;
@@ -354,3 +324,4 @@ VertexOutput GetVertexOutput(VertexInputs input, float rand, WindSettings s, Ben
 
 	return data;
 }
+#endif

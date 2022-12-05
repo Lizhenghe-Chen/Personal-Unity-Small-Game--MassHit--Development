@@ -36,6 +36,9 @@ namespace MFlight.Demo
         [SerializeField][Range(-1f, 1f)] private float yaw = 0f;
         [SerializeField][Range(-1f, 1f)] private float roll = 0f;
 
+        public Transform MainCamera;
+        public Transform Player;
+
         public float Pitch { set { pitch = Mathf.Clamp(value, -1f, 1f); } get { return pitch; } }
         public float Yaw { set { yaw = Mathf.Clamp(value, -1f, 1f); } get { return yaw; } }
         public float Roll { set { roll = Mathf.Clamp(value, -1f, 1f); } get { return pitch; } }
@@ -44,7 +47,11 @@ namespace MFlight.Demo
 
         private bool rollOverride = false;
         private bool pitchOverride = false;
-
+        private void OnEnable()
+        {
+            thrust = 5f;
+            transform.forward = MainCamera.forward;
+        }
         private void Awake()
         {
             rigid = GetComponent<Rigidbody>();
@@ -58,6 +65,7 @@ namespace MFlight.Demo
         }
         private void Update()
         {
+            Player.position = transform.position;
             // When the player commands their own stick input, it should override what the
             // autopilot is trying to do.
             rollOverride = false;

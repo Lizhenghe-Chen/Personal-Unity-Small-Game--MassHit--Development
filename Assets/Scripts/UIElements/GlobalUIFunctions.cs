@@ -84,7 +84,7 @@ namespace UIElements
         AsyncOperation asyncOperation;
         IEnumerator AsyncLoadScene(string NextSceneName)//https://docs.unity3d.com/ScriptReference/AsyncOperation-allowSceneActivation.html
         {
-             yield return null;
+            yield return null;
             //Begin to load the Scene you specify
             asyncOperation = SceneManager.LoadSceneAsync(NextSceneName);
             //Don't let the Scene activate until you allow it to
@@ -109,7 +109,7 @@ namespace UIElements
 
         public void FinnishAsyncLoad()
         {
-          //  AsyncLoadPass = true;
+            //  AsyncLoadPass = true;
             asyncOperation.allowSceneActivation = true;
         }
         public IEnumerator DelayLoadLevel(string SceneName)
@@ -182,15 +182,14 @@ namespace UIElements
         public static void ObjectToScreenPosition(Camera mainCamera, Transform target, Image screenIcon, int screenIconWidth, int screenIconHeight)
         {
             var screenPosition = mainCamera.WorldToScreenPoint(target.position);
-            //Debug.Log(screenBound);
+            Debug.Log(screenBound);
             if (screenPosition.z < 0)
             {
-                screenPosition.y = 0;
-                screenPosition.x = -screenPosition.x + screenBound.x;
-            }//https://docs.unity3d.com/ScriptReference/Mathf.Clamp.html
+                screenPosition *= -1;
+            }
             screenIcon.transform.position = new Vector2(
-                Mathf.Clamp(screenPosition.x, screenIconWidth, screenBound.x - screenIconWidth),
-                Mathf.Clamp(screenPosition.y, screenIconHeight, screenBound.y - screenIconHeight));//https://docs.unity3d.com/ScriptReference/Mathf.Clamp.html
+                Mathf.Clamp(screenPosition.x, screenBound.x / 50, screenBound.x - screenBound.x / 50),
+                Mathf.Clamp(screenPosition.y, screenBound.y / 50, screenBound.y - screenBound.y / 50));//https://docs.unity3d.com/ScriptReference/Mathf.Clamp.html
         }
     }
 }

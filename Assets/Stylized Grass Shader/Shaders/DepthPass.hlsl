@@ -30,7 +30,7 @@ Varyings DepthOnlyVertex(Attributes input)
 	WindSettings wind = PopulateWindSettings(_WindAmbientStrength, _WindSpeed, _WindDirection, _WindSwinging, BEND_MASK, _WindObjectRand, _WindVertexRand, _WindRandStrength, _WindGustStrength, _WindGustFreq);
 	BendSettings bending = PopulateBendSettings(_BendMode, BEND_MASK, _BendPushStrength, _BendFlattenStrength, _PerspectiveCorrection);
 
-	VertexInputs vertexInputs = GetVertexInputs(input, _NormalParams.w);
+	VertexInputs vertexInputs = GetVertexInputs(input, _NormalFlattenDepthNormals);
 	VertexOutput vertexData = GetVertexOutput(vertexInputs, posOffset, wind, bending);
 
 	output.positionCS = vertexData.positionCS;
@@ -51,7 +51,7 @@ half4 DepthOnlyFragment(Varyings input) : SV_TARGET
 
 #ifdef _ALPHATEST_ON
 	float alpha = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv).a;
-	AlphaClip(alpha, _Cutoff, input.positionCS.xyz, input.positionWS.xyz, _FadeParams);
+	AlphaClip(alpha, _Cutoff, input.positionCS.xyz, input.positionWS.xyz, _FadeNear, _FadeFar, _FadeAngleThreshold);
 #endif
 
 	return 0;
@@ -64,7 +64,7 @@ half4 DepthNormalsFragment(Varyings input) : SV_TARGET
 #ifdef SHADERPASS_DEPTHNORMALS
 	#ifdef _ALPHATEST_ON
 	float alpha = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv).a;
-	AlphaClip(alpha, _Cutoff, input.positionCS.xyz, input.positionWS.xyz, _FadeParams);
+	AlphaClip(alpha, _Cutoff, input.positionCS.xyz, input.positionWS.xyz, _FadeNear, _FadeFar, _FadeAngleThreshold);
 	#endif
 
 	return half4(input.normalWS, 0.0);

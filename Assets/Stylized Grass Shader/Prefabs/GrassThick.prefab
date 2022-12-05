@@ -39,7 +39,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3958793126709022077}
-  m_Mesh: {fileID: -3397543929554076978, guid: 096e92abcaba97f4c8139651d08f0c49, type: 3}
+  m_Mesh: {fileID: 1767926848882389502, guid: 096e92abcaba97f4c8139651d08f0c49, type: 3}
 --- !u!23 &2950066647583452251
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -55,6 +55,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,6 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4339158089320749558
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +181,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5438576940023339183}
-  m_Mesh: {fileID: 4152671408422335528, guid: 096e92abcaba97f4c8139651d08f0c49, type: 3}
+  m_Mesh: {fileID: 9016163208507508241, guid: 096e92abcaba97f4c8139651d08f0c49, type: 3}
 --- !u!23 &6159090623379372425
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -195,6 +197,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -219,6 +222,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7695846177758354817
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +262,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7695846177758354817}
-  m_Mesh: {fileID: 9163756225364419683, guid: 096e92abcaba97f4c8139651d08f0c49, type: 3}
+  m_Mesh: {fileID: 2232601477126933531, guid: 096e92abcaba97f4c8139651d08f0c49, type: 3}
 --- !u!23 &8416642697587735719
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -274,6 +278,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -298,3 +303,4 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}

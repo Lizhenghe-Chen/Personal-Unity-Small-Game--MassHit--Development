@@ -1,3 +1,41 @@
+1.3.1
+
+Fixed:
+- Terrain material being overriden when using the Colormap Renderer with specific settings.
+- Preliminary fixes for Unity 2023.1.0
+
+1.3.0
+Minimum supported version is now Unity 2020.3 and URP 10.3.2
+
+- Reworked the grass bending functionality for greatly improved performance.
+- Restructured folders to follow the UPM standard. Scripts now in a separate Runtime/Editor folder.
+
+Added:
+- Prefabs specific to use with the terrain system (without LODs)
+- Normal maps for all grass textures
+- Masking Sphere component. Fades out the grass towards a single point, with a given radius.
+- GI support for DOTS Instancing (Hybrid Renderer)
+- Options for near/fade camera fading
+
+Changed:
+- Recreated most grass textures for improved shape and density.
+- Scale map is no longer experimental
+    * Transitions between different terrain layers are now seamless
+    * Grass scale defaults to 100% for any layers not configured
+- Translucency shading is now greatly improved for orthographic cameras.
+- Color Map Renderer now respects individual materials assigned to terrain tiles.
+- Reworked material UI to support multi-selection and Material Variants. This causes the following parameters to be reset:
+    * Normal parameters
+    * Distance fading parameters
+    * Environment reflections toggle
+    
+Fixed:
+- Alpha clipping value no longer influences the angle fading functionality.
+- Color map rendering as completely red if the terrain had 0 height.
+- Grass appearing shorter if the "Apply scale map" option was enabled, yet no scale map was present
+- Sparkles appearing when the grass geometry occupies <1px on the screen and MSAA is enabled.
+- Certain terrain layers not being configurable in the layer-based grass scale options
+
 1.2.2
 
 Fixed:

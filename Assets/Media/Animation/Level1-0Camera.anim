@@ -118,14 +118,14 @@ AnimationClip:
       - serializedVersion: 3
         time: 20.083334
         value: {x: 2.9300253, y: 3.2116508, z: 44.242176}
-        inSlope: {x: 0.33296254, y: 0, z: 0}
-        outSlope: {x: 0.33296254, y: 0, z: 0}
+        inSlope: {x: 0.3308684, y: 0, z: 0}
+        outSlope: {x: 0.3308684, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 23.016666
+        time: 23.066668
         value: {x: 3.5876262, y: 2.9062934, z: -34.01663}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -152,7 +152,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 23.833334
+        time: 23.4
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -180,7 +180,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 23.833334
+        time: 24.55
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -208,7 +208,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 24.366667
+        time: 23.9
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -236,7 +236,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 24.116667
+        time: 23.666666
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -307,7 +307,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 24.5
+    m_StopTime: 27.55
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -365,14 +365,14 @@ AnimationClip:
       - serializedVersion: 3
         time: 20.083334
         value: 2.9300253
-        inSlope: 0.33296254
-        outSlope: 0.33296254
+        inSlope: 0.3308684
+        outSlope: 0.3308684
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 23.016666
+        time: 23.066668
         value: 3.5876262
         inSlope: 0
         outSlope: 0
@@ -436,7 +436,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 23.016666
+        time: 23.066668
         value: 2.9062934
         inSlope: 0
         outSlope: 0
@@ -500,7 +500,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 23.016666
+        time: 23.066668
         value: -34.01663
         inSlope: 0
         outSlope: 0
@@ -720,7 +720,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 23.833334
+        time: 23.4
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -748,7 +748,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 23.833334
+        time: 24.55
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -776,7 +776,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 24.366667
+        time: 23.9
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -804,7 +804,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 24.116667
+        time: 23.666666
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -853,6 +853,13 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: Disable_VirtualCamera1_Input
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 2.9166667
     functionName: NextMissionText
     data: 
@@ -867,7 +874,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 24.5
+  - time: 27.3
+    functionName: Enable_VirtualCamera1_Input
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 27.55
     functionName: DisableAnimationCtrl
     data: 
     objectReferenceParameter: {fileID: 0}

@@ -281,7 +281,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 23.5
+    m_StopTime: 26.433332
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -826,7 +826,21 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 23.5
+  - time: 0
+    functionName: Disable_VirtualCamera1_Input
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 26.016666
+    functionName: Enable_VirtualCamera1_Input
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 26.433332
     functionName: DisableAnimationCtrl
     data: 
     objectReferenceParameter: {fileID: 0}

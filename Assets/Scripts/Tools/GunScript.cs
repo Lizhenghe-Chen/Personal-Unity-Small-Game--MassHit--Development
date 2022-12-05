@@ -8,7 +8,7 @@ public class GunScript : MonoBehaviour
 {
     [Header("Need Assign in Inspector")]
     public Transform Player;
-
+    public Transform Plane;
     public Transform muzzle;
     public GameObject AimPoint;
     public Transform shootTraget;
@@ -62,7 +62,12 @@ public class GunScript : MonoBehaviour
             //shoot bullet from screen center
 
             Physics.IgnoreCollision(temp.GetComponent<Collider>(), Player.GetComponent<Collider>(), true);
-            temp.GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed;
+            if (CharacterCtrl._CharacterCtrl.PlayerAnimator.GetBool("ToPlane"))
+            {
+                temp.GetComponent<Rigidbody>().velocity = Plane.transform.forward * bulletSpeed;
+            }
+            else { temp.GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed; }
+
         }
     }
     void PreShoot()//!!!!!!!!!!!!!!!!!!!!!!!!!!!!

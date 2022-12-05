@@ -200,12 +200,12 @@ public class AudioPeer : MonoBehaviour
             Ins_cube = Instantiate(cubePrefab, this.transform.position, Quaternion.Euler(0, averangeEulerAng * i, 0));
 
             Ins_cube.transform.parent = Audiovisualparent;
-            if (i == 0)
-            {
-                Ins_cube.GetComponent<Renderer>().material.color = Color.blue;
-                Ins_cube.GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.blue);
+            // if (i == 0)
+            // {
+            //     Ins_cube.GetComponent<Renderer>().material.color = Color.blue;
+            //     Ins_cube.GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.blue);
 
-            }
+            // }
             // Ins_cube.transform.position = this.transform.position;
             // this.transform.eulerAngles = new Vector3(0, averangeEulerAng * i, 0);
 

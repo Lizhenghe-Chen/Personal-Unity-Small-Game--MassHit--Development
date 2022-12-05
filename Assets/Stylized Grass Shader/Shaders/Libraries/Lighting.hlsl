@@ -13,8 +13,6 @@ struct TranslucencyData
 	Light light;
 };
 
-#define TRANSLUCENCY_DIRECT_BOOST 4
-
 float GetLightHorizonFalloff(float3 dir)
 {
 	//Fade the effect out as the sun approaches the horizon (75 to 90 degrees)
@@ -30,16 +28,19 @@ void ApplyTranslucency(inout SurfaceData surfaceData, InputData inputData, Trans
 
 	//For proper sub-surface scattering, this should be blurred to some extent. But this should ideally be incorporated into the pipeline as a whole.
 	float shadowMask = data.light.shadowAttenuation * data.light.distanceAttenuation * surfaceData.occlusion;
-	
+
+	//Fake some subsurface scattering by incorporating the effect into occlusion as well.
+	shadowMask = saturate(shadowMask + data.strengthIndirect);
+
 	half angleMask = GetLightHorizonFalloff(data.light.direction);
 
 	//In URP light intensity is pre-multiplied with the color, extract via magnitude of color "vector"
 	float lightStrength = length(data.light.color);
-
-	float3 tColor = surfaceData.albedo + BlendOverlay(data.light.color, surfaceData.albedo);
-	float3 direct = lerp(surfaceData.emission, tColor, data.strengthDirect * TRANSLUCENCY_DIRECT_BOOST);
-	float3 indirect = tColor * data.strengthIndirect;
 	
+	float3 tColor = surfaceData.albedo + BlendOverlay(data.light.color, surfaceData.albedo);
+	float3 direct = tColor * data.strengthDirect;
+	float3 indirect = tColor * data.strengthIndirect;
+
 	surfaceData.emission += lerp(indirect, direct, VdotL) * lightStrength * shadowMask * angleMask * data.thickness;
 }
 
@@ -54,7 +55,7 @@ float3 UnlitShading(SurfaceData surfaceData, InputData input)
 	#endif
 	#endif
 
-	return surfaceData.albedo + surfaceData.emission;
+	return surfaceData.albedo + surfaceData.emission + surfaceData.specular;
 }
 
 // General function to apply lighting based on the configured mode
