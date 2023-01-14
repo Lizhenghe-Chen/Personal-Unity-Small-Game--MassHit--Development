@@ -72,6 +72,7 @@ namespace UIElements
             }
         }
         public void LoadStartMenu() { LoadScene(levelList.List[0].levelName); }
+        
         /// <summary>
         /// the index in the level list from the Recource folder
         /// </summary>
@@ -190,6 +191,10 @@ namespace UIElements
             screenIcon.transform.position = new Vector2(
                 Mathf.Clamp(screenPosition.x, screenBound.x / 50, screenBound.x - screenBound.x / 50),
                 Mathf.Clamp(screenPosition.y, screenBound.y / 50, screenBound.y - screenBound.y / 50));//https://docs.unity3d.com/ScriptReference/Mathf.Clamp.html
+        }
+        public static bool IntToBool(int number)
+        {
+            return number == 0 ? false : true;
         }
     }
 }

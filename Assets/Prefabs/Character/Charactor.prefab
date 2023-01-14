@@ -1144,7 +1144,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183027161721721481}
-  m_LocalRotation: {x: -0.0010052881, y: -0.9735687, z: -0.004285998, w: 0.22835216}
+  m_LocalRotation: {x: -0.0005057744, y: -0.97481316, z: -0.22301167, w: 0.0022138306}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -6616,12 +6616,12 @@ MonoBehaviour:
     NearClipPlane: 0.1
     FarClipPlane: 1000
     Dutch: 0
-    ModeOverride: 3
+    ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 1
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
-    m_BlendHint: 2
+    m_BlendHint: 3
     m_InheritPosition: 1
     m_OnCameraLive:
       m_PersistentCalls:
@@ -7138,7 +7138,7 @@ MonoBehaviour:
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 2
-    m_InheritPosition: 0
+    m_InheritPosition: 1
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
@@ -7698,7 +7698,7 @@ MonoBehaviour:
   m_HorizontalDamping: 0.5
   m_VerticalDamping: 0.5
   m_ScreenX: 0.5
-  m_ScreenY: 0.5
+  m_ScreenY: 0.6
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_SoftZoneWidth: 0.8
@@ -7819,7 +7819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 0.022271872, z: -2.5295305}
+  m_FollowOffset: {x: 0, y: 1.3882082, z: -2.8752286}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -7839,7 +7839,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 26.400429
+    Value: 0.2601963
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -7877,7 +7877,7 @@ MonoBehaviour:
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
   m_HorizontalDamping: 0
-  m_VerticalDamping: 0
+  m_VerticalDamping: 0.2
   m_ScreenX: 0.5
   m_ScreenY: 0.55
   m_DeadZoneWidth: 0
@@ -8465,7 +8465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 0.022271872, z: -2.5295305}
+  m_FollowOffset: {x: 0, y: 1.3882082, z: -2.8752286}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -8485,7 +8485,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 26.400429
+    Value: 0.2601963
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -8558,7 +8558,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4700703369568906992}
-  m_LocalRotation: {x: 0.22163808, y: -0.25637746, z: 0.06052251, w: 0.9388739}
+  m_LocalRotation: {x: 0.2216381, y: -0.25637743, z: 0.0605225, w: 0.9388739}
   m_LocalPosition: {x: 10.164806, y: 10, z: -17.224304}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
@@ -8580,11 +8580,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbee29e0cfce6e049b98ac865cd2abcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  postProcessVolume: {fileID: 8237016961248122844}
-  Player: {fileID: 6299892785299899478}
   maxRadius: -25
   minRadius: -3
-  transposerXdY: -0.5
+  transposerXdY: -0.3
+  postProcessVolume: {fileID: 8237016961248122844}
+  Player: {fileID: 6299892785299899478}
   disdance: 0
   playerRadius: 0
   total_Offset_Z: 0
@@ -8605,18 +8605,18 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 5
   m_StandbyUpdate: 0
   m_LookAt: {fileID: 6299892785299899478}
   m_Follow: {fileID: 6299892785299899478}
   m_Lens:
-    FieldOfView: 11.421186
+    FieldOfView: 15
     OrthographicSize: 5
     NearClipPlane: 0.1
     FarClipPlane: 1000
     Dutch: 0
-    ModeOverride: 3
-    LensShift: {x: 0, y: 0.2}
+    ModeOverride: 2
+    LensShift: {x: 0, y: 0}
     GateFit: 1
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
@@ -8651,9 +8651,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4761137110479878084}
-  m_LocalRotation: {x: -0.109950036, y: -0.000000059604638, z: -0.000000016763805,
-    w: 0.9939371}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.00000013969839, y: 0.508705, z: -4.209146}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8689,12 +8688,12 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 43.60282
+    FieldOfView: 40
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 1000
     Dutch: 0
-    ModeOverride: 3
+    ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 1
     m_SensorSize: {x: 1, y: 1}
@@ -8732,7 +8731,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5179348127629032643}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.009349309, y: -0.42161205, z: -0.0059095575}
+  m_LocalPosition: {x: -0.0071258545, y: -0.41994035, z: -0.007167816}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9211,8 +9210,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5699303883709023150}
-  m_LocalRotation: {x: -0.07343826, y: 0.22770396, z: 0.01722508, w: 0.97080433}
-  m_LocalPosition: {x: -1.1247352, y: 0.022271872, z: -2.2657218}
+  m_LocalRotation: {x: 0.20752269, y: 0.0022212493, z: -0.0004712192, w: 0.9782276}
+  m_LocalPosition: {x: -0.013057232, y: 1.3882083, z: -2.8751984}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9231,7 +9230,7 @@ Camera:
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 2
+  m_projectionMatrixMode: 1
   m_GateFitMode: 1
   m_FOVAxisMode: 0
   m_SensorSize: {x: 1, y: 1}
@@ -9245,7 +9244,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 1000
-  field of view: 43.60282
+  field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: 100
@@ -14361,7 +14360,6 @@ GameObject:
   - component: {fileID: 9161388117311884999}
   - component: {fileID: 6299892785299899477}
   - component: {fileID: 6299892785299899474}
-  - component: {fileID: 3358674326828623019}
   - component: {fileID: 9040010018938861832}
   m_Layer: 3
   m_Name: Player
@@ -14494,40 +14492,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!215 &3358674326828623019
-ReflectionProbe:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6299892785299899475}
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Type: 0
-  m_Mode: 1
-  m_RefreshMode: 1
-  m_TimeSlicingMode: 0
-  m_Resolution: 32
-  m_UpdateFrequency: 0
-  m_BoxSize: {x: 2, y: 2, z: 2}
-  m_BoxOffset: {x: 0, y: 0, z: 0}
-  m_NearClip: 0.01
-  m_FarClip: 20
-  m_ShadowDistance: 50
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 2147483647
-  m_IntensityMultiplier: 1.2
-  m_BlendDistance: 5
-  m_HDR: 0
-  m_BoxProjection: 0
-  m_RenderDynamicObjects: 1
-  m_UseOcclusionCulling: 1
-  m_Importance: 2
-  m_CustomBakedTexture: {fileID: 8900000, guid: 526f476039ebee544874f76e9bc8b3ce,
-    type: 2}
 --- !u!95 &9040010018938861832
 Animator:
   serializedVersion: 4
@@ -19532,8 +19496,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7068789899326457314}
-  m_LocalRotation: {x: 0.06005489, y: -0.000000044703484, z: -0.0000000055879354,
-    w: 0.9981951}
+  m_LocalRotation: {x: 0.041983824, y: 0.0000000114087, z: -0.0000000044528856, w: 0.99911827}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -19570,12 +19533,12 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 43.60282
+    FieldOfView: 40
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 1000
     Dutch: 0
-    ModeOverride: 3
+    ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 1
     m_SensorSize: {x: 1, y: 1}
@@ -19721,7 +19684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 0.022271872, z: -2.5295305}
+  m_FollowOffset: {x: 0, y: 1.3882082, z: -2.8752286}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -19741,7 +19704,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 26.400429
+    Value: 0.2601963
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -20123,8 +20086,9 @@ MonoBehaviour:
   aptureSlider: {fileID: 1280857435594967354}
   MainCamera: {fileID: 7916521723808790746}
   vcam: {fileID: 8620140829337412446}
+  POV: {fileID: 5315409954643349778}
+  playerVCam: {fileID: 8102733446096215914}
   postProcessVolume: {fileID: 2467034345881241803}
-  df: {fileID: 0}
 --- !u!223 &3165552488373236497
 Canvas:
   m_ObjectHideFlags: 0
@@ -20283,8 +20247,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8102733446096215914}
-  m_LocalRotation: {x: -0.07360827, y: 0.22770098, z: 0.01726496, w: 0.97079146}
-  m_LocalPosition: {x: -2.2494705, y: 0.044543743, z: -4.5314436}
+  m_LocalRotation: {x: 0.16397248, y: 0.0022399202, z: -0.00037232568, w: 0.98646235}
+  m_LocalPosition: {x: -0.026114464, y: 2.7764165, z: -5.7503967}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20332,30 +20296,30 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 5
   m_StandbyUpdate: 0
   m_LookAt: {fileID: 6299892785299899478}
   m_Follow: {fileID: 6299892785299899478}
   m_CommonLens: 1
   m_Lens:
-    FieldOfView: 43.60282
+    FieldOfView: 40
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 1000
     Dutch: 0
-    ModeOverride: 3
+    ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 1
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 1
-    m_InheritPosition: 0
+    m_InheritPosition: 1
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0.32404983
+    Value: 0.56403
     m_SpeedMode: 1
     m_MaxSpeed: 0.1
     m_AccelTime: 2
@@ -20379,7 +20343,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: 26.400429
+    Value: 0.2601963
     m_SpeedMode: 1
     m_MaxSpeed: 10
     m_AccelTime: 2
@@ -20841,7 +20805,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 1
+  m_FillAmount: 0.6299293
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -21378,8 +21342,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9018846819849911417}
-  m_LocalRotation: {x: 0.000000007450581, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00000029616058, y: 0.010910373, z: -0.07280881}
+  m_LocalRotation: {x: 0.060150325, y: 0.000000013969839, z: -0.0000000056170393,
+    w: 0.9981894}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21415,12 +21380,12 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 43.60282
+    FieldOfView: 40
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 1000
     Dutch: 0
-    ModeOverride: 3
+    ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 1
     m_SensorSize: {x: 1, y: 1}

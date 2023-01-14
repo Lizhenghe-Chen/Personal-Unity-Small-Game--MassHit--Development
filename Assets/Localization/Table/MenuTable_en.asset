@@ -156,6 +156,18 @@ MonoBehaviour:
     m_Localized: Black Hole
     m_Metadata:
       m_Items: []
+  - m_Id: 70423644583104512
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70424272592048128
+    m_Localized: Finnished
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70426195667849216
+    m_Localized: Check Point Saved
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

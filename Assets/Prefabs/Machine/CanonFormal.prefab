@@ -307,7 +307,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2380254221206955049}
-  m_LocalRotation: {x: -0.04269112, y: 0.00000028462125, z: 0.000000105532486, w: 0.99908835}
+  m_LocalRotation: {x: -0.04269149, y: 0.00000028462128, z: 0.00000010553259, w: 0.99908835}
   m_LocalPosition: {x: 0, y: 0.40662718, z: 0.07390854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -755,6 +755,8 @@ MonoBehaviour:
   FirePoint: {fileID: 2484417531738189477}
   bullet: {fileID: 1710411021089273418, guid: 6b23ddab9b71b1446bf0cbeef14f9c3a, type: 3}
   muzzleFlash: {fileID: 3886002869105554556}
+  fireParticle: {fileID: 4801680938569662124, guid: 0d1df899111844845be2a5d0502188cf,
+    type: 3}
   attackRange: 25
   FiringRate: 1
   bulletSpeed: 100

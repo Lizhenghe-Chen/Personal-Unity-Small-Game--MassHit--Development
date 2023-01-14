@@ -15,40 +15,40 @@ MonoBehaviour:
   m_TableCollectionName: MenuTable
   m_TableCollectionNameGuidString: d8ec274d75d86c4468c7bdd0016e6a5a
   m_Entries:
-  - m_Id: 400069239066624
-    m_Key: StartGame
-    m_Metadata:
-      m_Items: []
-  - m_Id: 400002058899456
-    m_Key: Continue
-    m_Metadata:
-      m_Items: []
-  - m_Id: 391199171104768
-    m_Key: Return Menu
-    m_Metadata:
-      m_Items: []
-  - m_Id: 391164308049920
-    m_Key: PhotoMode
-    m_Metadata:
-      m_Items: []
-  - m_Id: 391133735768064
-    m_Key: Resume
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31818025881600
-    m_Key: Settings
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31782294605824
-    m_Key: Quit
+  - m_Id: 38833049600
+    m_Key: Title
     m_Metadata:
       m_Items: []
   - m_Id: 1150529130496
     m_Key: Chinese
     m_Metadata:
       m_Items: []
-  - m_Id: 38833049600
-    m_Key: Title
+  - m_Id: 31782294605824
+    m_Key: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31818025881600
+    m_Key: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 391133735768064
+    m_Key: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 391164308049920
+    m_Key: PhotoMode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 391199171104768
+    m_Key: Return Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 400002058899456
+    m_Key: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 400069239066624
+    m_Key: StartGame
     m_Metadata:
       m_Items: []
   - m_Id: 416061428158464
@@ -69,10 +69,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 890186382790656
     m_Key: PrairieLevel
-    m_Metadata:
-      m_Items: []
-  - m_Id: 32064295057141760
-    m_Key: BlackHoleLevel
     m_Metadata:
       m_Items: []
   - m_Id: 890390372765696
@@ -113,6 +109,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 16356657023594496
     m_Key: PlayerTips
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32064295057141760
+    m_Key: BlackHoleLevel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70423644583104512
+    m_Key: Loading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70424272592048128
+    m_Key: Finnished
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70426195667849216
+    m_Key: CheckPoint
     m_Metadata:
       m_Items: []
   m_Metadata:

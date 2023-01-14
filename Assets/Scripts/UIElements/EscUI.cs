@@ -29,8 +29,9 @@ namespace UIElements
         public GameObject MissionCanvas;
         CinemachineBrain cameraBrain;
         public GameObject PlayerTips;
+        [Header("SpectatorUI System:")]
         [SerializeField] Canvas SpectatorBundleCanavs, PlayerBundleCanvas;
-
+        [SerializeField] SpectatorUI SpectatorUIScript;
         // Start is called before the first frame update
 
         void OnEnable()
@@ -38,6 +39,7 @@ namespace UIElements
             escCanvas = this.GetComponent<Canvas>();
             PlayerBundleCanvas = PlayerBunbleHUD.GetComponent<Canvas>();
             SpectatorBundleCanavs = SpectatorBunbleHUD.GetComponent<Canvas>();
+            SpectatorUIScript = SpectatorBunbleHUD.GetComponent<SpectatorUI>();
             // videoDropdown.value = QualitySettings.GetQualityLevel();
 
             //ChangeQualityLevel();
@@ -73,19 +75,23 @@ namespace UIElements
                 //  SpectatorBunbleHUD.SetActive(false);
                 PlayerTips.SetActive(false);
                 SpectatorBundleCanavs.enabled = false;
+                SpectatorUIScript.EnableCameraCtrol();
                 //PlayerBunbleHUD.SetActive(false);
                 //if (characterCtrl.enabled) { GlobalRules.instance.isPause = false; }
-                cameraBrain.enabled = true;
-                 GlobalUIFunctions.HideCrusor();
+                // cameraBrain.enabled = true;
+                UnFrozenCMBrain();
+                GlobalUIFunctions.HideCrusor();
             }
             else// if menu is inactive, switch it active,open the menu
             {
                 GlobalRules.instance.isPause = true; TimeSettings();
                 escCanvas.enabled = true;
-                cameraBrain.enabled = false;
+                //cameraBrain.enabled = false;
+                FrozeCMBrain();
                 GlobalRules.instance.isPause = true;
                 PlayerTips.SetActive(true);
                 SpectatorBundleCanavs.enabled = true;
+                SpectatorUIScript.DisableCameraCtrol();
                 GlobalUIFunctions.ShowCrusor();
                 //SpectatorBunbleHUD.SetActive(true);
                 //PlayerBunbleHUD.SetActive(true);
@@ -106,7 +112,8 @@ namespace UIElements
         public void SwitchBunble()
         {
             CancelInvoke();
-            cameraBrain.enabled = true;
+            // cameraBrain.enabled = true;
+         //   UnFrozenCMBrain();
             if (characterCtrl.enabled)
             {
                 GlobalRules.instance.isPause = true;
@@ -133,8 +140,10 @@ namespace UIElements
                 //PlayerPos.position = SpectatorPos.position;
                 //SwitchButton.GetComponentInChildren<TextMeshProUGUI>().text = "Photo Mode";
                 SwitchButton.GetComponentInChildren<LocalizeStringEvent>().SetEntry("Photo Mode");
+              //  FrozeCMBrain();
+                // Invoke(nameof(FrozeCMBrain), 1f * Time.timeScale);
             }
-            Invoke(nameof(UnableCinemachineBrain), 1f * Time.timeScale);
+
         }
 
         //public void ChangeLevel()
@@ -172,10 +181,15 @@ namespace UIElements
             }
             SpectatorPos.position = MainCamera.position;
         }
-        void UnableCinemachineBrain()
+        void FrozeCMBrain()
         {
-            cameraBrain.enabled = false;
-            Debug.Log("UnableCinemachineBrain");
+            cameraBrain.m_IgnoreTimeScale = false;
+            Debug.Log("FrozeCMBrain");
+        }
+        void UnFrozenCMBrain()
+        {
+            cameraBrain.m_IgnoreTimeScale = true;
+            Debug.Log("UnFrozenCMBrain");
         }
 
     }

@@ -42,7 +42,7 @@ public class PlayerBrain : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        OnBelowDeathAltitude();
+        CharacterCtrl._CharacterCtrl.OnBelowDeathAltitude();
         if (inMenuRotate) { transform.rotation = Quaternion.Lerp(transform.rotation, randomTransform.rotation, selfRotateSpeed * Time.deltaTime); return; }
         //  transform.position = Player.position;
         //   Debug.Log(Vector3.Distance(transform.position, PlayerKernel.transform.position));
@@ -63,20 +63,7 @@ public class PlayerBrain : MonoBehaviour
             }
         }
     }
-    void OnBelowDeathAltitude()
-    {
-        if (transform.position.y < GlobalRules.instance.DeathAltitude)
-        {
-            CharacterCtrl._CharacterCtrl.MaskAnimator.Play("Enter", 0, 0);
-            CharacterCtrl._CharacterCtrl.currentOutLookState = CharacterCtrl.OutLookState.NORMAL;
-            Debug.LogWarning("Below Death Altitude");
-            CharacterCtrl._CharacterCtrl.transform.position = CharacterCtrl._CharacterCtrl.CheckPoint;
-            CharacterCtrl._CharacterCtrl.rb.velocity = Vector3.zero;
 
-            // LoadScene(SceneManager.GetActiveScene().buildIndex);
-            // this.transform.position = new Vector3(0, 5, 0);
-        }
-    }
     // private void OnTriggerStay(Collider other)
     // {
 

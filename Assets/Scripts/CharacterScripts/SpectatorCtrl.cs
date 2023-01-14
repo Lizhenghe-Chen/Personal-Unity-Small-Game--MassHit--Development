@@ -80,7 +80,7 @@ public class SpectatorCtrl : MonoBehaviour
         transform.position += horizontal * Speed * Time.unscaledDeltaTime * Camera.right;
         Physics.Raycast(transform.position, -Vector3.up, out RaycastHit hit);
         //raycast
-        Debug.Log(hit.distance);
+//        Debug.Log(hit.distance);
         if (hit.distance < 0.1 || hit.distance == Mathf.Infinity)
         {
             transform.position = Vector3.Lerp(transform.position, transform.position + new Vector3(0, 1, 0), Time.unscaledDeltaTime);

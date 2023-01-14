@@ -13,27 +13,30 @@ namespace UIElements
         public Slider focusDistanceSlider, FieldOfViewSlider, focalLengthSlider, aptureSlider;
         public Transform MainCamera;
         Camera MainCameraForFieldOfView;
+        private CinemachineBrain cameraBrain;
         [SerializeField] CinemachineVirtualCamera vcam;
+        [SerializeField] CinemachinePOV POV;
+        [SerializeField] GameObject playerVCam;
         [SerializeField] private Volume postProcessVolume;
-        [SerializeField] private DepthOfField df;
+        private DepthOfField df;
+
         void Start()
-        {
+        {//modify the sensor size of the virtual camera to match the sensor size of the camera
+
+            POV = vcam.GetComponentInChildren<CinemachinePOV>();
             postProcessVolume.sharedProfile.TryGet<DepthOfField>(out df);
             MainCameraForFieldOfView = MainCamera.GetComponent<Camera>();
+            cameraBrain = MainCamera.GetComponent<CinemachineBrain>();
             SetApture();
             SetFocalLength();
             SetFocusDistance();
             SetFieldOfView();
 
         }
-        //private void OnEnable()
-        //{
-        //    // SetTimeScale();
-        //    // FieldOfViewSlider.value = MainCamera.GetComponent<Camera>().fieldOfView = 35f;
-        //}
+
         private void Update()
         {
-            if (Input.mouseScrollDelta.y != 0) { vcam.m_Lens.FieldOfView = FieldOfViewSlider.value = MainCameraForFieldOfView.fieldOfView += Input.mouseScrollDelta.y; }
+            if (Input.mouseScrollDelta.y != 0) { vcam.m_Lens.FieldOfView = FieldOfViewSlider.value += Input.mouseScrollDelta.y; }
             if (Input.GetMouseButtonDown(1))
             {
                 if (Physics.Raycast(MainCameraForFieldOfView.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
@@ -59,13 +62,21 @@ namespace UIElements
 
             GlobalRules.instance.isPause = menuPause;
         }
+        public void EnableCameraCtrol()
+        {
+            POV.m_VerticalAxis.m_MaxSpeed = POV.m_HorizontalAxis.m_MaxSpeed = 1;
+        }
+        public void DisableCameraCtrol()
+        {
+            POV.m_VerticalAxis.m_MaxSpeed = POV.m_HorizontalAxis.m_MaxSpeed = 0;
+        }
         public void SetFocusDistance()
         {
             df.focusDistance.value = focusDistanceSlider.value;
         }
         public void SetFieldOfView()
         {
-            vcam.m_Lens.FieldOfView = MainCameraForFieldOfView.fieldOfView = FieldOfViewSlider.value;
+            vcam.m_Lens.FieldOfView = FieldOfViewSlider.value;
             // MainCameraForFieldOfView.fieldOfView = FieldOfViewSlider.value;
 
         }

@@ -8,18 +8,22 @@ using UnityEngine.UI;
 //This File shoulbe attach to Camera
 public class CameraDistSecond : MonoBehaviour
 {
+    [Header("Clould be Modified in Inspector: \n")]
+    public float maxRadius = -40; //should <0!!!!!
+    public float minRadius = 0; //should ==0
+    public float transposerXdY = -0.5f;
+
     [Header("Need Assign in Inspector\n")]
     [SerializeField] private Volume postProcessVolume;
     [SerializeField] Transform Player;
     //[SerializeField] CinemachineVirtualCamera virtualCamera;
-    public float maxRadius = -40; //should <0!!!!!
-    public float minRadius = 0; //should ==0
-    public float transposerXdY = -0.5f;
+
+    [Header("For Debug:\n")]
     [SerializeField] float disdance; //for postProcessVolume Depth od Field use
     [SerializeField] float playerRadius;
+
     private CinemachineTransposer transposer;
     readonly int offset_Value = 2; //offset when Mouse ScrollWheel
-
     private DepthOfField dof;
 
     [SerializeField] float total_Offset_Z, smoothSpeed = 2f;//distance between player and camera
@@ -59,7 +63,7 @@ public class CameraDistSecond : MonoBehaviour
             total_Offset_Z += offset_Value;
         }
         total_Offset_Z = Mathf.Clamp(total_Offset_Z, maxRadius, minRadius);
-       // if (transposer.m_FollowOffset.z - total_Offset_Z <= 0.5f) { return; }
+        // if (transposer.m_FollowOffset.z - total_Offset_Z <= 0.5f) { return; }
 
         transposer.m_FollowOffset.z = Mathf.Lerp(transposer.m_FollowOffset.z, total_Offset_Z, smoothSpeed * Time.deltaTime);
         transposer.m_FollowOffset.y = Mathf.Lerp(transposer.m_FollowOffset.y, transposerXdY * total_Offset_Z, smoothSpeed * Time.deltaTime);

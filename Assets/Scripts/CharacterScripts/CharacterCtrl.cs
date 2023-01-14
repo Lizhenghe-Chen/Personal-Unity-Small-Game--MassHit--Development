@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class CharacterCtrl : MonoBehaviour
+public partial class CharacterCtrl : MonoBehaviour
 {
     public static CharacterCtrl _CharacterCtrl;
     public enum OutLookState
@@ -81,10 +81,6 @@ public class CharacterCtrl : MonoBehaviour
     }
     void Start()
     {
-
-
-
-
         rb = GetComponent<Rigidbody>();
         //GlobalRules.instance.cam1 = Player_Camera1.GetComponent<Cinemachine.CinemachineFreeLook>();
         //GlobalRules.instance.cam2 = Player_Camera2.GetComponent<Cinemachine.CinemachineVirtualCamera>();
@@ -101,19 +97,13 @@ public class CharacterCtrl : MonoBehaviour
         else { this.transform.position = CheckPoint; }
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
 
-        if (moveAbility) { TurningTorque(); }
-        GiveForce();//swimming
-    }
     void Update()
     {
         AnimatorCtrl();
         if (AircraftAility) AircraftModeDetect();
         if (!moveAbility) { return; }
-        PlayerHealth = Mathf.Clamp(PlayerHealth, -0.1f, 100);
+       // PlayerHealth = Mathf.Clamp(PlayerHealth, -0.1f, 100);
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         JumpCommand(); RushCommand();
@@ -134,25 +124,10 @@ public class CharacterCtrl : MonoBehaviour
 
     //    }
     //}
-    void TurningTorque()
-    {
-        rb.maxAngularVelocity = (Input.GetKey(GlobalRules.instance.SpeedUp) ? speedUp_torque : initial_torque);
-        if (towardWithCamera)
-        {
-
-            rb.AddTorque(rb.maxAngularVelocity * verticalInput * Camera.transform.right);       //foward and back, rotate around Camera's red axis
-            rb.AddTorque(rb.maxAngularVelocity * horizontalInput * -Camera.transform.forward);  //left and right,rotate around Camera's blue axis
-        }
-        else
-        {
-            rb.AddTorque(rb.maxAngularVelocity * verticalInput * Vector3.right);
-            rb.AddTorque(rb.maxAngularVelocity * horizontalInput * -Vector3.forward);
-        }
-    }
 
     private void OnCollisionEnter(Collision other)
     {
-        DamageCaculate(other);
+        DamageEvent(other);
         if (landBendEffect) landBendEffect.Emit(1);
         // if (currentOutLookState == OutLookState.AIRCRAFT) SwitchAircraftMode();
         SetPlayerSkinStateByCollision(other);
@@ -166,97 +141,9 @@ public class CharacterCtrl : MonoBehaviour
         ClimbWall(collision);
 
         GetSpeed_Friction_Direction(collision);
-        // Debug.Log((transform.position - collision.GetContact(0).point).normalized);
 
-        //if (GlobalRules.IsGameObjInLayerMask(collision.gameObject, GlobalRules.instance.GoundLayer))
-        //{
-        //    ableToJump = true;
-        //}
-        //var temp = (transform.position - collision.GetContact(0).point);
-        // Debug.Log(temp.normalized + ", " + temp.normalized.y);
         if ((transform.position - collision.GetContact(0).point).normalized.y >= 0.2) { ableToJump = true; }
     }
-    private void GetSpeed_Friction_Direction(Collision collision)
-    {
-        // PlayerSpeedDirection.forward = rb.velocity.normalized;
-        //draw a line to show the direction of rigidbody
-        PlayerRotationDirection = Vector3.Cross(rb.angularVelocity, Vector3.up).normalized;
-        PlayerFrictionDirection = collision.relativeVelocity.normalized;
-        // if PlayerRotationDirection and PlayerFrictionDirection are not in the same line, then the player is sliding
-        // Debug.Log(Vector3.Dot(PlayerRotationDirection, PlayerFrictionDirection));
-        var emission = frictionParticleSystem.emission;
-        if (Vector3.Dot(PlayerRotationDirection, PlayerFrictionDirection) > -0.9f || (int)(transform.localScale.x * rb.angularVelocity.magnitude) != (int)(collision.relativeVelocity.magnitude))
-        {
-            emission.rateOverDistance = 6;
-            frictionParticleSystem.transform.position = collision.GetContact(0).point;
-        }
-
-        else emission.rateOverDistance = 0;
-
-        Debug.DrawLine(transform.position, transform.position + PlayerFrictionDirection * 10, Color.green);
-        Debug.DrawLine(transform.position, transform.position + PlayerRotationDirection * 10, Color.red);
-//        Debug.Log((int)(transform.localScale.x * rb.angularVelocity.magnitude) + "," + (int)(collision.relativeVelocity.magnitude));
-    }
-
-    private void DamageCaculate(Collision other)
-    {
-        if (other.gameObject.CompareTag("Bullet"))
-        {
-            Debug.Log("Hit" + other.relativeVelocity.magnitude);
-              MaskAnimator.Play("Injured", 0, 0);
-            PlayerHealth -= other.relativeVelocity.magnitude * other.rigidbody.mass;
-            if (PlayerHealth <= 0) OnHealthRunOut();
-        }
-
-    }
-    void OnHealthRunOut()
-    {
-
-        MaskAnimator.Play("Enter", 0, 0);
-        currentOutLookState = OutLookState.NORMAL;
-        Debug.LogWarning("Player is dead");
-        transform.position = CheckPoint;
-        rb.velocity = Vector3.zero;
-        PlayerHealth = 100;
-        // LoadScene(SceneManager.GetActiveScene().buildIndex);
-        // this.transform.position = new Vector3(0, 5, 0);
-    }
-    private void SetPlayerSkinStateByCollision(Collision other)
-    {
-        if (other.collider.name == "Diamond" && currentOutLookState != OutLookState.DIAMOND)
-        {
-            SavePriviousOutlookState();
-            currentOutLookState = OutLookState.DIAMOND;
-        }
-        if (other.collider.name == "Normal" && currentOutLookState != OutLookState.NORMAL)
-        {
-            SavePriviousOutlookState();
-            currentOutLookState = OutLookState.NORMAL;
-        }
-    }
-    private void AnimatorCtrl()
-    {
-        switch (currentOutLookState)
-        {
-            case OutLookState.NORMAL:
-                PlayerAnimator.SetBool("ToNormal", true);
-                PlayerAnimator.SetBool("ToPlane", false);
-                PlayerAnimator.SetBool("ToDiamond", false);
-                break;
-            case OutLookState.DIAMOND:
-                PlayerAnimator.SetBool("ToDiamond", true);
-                PlayerAnimator.SetBool("ToPlane", false);
-                PlayerAnimator.SetBool("ToNormal", false);
-                break;
-            case OutLookState.AIRCRAFT:
-                PlayerAnimator.SetBool("ToPlane", true);
-                PlayerAnimator.SetBool("ToDiamond", false);
-                PlayerAnimator.SetBool("ToNormal", false);
-                break;
-        }
-    }
-
-    public void ResetAnimateParamater() { PlayerAnimator.SetBool("ToDiamond", false); PlayerAnimator.SetBool("ToNormal", false); }
     private void OnCollisionExit(Collision other)
     {
         isCliming = false;
@@ -268,108 +155,6 @@ public class CharacterCtrl : MonoBehaviour
         //}
     }
 
-
-
-    float doubleClickTimetThreshold = 0.5f, lastClickTime;
-
-    private bool IsDoubleClick(KeyCode keyCode)
-    {
-        if (Input.GetKeyDown(keyCode))
-        {
-            isDoubleClick = ((Time.time - lastClickTime) <= doubleClickTimetThreshold);
-            lastClickTime = Time.time;
-        }
-        else { isDoubleClick = false; }
-        return isDoubleClick;
-    }
-    private void ClimbWall(Collision collision)
-    {
-        //if (collision.gameObject.layer == GlobalRules.instance.groundLayerID) { isCliming = false; return; }
-        if (!climbAbility) { return; }
-        if (Input.GetKey(GlobalRules.instance.Climb) && PlayerBrain.shootEnergy > 0)
-        {
-            if (Input.GetKeyDown(GlobalRules.instance.Jump))
-            {
-                rb.AddForce((transform.position - collision.GetContact(0).point).normalized * jumpForce);
-                isCliming = false;
-                return;
-            }
-            isCliming = true;
-            PlayerBrain.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
-            rb.AddForce(2 * -Physics.gravity.y * (collision.GetContact(0).point - transform.position).normalized);
-            rb.AddForce(-Physics.gravity);// print("First point that collided: " + collision.contacts[0].point);
-        }
-        else { isCliming = false; }
-
-    }
-    private void GiveForce()
-    {
-        if (PlayerBrain.shootEnergy <= 0||ableToJump) { return; }
-        //  Debug.Log("GiveForce");
-        var force = (Input.GetKey(GlobalRules.instance.SpeedUp) ? sliteForce * 2 : sliteForce);
-        rb.AddForce(force * verticalInput * Camera.transform.forward);
-        rb.AddForce(force * horizontalInput * Camera.transform.right);
-        if (Input.GetKey(GlobalRules.instance.MoveUp))
-        {
-            rb.AddForce(Vector3.up);
-        }
-        if (Input.GetKey(GlobalRules.instance.MoveDown))
-        {
-            rb.AddForce(-Vector3.up);
-        }
-
-        //PlayerBrain.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
-    }
-    void JumpCommand()
-    {
-        if (!ableToJump)
-        {
-            var emission = frictionParticleSystem.emission;
-            emission.rateOverDistance = 0;
-        }
-
-        if (!jumpAbility) { return; }
-        if (Input.GetKeyDown(GlobalRules.instance.Jump))
-        {
-            if (ableToJump)
-            {
-                //  Debug.Log("Jump");
-
-                rb.AddForce(Vector3.up * jumpForce);
-            }
-
-
-        }
-        else if (!isCliming && !ableToJump && PlayerBrain.shootEnergy > 0)
-        {
-            if (!flyAbility) { return; }
-            if ((Input.GetKey(GlobalRules.instance.Jump)))
-            {
-
-                rb.useGravity = false;
-                PlayerBrain.shootEnergy -= Time.deltaTime * GlobalRules.instance.flyConsume;
-
-                // Debug.Log("Fly");
-            }
-            else { rb.useGravity = true; }
-        }
-        else { rb.useGravity = true; }
-
-    }
-    void RushCommand()
-    {
-        if (!rushAbility) { return; }
-        if (Input.GetKeyDown(GlobalRules.instance.Rush) && PlayerBrain.shootEnergy > 0)
-        {
-            PlayerBrain.shootEnergy -= GlobalRules.instance.rushConsume;
-            if (towardWithCamera)
-            { rb.AddForce(Camera.transform.forward * rushForce); }
-            else
-            {
-                rb.AddForce(Vector3.zero * rushForce);
-            }
-        }
-    }
     void DestroyCommand()
     {
         if (Input.GetKey(KeyCode.C))
@@ -389,133 +174,20 @@ public class CharacterCtrl : MonoBehaviour
         //HitObjects.Clear();
         // Destroy(Test.Dequeue());
     }
-    void Break_Aim()
-    {
-        if (Input.GetKey(GlobalRules.instance.Break)) { rb.angularVelocity = Vector3.zero; }
-        if (!shootAbility) { return; }
-        if (Input.GetKey(GlobalRules.instance.HoldObject))
-        {
-            // Debug.Log("GetKeyDown");
-            playerActionState = ActionState.AIMING;
-            if (PlayerBrain.is_Charging) { PlayerAnimator.SetBool("isAiming", true); } else { PlayerAnimator.SetBool("isAiming", false); }
-
-            //ChangeMaterialsToTransparent();
-        }
-        if (Input.GetKeyUp(GlobalRules.instance.PreShoot) || Input.GetKeyUp(GlobalRules.instance.HoldObject))
-        {
-            playerActionState = ActionState.IDLE;
-            PlayerAnimator.SetBool("isAiming", false);
-            //ChangeMaterialsToOriginal();
-        }
-    }
-
-    public void AircraftModeDetect()
-    {
-        if (PlayerBrain.shootEnergy <= 25)
-        {
-            currentOutLookState = OutLookState.NORMAL; return;
-        }
-        if ((IsDoubleClick(GlobalRules.instance.Jump) && !ableToJump))
-        {
-            SwitchAircraftMode();
-            PlayerBrain.shootEnergy += 1;
-        }
-    }
-    public void SwitchAircraftMode()
-    {
-        Debug.Log("Double Click, FlyModeSwitching");
-        if (currentOutLookState != OutLookState.AIRCRAFT)
-        {
-            SavePriviousOutlookState();
-            currentOutLookState = OutLookState.AIRCRAFT;
-        }
-        else { currentOutLookState = priviousOutlookState; }
-        //PlayerAnimator.SetBool("ToPlane", !PlayerAnimator.GetBool("ToPlane"));
-    }
-    private void SavePriviousOutlookState()
-    {
-        //if (priviousOutlookState == currentOutLookState) { return; }
-        priviousOutlookState = currentOutLookState;
-    }
-    public void ChangeMaterialsToTransparent()
-    {
-        playerActionState = ActionState.AIMING;
-
-        // Material[] newMaterials = new Material[] { TransparentMaterial };
-
-        if (PlayerBrain.is_Charging)
-        {
-            playerMeshRenderer = GetComponent<MeshRenderer>();
-
-            playerMeshRenderer.materials = new Material[] { TransparentMaterial };
-
-            //for (int i = 0; i < playerMeshRenderer.materials.Length; i++)
-            //{
-            //    OriginalMaterialList.Add(playerMeshRenderer.materials[i]);
-            //    playerMeshRenderer.materials[i] = new Material[] { TransparentMaterial };
-            //}
-        }
-    }
-    //public void ChangeMaterialsToOriginal()
-    //{
-    //    playerActionState = ActionState.IDLE;
-    //    playerMeshRenderer = GetComponent<MeshRenderer>();
-    //    for (int i = 0; i < OriginalMaterialList.Count - 1; i++)
-    //    {
-    //        playerMeshRenderer.materials[i] = OriginalMaterialList[i];
-    //    }
-    //}
-
-    public void LoadScene(int sceneIndex)
-    {
-        //Time.timeScale = 1f;
-        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
-        SceneManager.LoadScene(sceneIndex);
-    }
-
-    private void ChangeCamera()//cam1 is CinemachineFreeLook, cam2 is CinemachineTransposer
-    {
-        if (Input.GetKeyDown(GlobalRules.instance.SwitchCamera))
-        {
-            Debug.Log("Switch Camera");
-            if (Player_Camera1.activeSelf == true)//cam1 to cam2
-            {
-                Player_Camera2.SetActive(true);
-                //  Camera = Player_Camera2.transform.parent.Find("Main Camera").GetComponent<Transform>();
-                //GlobalRules.instance.FitCameraDirection(true);
-                Player_Camera1.SetActive(false);
-
-            }
-            else//cam2 to cam1
-            {
-                Player_Camera1.SetActive(true);
-                //Camera = Player_Camera2.transform.parent.Find("Main Camera").GetComponent<Transform>();
-                //GlobalRules.instance.FitCameraDirection(false);
-                Player_Camera2.SetActive(false);
-            }
-        }
-
-    }
-    // public void BackToStartMenu()
+ 
+    // public IEnumerator DelayLoadLevel(int leveID)
     // {
-
-    //     StartCoroutine(DelayBackToStartMenu());
-
-    //     //  DelayLoadLevel(0);
+    //     PlayMaskLeaveClip();
+    //     yield return new WaitForSecondsRealtime(2f);
+    //     SceneManager.LoadScene(leveID);
     // }
-    public IEnumerator DelayLoadLevel(int leveID)
-    {
-        PlayMaskLeaveClip();
-        yield return new WaitForSecondsRealtime(2f);
-        SceneManager.LoadScene(leveID);
-    }
-    public IEnumerator DelayBackToStartMenu()
-    {
-        PlayMaskLeaveClip();
-        yield return new WaitForSecondsRealtime(2f);
-        SceneManager.LoadScene(GlobalRules.instance.StartSceneName);
-        Destroy(this.transform.parent.parent.gameObject);
-    }
+    // public IEnumerator DelayBackToStartMenu()
+    // {
+    //     PlayMaskLeaveClip();
+    //     yield return new WaitForSecondsRealtime(2f);
+    //     SceneManager.LoadScene(GlobalRules.instance.StartSceneName);
+    //     Destroy(this.transform.parent.parent.gameObject);
+    // }
     public IEnumerator AutoDestory()
     {
         while (true)
@@ -525,46 +197,6 @@ public class CharacterCtrl : MonoBehaviour
             yield return new WaitForSeconds(3f);
         }
     }
-    public void SetPlayerCam1(int isActive)//0 is false,1 is true
-    {
-        if (isActive == 0)
-        {
-            Player_Camera1.SetActive(false);
-        }
-        else
-        {
-            Player_Camera1.SetActive(true);
-        }
-    }
-    bool IntToBool(int number)
-    {
-        return number == 0 ? false : true;
-    }
-    public void PlayerParticle()//play the particle cover
-    {
-        SwitchParticleSystem.Stop();
-        SwitchParticleSystem.Play();
-        //OriginalMaterialList.Clear();
-        //foreach (var item in playerMeshRenderer.materials)
-        //{
-        //    OriginalMaterialList.Add(item);
-        //}
-    }
-    public void SetPlayerSkin(int targetSkinIndex)
-    {
-        Debug.Log("SetPlayerSkin");
-        for (int i = 0; i < playerSkinList.Count; i++)
-        {
-            if (i == targetSkinIndex)
-            {
-                playerSkinList[i].SetActive(true);
-            }
-            else { playerSkinList[i].SetActive(false); }
+     
 
-        }
-    }
-    public void PlayMaskLeaveClip()
-    {
-        MaskAnimator.Play("Leave");
-    }
 }
