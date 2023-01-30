@@ -103,13 +103,11 @@ namespace UIElements
             LevelButtons = LevelList.GetComponentsInChildren<Button>();
             for (int i = 0; i < LevelButtons.Length; i++)
             {
-                if (i <= unlockedLevel) { LevelButtons[i].interactable = true; }
+                if (i <= unlockedLevel-2) { LevelButtons[i].interactable = true; }
                 else
                 {
                     LevelButtons[i].interactable = false;
                     LevelButtons[i].GetComponentInChildren<LocalizeStringEvent>().enabled = false;
-
-
                     LevelButtons[i].GetComponentInChildren<TMP_Text>().text = "?";
                 }
             }

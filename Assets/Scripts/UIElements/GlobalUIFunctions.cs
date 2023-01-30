@@ -57,9 +57,46 @@ namespace UIElements
         // {
         //     LoadScene(levelList.List[SceneIndex].levelName);
         // }
+
+        /// <summary>
+        /// Load the level by the index in the level list from the Recource folder, for example,
+        /// Index 0 is the Splash Screen, Index 1 is the Start Menu, Index 2 is the first level in the level list, and so on.
+        /// </summary>
+        /// <param name="Index"> the index in the level list from the Recource folder</param>
         public void LoadLevelBy_LevelList_Index(int Index)
         {
-            LoadScene(levelList.List[Index].levelName);
+            LoadScene(FindLevelNamebyIndex(Index));
+        }
+        public void ClearSavedLocation()
+        {
+            PlayerPrefs.DeleteKey("SavedCheckPointScene");
+            PlayerPrefs.DeleteKey("SavedCheckPoint_X");
+            PlayerPrefs.DeleteKey("SavedCheckPoint_Y");
+            PlayerPrefs.DeleteKey("SavedCheckPoint_Z");
+        }
+        public string FindLevelNamebyIndex(int Index)
+        {
+            foreach (var item in levelList.List)
+            {
+                if (item.levelIndex == Index)
+                {
+                    return item.levelName;
+                }
+            }
+            Debug.LogError("Level Name not found");
+            return levelList.StartMenu.levelName;
+        }
+        public int FindLevelIndexbyName(string Name)
+        {
+            foreach (var item in levelList.List)
+            {
+                if (item.levelName == Name)
+                {
+                    return item.levelIndex;
+                }
+            }
+            Debug.LogError("Level Index not found");
+            return levelList.StartMenu.levelIndex;
         }
         public void LoadScene(string sceneName)
         {
@@ -72,7 +109,7 @@ namespace UIElements
             }
         }
         public void LoadStartMenu() { LoadScene(levelList.List[0].levelName); }
-        
+
         /// <summary>
         /// the index in the level list from the Recource folder
         /// </summary>

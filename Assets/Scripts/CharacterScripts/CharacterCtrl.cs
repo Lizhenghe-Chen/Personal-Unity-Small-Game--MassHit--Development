@@ -30,7 +30,7 @@ public partial class CharacterCtrl : MonoBehaviour
     public Transform Camera;
     public Transform PlayerKernel;
     public Vector3 CheckPoint;
-    public bool towardWithCamera = true, moveAbility = true, climbAbility = true, shootAbility = true,
+    public bool autuoIntialize = true, towardWithCamera = true, moveAbility = true, climbAbility = true, shootAbility = true,
     catchObjAbility = true, jumpAbility = true, rushAbility = true, flyAbility = true, AircraftAility = true, AudioTail = true;
     public float initial_torque, speedUp_torque, jumpForce, rushForce, sliteForce = 5f;
     public Material TransparentMaterial;
@@ -87,14 +87,9 @@ public partial class CharacterCtrl : MonoBehaviour
         PlayerKernel.parent = this.transform.parent.parent;
         gunScript = PlayerKernel.GetComponent<GunScript>();
         //gunScript.PlayerKernelTarget = this.gameObject.transform;
-
+        if (autuoIntialize) PlayerInitialize();
         StartCoroutine(AutoDestory());
 
-        if (SceneManager.GetActiveScene().name == GlobalUIFunctions.levelList.StartMenu.levelName) return;
-        CheckPoint = new Vector3(PlayerPrefs.GetFloat("SavedCheckPoint_X"), PlayerPrefs.GetFloat("SavedCheckPoint_Y"), PlayerPrefs.GetFloat("SavedCheckPoint_Z"));
-        PlayerPrefs.SetString("SavedCheckPointScene", SceneManager.GetActiveScene().name);//save player's current scene
-        if (CheckPoint == Vector3.zero) { CheckPoint = this.transform.position; }
-        else { this.transform.position = CheckPoint; }
     }
 
 
@@ -103,7 +98,7 @@ public partial class CharacterCtrl : MonoBehaviour
         AnimatorCtrl();
         if (AircraftAility) AircraftModeDetect();
         if (!moveAbility) { return; }
-       // PlayerHealth = Mathf.Clamp(PlayerHealth, -0.1f, 100);
+        // PlayerHealth = Mathf.Clamp(PlayerHealth, -0.1f, 100);
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         JumpCommand(); RushCommand();
@@ -174,7 +169,7 @@ public partial class CharacterCtrl : MonoBehaviour
         //HitObjects.Clear();
         // Destroy(Test.Dequeue());
     }
- 
+
     // public IEnumerator DelayLoadLevel(int leveID)
     // {
     //     PlayMaskLeaveClip();
@@ -197,6 +192,6 @@ public partial class CharacterCtrl : MonoBehaviour
             yield return new WaitForSeconds(3f);
         }
     }
-     
+
 
 }

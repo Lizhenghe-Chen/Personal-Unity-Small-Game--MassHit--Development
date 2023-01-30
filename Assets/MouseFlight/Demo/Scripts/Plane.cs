@@ -20,7 +20,10 @@ namespace MFlight.Demo
         [Header("Components")]
         [SerializeField] private MouseFlightController controller = null;
 
-
+        [Header("For Lock Player Rigidbody to Plane")]
+        [SerializeField] private Rigidbody playerRigidbody = null;
+        public Transform MainCamera;
+        public Transform Player;
         [Header("Physics")]
         [Range(0f, 80f)]
         [Tooltip("Force to push plane forwards with")] public float thrust = 40;
@@ -36,8 +39,7 @@ namespace MFlight.Demo
         [SerializeField][Range(-1f, 1f)] private float yaw = 0f;
         [SerializeField][Range(-1f, 1f)] private float roll = 0f;
 
-        public Transform MainCamera;
-        public Transform Player;
+
 
         public float Pitch { set { pitch = Mathf.Clamp(value, -1f, 1f); } get { return pitch; } }
         public float Yaw { set { yaw = Mathf.Clamp(value, -1f, 1f); } get { return yaw; } }
@@ -55,7 +57,7 @@ namespace MFlight.Demo
         private void Awake()
         {
             rigid = GetComponent<Rigidbody>();
-
+            playerRigidbody = Player.GetComponent<Rigidbody>();
             if (controller == null)
                 Debug.LogError(name + ": Plane - Missing reference to MouseFlightController!");
         }
@@ -65,7 +67,7 @@ namespace MFlight.Demo
         }
         private void Update()
         {
-            Player.position = transform.position;
+            //  Player.position = transform.position;
             // When the player commands their own stick input, it should override what the
             // autopilot is trying to do.
             rollOverride = false;
@@ -161,6 +163,11 @@ namespace MFlight.Demo
                                                 turnTorque.y * yaw,
                                                 -turnTorque.z * roll) * forceMult,
                                     ForceMode.Force);
+            LockPlayerWithPlane();
+        }
+        private void LockPlayerWithPlane()
+        {
+            playerRigidbody.MovePosition(transform.position);
         }
     }
 }

@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 
-public class CheckPoint : MonoBehaviour
+public class CheckPoint : UIElements.GlobalUIFunctions
 {
     [Tooltip("False if wnat it to be the finnish point")]
     public bool isCheckPoint = true;
@@ -54,6 +54,7 @@ public class CheckPoint : MonoBehaviour
                 animator.Play("ShowChecked", 0, 0);
                 Debug.Log("CheckPoint");
                 CharacterCtrl._CharacterCtrl.CheckPoint = this.transform.position + new Vector3(Random.Range(1, 3), 0, Random.Range(1, 3));
+                PlayerPrefs.SetInt("UnlockedLevel", FindLevelIndexbyName(SceneManager.GetActiveScene().name));
                 PlayerPrefs.SetString("SavedCheckPointScene", SceneManager.GetActiveScene().name);
                 PlayerPrefs.SetFloat("SavedCheckPoint_X", CharacterCtrl._CharacterCtrl.CheckPoint.x);
                 PlayerPrefs.SetFloat("SavedCheckPoint_Y", CharacterCtrl._CharacterCtrl.CheckPoint.y);
@@ -69,7 +70,8 @@ public class CheckPoint : MonoBehaviour
                 Time.timeScale = 0;
                 Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 animator.Play("Mission Accomplished", 0, 0);
-                PlayerPrefs.SetInt("UnlockedLevel", SceneManager.GetActiveScene().buildIndex + 1);
+                // PlayerPrefs.SetInt("UnlockedLevel", SceneManager.GetActiveScene().buildIndex + 1);
+                PlayerPrefs.SetInt("UnlockedLevel", FindLevelIndexbyName(SceneManager.GetActiveScene().name) + 1);
                 HitOnce = true;
                 // Debug.Log("FinishPoint now unlocked level" + ((Resources.Load("Data") as GameObject).GetComponent<SavedData>().UnlockedLevel = SceneManager.GetActiveScene().buildIndex - 1));
             }

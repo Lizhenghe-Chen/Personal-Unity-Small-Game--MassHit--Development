@@ -168,6 +168,30 @@ MonoBehaviour:
     m_Localized: Check Point Saved
     m_Metadata:
       m_Items: []
+  - m_Id: 71478281398521856
+    m_Localized: Focal distance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71478454036074496
+    m_Localized: Field Of View
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71478596575301632
+    m_Localized: Focal Length
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71479429962534912
+    m_Localized: Aperture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71825443768635392
+    m_Localized: 'BunnyChen Laboratory '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75491820480106496
+    m_Localized: Time Scale
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

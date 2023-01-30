@@ -11,17 +11,19 @@ public class BulletDestory : MonoBehaviour
     //public GameObject explosion;
     public float scaleOfTime = 0.01f;
     public bool ignorePlayerColletion, isPlayerBullet;
+    public string playerTagName;
     private Rigidbody rb;
     //   private SphereCollider damageRange;
     //void Awake() { explosion.SetActive(false); }
     void OnEnable()
     {
+        playerTagName = GlobalRules.instance.playerTagName;
         rb = this.GetComponent<Rigidbody>();
         if (ignorePlayerColletion)
         {//ignore collision by layer
             Physics.IgnoreLayerCollision(GlobalRules.instance.bulletLayerID, GlobalRules.instance.playerLayerID);
         }
-        Destroy(this.gameObject, 10f);
+        Destroy(this.gameObject, 8);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,17 +45,18 @@ public class BulletDestory : MonoBehaviour
 
         if (isPlayerBullet)
         {
+            SetHitParticle(playerHitParticleSystem, other, 0.1f);
             Time.timeScale = scaleOfTime;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
-            SetHitParticle(playerHitParticleSystem, other, 0.1f);
             Destroy(this.gameObject, 1f);
         }
         else
         {
             SetHitParticle(hitParticleSystem, other, 0.01f);
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag(playerTagName))
             {
                 Destroy(this.gameObject);
+                //                Debug.Log("hit player");
             }
             else Destroy(this.gameObject, 1f);
 

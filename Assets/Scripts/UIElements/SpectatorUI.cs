@@ -10,7 +10,7 @@ namespace UIElements
     public class SpectatorUI : MonoBehaviour
     {
         public bool menuPause;
-        public Slider focusDistanceSlider, FieldOfViewSlider, focalLengthSlider, aptureSlider;
+        public Slider TimeScaleSlider, focusDistanceSlider, FieldOfViewSlider, focalLengthSlider, aptureSlider;
         public Transform MainCamera;
         Camera MainCameraForFieldOfView;
         private CinemachineBrain cameraBrain;
@@ -19,7 +19,11 @@ namespace UIElements
         [SerializeField] GameObject playerVCam;
         [SerializeField] private Volume postProcessVolume;
         private DepthOfField df;
+        private void Awake()
+        {
 
+            this.transform.parent.parent.gameObject.SetActive(false);
+        }
         void Start()
         {//modify the sensor size of the virtual camera to match the sensor size of the camera
 
@@ -31,7 +35,7 @@ namespace UIElements
             SetFocalLength();
             SetFocusDistance();
             SetFieldOfView();
-
+            TimeScaleSlider.value = Time.timeScale;
         }
 
         private void Update()
@@ -43,25 +47,24 @@ namespace UIElements
                 {
                     focusDistanceSlider.value = df.focusDistance.value = hit.distance;
                 }
-
             }
             if (Input.GetKeyDown(KeyCode.P))
             {
+                FrozeTime();
                 Debug.Log("Pressed P");
-                menuPause = !menuPause;
-                SetTimeScale();
             }
         }
-        public void SetTimeScale()
+        public void FrozeTime()
         {
-            if (menuPause)
+            if (!GlobalRules.instance.normalTime)
             {
                 Time.timeScale = 0;
                 Time.fixedDeltaTime = Time.timeScale * 0.02f;
             }
+            GlobalRules.instance.normalTime = !GlobalRules.instance.normalTime;
 
-            GlobalRules.instance.isPause = menuPause;
         }
+
         public void EnableCameraCtrol()
         {
             POV.m_VerticalAxis.m_MaxSpeed = POV.m_HorizontalAxis.m_MaxSpeed = 1;
@@ -69,6 +72,11 @@ namespace UIElements
         public void DisableCameraCtrol()
         {
             POV.m_VerticalAxis.m_MaxSpeed = POV.m_HorizontalAxis.m_MaxSpeed = 0;
+        }
+        public void SetTimeScale()
+        {
+            Time.timeScale = TimeScaleSlider.value;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
         }
         public void SetFocusDistance()
         {

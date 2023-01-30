@@ -25,7 +25,7 @@ public class SpectatorCtrl : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        if (Time.timeScale >= 0.1) { Movement(); } else MovementUnscaled();
+        if (Time.timeScale >= 0.7f) { Movement(); } else MovementUnscaled();
         if (Input.GetKey(GlobalRules.instance.Break)) { rb.velocity = Vector3.zero; }
     }
 

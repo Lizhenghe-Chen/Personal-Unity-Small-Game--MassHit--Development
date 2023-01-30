@@ -64,107 +64,72 @@ namespace UIElements
         }
         public void InGameMenu()
         {
-            TimeSettings();
+
+            GlobalRules.PauseTime();
+
+            if (escCanvas.enabled && !SpectatorBunble.activeSelf)
+            //if menu is active and photoBundle is inactive,
+            //it is time to disable the menu and let time normal
+            {
+                GlobalRules.instance.normalTime = true;
+            }
+            else
+            {
+                GlobalRules.instance.normalTime = false;
+            }
 
             CancelInvoke();
+
             if (escCanvas.enabled)//if menu is active, switch it inactive
             {
-                if (PlayerBunbleHUD.activeSelf) GlobalRules.instance.isPause = false;
                 escCanvas.enabled = false;
-
-                //  SpectatorBunbleHUD.SetActive(false);
+                UnFrozenCMBrain();
                 PlayerTips.SetActive(false);
                 SpectatorBundleCanavs.enabled = false;
                 SpectatorUIScript.EnableCameraCtrol();
-                //PlayerBunbleHUD.SetActive(false);
-                //if (characterCtrl.enabled) { GlobalRules.instance.isPause = false; }
-                // cameraBrain.enabled = true;
-                UnFrozenCMBrain();
                 GlobalUIFunctions.HideCrusor();
             }
             else// if menu is inactive, switch it active,open the menu
             {
-                GlobalRules.instance.isPause = true; TimeSettings();
                 escCanvas.enabled = true;
-                //cameraBrain.enabled = false;
                 FrozeCMBrain();
-                GlobalRules.instance.isPause = true;
                 PlayerTips.SetActive(true);
                 SpectatorBundleCanavs.enabled = true;
                 SpectatorUIScript.DisableCameraCtrol();
                 GlobalUIFunctions.ShowCrusor();
-                //SpectatorBunbleHUD.SetActive(true);
-                //PlayerBunbleHUD.SetActive(true);
 
-                //   Invoke("UnableCinemachineBrain", 1f * Time.timeScale);
             }
-
-        }
-        public void TimeSettings()
-        {
-            if (GlobalRules.instance.isPause)
-            {
-                Time.timeScale = 0;
-                Time.fixedDeltaTime = Time.timeScale * 0.02f;
-            }
-
         }
         public void SwitchBunble()
         {
+            GlobalRules.PauseTime();
+            GlobalRules.instance.normalTime = false;
+            Debug.Log("SwitchBunble");
+            
             CancelInvoke();
-            // cameraBrain.enabled = true;
-         //   UnFrozenCMBrain();
+
             if (characterCtrl.enabled)
             {
-                GlobalRules.instance.isPause = true;
+
                 characterCtrl.enabled = false;
                 PlayerBunbleHUD.SetActive(false);
                 if (MissionCanvas) { MissionCanvas.SetActive(false); }
                 SpectatorBunble.SetActive(true);
                 resumeButton.interactable = false;
-                //PlayerBunble.SetActive(false);
-                //SwitchBubleWithCamera();
-                //  var a = SwitchButton.GetComponentInChildren(typeof(Text)) as Text;
-                //SwitchButton.GetComponentInChildren<TextMeshProUGUI>().text = "Player Mode";
                 SwitchButton.GetComponentInChildren<LocalizeStringEvent>().SetEntry("Player Mode");
             }
             else
             {
-                GlobalRules.instance.isPause = true;
+
                 characterCtrl.enabled = true;
                 PlayerBunbleHUD.SetActive(true);
                 if (MissionCanvas) { MissionCanvas.SetActive(true); }
                 resumeButton.interactable = true;
-                // PlayerBunble.SetActive(true);
                 SpectatorBunble.SetActive(false);
-                //PlayerPos.position = SpectatorPos.position;
-                //SwitchButton.GetComponentInChildren<TextMeshProUGUI>().text = "Photo Mode";
                 SwitchButton.GetComponentInChildren<LocalizeStringEvent>().SetEntry("Photo Mode");
-              //  FrozeCMBrain();
-                // Invoke(nameof(FrozeCMBrain), 1f * Time.timeScale);
             }
 
         }
-
-        //public void ChangeLevel()
-        //{
-        //    if (SceneManager.GetActiveScene().buildIndex == levelDropdown.value + 1)
-        //    {
-        //        levelDropdown.value = SceneManager.GetActiveScene().buildIndex - 1;
-        //        Debug.LogWarning("Same Level");
-
-        //        return;
-        //    }
-
-        //    PlayerPos.parent.position += new Vector3(0, 2, 0);
-        //    Debug.Log(levelDropdown.value + 1);
-        //    SceneManager.LoadScene(levelDropdown.value + 1);
-        //    StartCoroutine(DelayLoadLevel(levelDropdown.value + 1));
-
-        //    Time.timeScale = 0.01f;
-        //    Time.fixedDeltaTime = Time.timeScale * 0.02f;
-
-        //}
 
         void SwitchBubleWithCamera()
         { //let two bundle's camera have same direction
@@ -184,11 +149,13 @@ namespace UIElements
         void FrozeCMBrain()
         {
             cameraBrain.m_IgnoreTimeScale = false;
+            cameraBrain.enabled = false;
             Debug.Log("FrozeCMBrain");
         }
         void UnFrozenCMBrain()
         {
             cameraBrain.m_IgnoreTimeScale = true;
+            cameraBrain.enabled = true;
             Debug.Log("UnFrozenCMBrain");
         }
 

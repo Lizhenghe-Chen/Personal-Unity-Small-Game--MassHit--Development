@@ -4,6 +4,14 @@ using UnityEngine.SceneManagement;
 
 public partial class CharacterCtrl
 {
+    private void PlayerInitialize()
+    {
+        if (SceneManager.GetActiveScene().name == GlobalUIFunctions.levelList.StartMenu.levelName) return;
+        CheckPoint = new Vector3(PlayerPrefs.GetFloat("SavedCheckPoint_X"), PlayerPrefs.GetFloat("SavedCheckPoint_Y"), PlayerPrefs.GetFloat("SavedCheckPoint_Z"));
+        PlayerPrefs.SetString("SavedCheckPointScene", SceneManager.GetActiveScene().name);//save player's current scene
+        if (CheckPoint == Vector3.zero) { CheckPoint = this.transform.position; }
+        else { this.transform.position = CheckPoint; }
+    }
     public void OnBelowDeathAltitude()
     {
         if (transform.position.y < GlobalRules.instance.DeathAltitude)
@@ -14,7 +22,7 @@ public partial class CharacterCtrl
             CharacterCtrl._CharacterCtrl.transform.position = CharacterCtrl._CharacterCtrl.CheckPoint;
             CharacterCtrl._CharacterCtrl.rb.velocity = Vector3.zero;
             ProceedPlayerHealth(false, 30);
-              MaskAnimator.Play("Injured", 0, 0);
+            MaskAnimator.Play("Injured", 0, 0);
             // LoadScene(SceneManager.GetActiveScene().buildIndex);
             // this.transform.position = new Vector3(0, 5, 0);
         }
@@ -23,7 +31,7 @@ public partial class CharacterCtrl
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
-            Debug.Log("Hit By Bullet" + other.relativeVelocity.magnitude);
+            //            Debug.Log("Hit By Bullet" + other.relativeVelocity.magnitude);
             MaskAnimator.Play("Injured", 0, 0);
             ProceedPlayerHealth(false, other.relativeVelocity.magnitude * other.rigidbody.mass);
 

@@ -9,14 +9,15 @@ using UnityEngine.UI;
 public class GlobalRules : MonoBehaviour
 {
     public static GlobalRules instance;
-    public bool isPause = false;
+    public bool normalTime = false;
     public int waterLayerID, playerLayerID, bulletLayerID, groundLayerID, IgnoreHoldObjectID;
+    public string playerTagName;
     public LayerMask GoundLayer;
     public int DeathAltitude;
     public EscUI escMenu;
     [SerializeField] Image MaskImage;
     public bool isLoadingNextLevel;
-
+    public LayerIgnoreCollision AudioCubeIgnoreCollision;
     public List<Transform> checkParentLists = new();
     public WaitForSeconds waitTime = new(5);
     public KeyCode Break, Jump, SpeedUp, MoveUp, MoveDown, Rush, PreShoot, Shoot,
@@ -29,6 +30,12 @@ public class GlobalRules : MonoBehaviour
     public float recoverTimeSpeed = 1f;
     [SerializeField] Transform Player;
 
+    [System.Serializable]
+    public struct LayerIgnoreCollision
+    {
+        public LayerMask layerIndex_self;
+        public LayerMask layerIndex_other;
+    }
 
     // Start is called before the first frame update
     void Awake()
@@ -87,11 +94,11 @@ public class GlobalRules : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         //  Debug.Log(scene.buildIndex + "Secen Loaded");
-        if (scene.name == StartSceneName) { isPause = true; return; }
+        if (scene.name == StartSceneName) { normalTime = false; return; }
         else
         {
             Time.timeScale = 1f;
-            Time.fixedDeltaTime = Time.timeScale * 0.02f; isPause = false;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f; normalTime = true;
         }
         //if (SceneManager.GetActiveScene().name == "Acknowledgements" || SceneManager.GetActiveScene().name == "Splash")
         //{
@@ -118,9 +125,9 @@ public class GlobalRules : MonoBehaviour
     }
     private void TimeCtrl()
     {
-        // Debug.Log(Time.fixedDeltaTime + "," + isPause);
+        // Debug.Log(Time.fixedDeltaTime + "," + normalTime);
 
-        if (!isPause)
+        if (normalTime)
         {
             if (Time.timeScale > 1) { Time.timeScale = 1; return; }
             //  Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
@@ -129,7 +136,7 @@ public class GlobalRules : MonoBehaviour
         }
 
     }
-    void AudioListenerCtrl()
+    private void AudioListenerCtrl()
     {
         if (!MaskImage || MaskImage.color.a > 1 || isLoadingNextLevel) { return; }
 
@@ -167,6 +174,12 @@ public class GlobalRules : MonoBehaviour
             yield return waitTime;
         }
     }
+    private void IgnoreCollisionSetting()
+    {
+    
+            Physics.IgnoreLayerCollision(AudioCubeIgnoreCollision.layerIndex_self, AudioCubeIgnoreCollision.layerIndex_other);
+      
+    }
     IEnumerator CheckDestoryByDeathAltitude(List<Transform> checkParentLists)
     {
         if (checkParentLists.Count == 0) { yield return null; }
@@ -184,28 +197,8 @@ public class GlobalRules : MonoBehaviour
             yield return waitTime;
         }
     }
-    public void FitCameraDirection(bool isCam1ToCam2)
-    {
-        var (A, B) = GetCamerasDetails();
-        // Debug.Log(A.m_XAxis.Value + ", " + B.m_XAxis.Value);
-        if (isCam1ToCam2)
-        {
-            B.m_XAxis.Value = A.m_XAxis.Value;
-        }
-        else
-        {
-            A.m_XAxis.Value = B.m_XAxis.Value;
-        }
-        // Debug.Log("->" + A.m_XAxis.Value + ", " + B.m_XAxis.Value);
-    }
-    public (CinemachineFreeLook, CinemachineOrbitalTransposer) GetCamerasDetails()
-    {
-        //cam1 = Player.GetComponent<CharacterCtrl>().Player_Camera1.GetComponent<CinemachineFreeLook>();
-        //cam2 = Player.GetComponent<CharacterCtrl>().Player_Camera2.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineOrbitalTransposer>();
 
-        return (cam1, cam2.GetCinemachineComponent<CinemachineOrbitalTransposer>());
-    }
-    void ReallocateCheckDestoryList()
+    private void ReallocateCheckDestoryList()
     {
         checkParentLists.Clear();
         foreach (GameObject temp in GameObject.FindGameObjectsWithTag("GravityCubeList"))
@@ -223,8 +216,37 @@ public class GlobalRules : MonoBehaviour
 
         }
     }
+     public static void PauseTime()
+        {
+            if (GlobalRules.instance.normalTime)
+            {
+                Time.timeScale = 0.01f;
+                Time.fixedDeltaTime = Time.timeScale * 0.02f;
+            }
+        }
     public static bool IsGameObjInLayerMask(GameObject gameObject, LayerMask layerMask)
     {
         return layerMask.value == (layerMask.value | (1 << gameObject.layer));
     }
+        // private void FitCameraDirection(bool isCam1ToCam2)
+    // {
+    //     var (A, B) = GetCamerasDetails();
+    //     // Debug.Log(A.m_XAxis.Value + ", " + B.m_XAxis.Value);
+    //     if (isCam1ToCam2)
+    //     {
+    //         B.m_XAxis.Value = A.m_XAxis.Value;
+    //     }
+    //     else
+    //     {
+    //         A.m_XAxis.Value = B.m_XAxis.Value;
+    //     }
+    //     // Debug.Log("->" + A.m_XAxis.Value + ", " + B.m_XAxis.Value);
+    // }
+    // private (CinemachineFreeLook, CinemachineOrbitalTransposer) GetCamerasDetails()
+    // {
+    //     //cam1 = Player.GetComponent<CharacterCtrl>().Player_Camera1.GetComponent<CinemachineFreeLook>();
+    //     //cam2 = Player.GetComponent<CharacterCtrl>().Player_Camera2.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineOrbitalTransposer>();
+
+    //     return (cam1, cam2.GetCinemachineComponent<CinemachineOrbitalTransposer>());
+    // }
 }
