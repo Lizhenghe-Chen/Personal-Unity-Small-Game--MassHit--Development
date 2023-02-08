@@ -810,7 +810,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e61db6b502d5b0f4f915f8c0ab17ca7a, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -835,11 +835,11 @@ MonoBehaviour:
   FirePoint: {fileID: 2484417531738189477}
   bullet: {fileID: 1710411021089273418, guid: 6b23ddab9b71b1446bf0cbeef14f9c3a, type: 3}
   muzzleFlash: {fileID: 3886002869105554556}
-  attackRange: 25
-  FiringRate: 1
-  bulletSpeed: 100
-  followSpeed: 5
-  noise: 0.05
+  attackRange: 150
+  FiringRate: 2
+  bulletSpeed: 150
+  followSpeed: 10
+  noise: 10
   ratgetTag: Respawn
   flyingTime: 0
   distance: 0
@@ -858,7 +858,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 25
+  m_Radius: 150
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7954558428672680422
 GameObject:

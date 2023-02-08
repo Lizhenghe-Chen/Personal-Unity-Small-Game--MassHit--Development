@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.UI;
+
 //This File shoulbe attach to Camera
 public class CameraDistMain : MonoBehaviour
 {

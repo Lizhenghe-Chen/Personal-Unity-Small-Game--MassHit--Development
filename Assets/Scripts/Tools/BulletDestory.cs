@@ -34,10 +34,6 @@ public class BulletDestory : MonoBehaviour
         catch (Exception) { }
 
         //  this.GetComponent<MeshRenderer>().enabled = false;
-
-
-
-
     }
 
     private void OnCollisionEnter(Collision other)

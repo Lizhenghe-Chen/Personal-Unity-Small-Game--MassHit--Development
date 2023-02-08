@@ -27,6 +27,10 @@ public partial class CharacterCtrl
             // this.transform.position = new Vector3(0, 5, 0);
         }
     }
+    /// <summary>
+    /// This function is used to deal with damage events, such as bullet, enemy, etc.
+    /// </summary>
+    /// <param name="other">the collision object</param>
     private void DamageEvent(Collision other)
     {
         if (other.gameObject.CompareTag("Bullet"))
@@ -34,7 +38,6 @@ public partial class CharacterCtrl
             //            Debug.Log("Hit By Bullet" + other.relativeVelocity.magnitude);
             MaskAnimator.Play("Injured", 0, 0);
             ProceedPlayerHealth(false, other.relativeVelocity.magnitude * other.rigidbody.mass);
-
             //   if (PlayerHealth <= 0) OnHealthRunOut();
         }
 
