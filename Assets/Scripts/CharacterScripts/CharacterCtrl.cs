@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 public partial class CharacterCtrl : MonoBehaviour
 {
     public static CharacterCtrl _CharacterCtrl;
@@ -26,7 +27,7 @@ public partial class CharacterCtrl : MonoBehaviour
     [SerializeField] private OutLookState priviousOutlookState;
     public ActionState playerActionState = ActionState.IDLE;
     public LayerMask groundLayer;
-    public Transform Camera;
+    public Camera Camera;
     public Transform PlayerKernel;
     public Vector3 CheckPoint;
     public bool autuoIntialize = true, towardWithCamera = true, moveAbility = true, climbAbility = true, shootAbility = true,
@@ -51,6 +52,7 @@ public partial class CharacterCtrl : MonoBehaviour
     //[SerializeField] List<Material> OriginalMaterialList = new();
     public Rigidbody rb; // player
     float horizontalInput, verticalInput;
+    private CharacterInputManager _input;
     private void Awake()
     {
         _CharacterCtrl = this;
@@ -81,13 +83,16 @@ public partial class CharacterCtrl : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        _input = GetComponent<CharacterInputManager>();
         //GlobalRules.instance.cam1 = Player_Camera1.GetComponent<Cinemachine.CinemachineFreeLook>();
         //GlobalRules.instance.cam2 = Player_Camera2.GetComponent<Cinemachine.CinemachineVirtualCamera>();
         PlayerKernel.parent = this.transform.parent.parent;
         gunScript = PlayerKernel.GetComponent<GunScript>();
         //gunScript.PlayerKernelTarget = this.gameObject.transform;
         if (autuoIntialize) PlayerInitialize();
-        StartCoroutine(AutoDestory());
+
+        holdAim.enabled = false;
+        //StartCoroutine(AutoDestory());
 
     }
 
@@ -100,12 +105,17 @@ public partial class CharacterCtrl : MonoBehaviour
         // PlayerHealth = Mathf.Clamp(PlayerHealth, -0.1f, 100);
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        JumpCommand(); RushCommand();
+        JumpCommand(); //RushCommand();
         DestroyCommand();
         ChangeCamera();
         Break_Aim();
 
+        HoldObjectCommand();
+        HoldObject();
     }
+
+
+
 
     void DestroyCommand()
     {
@@ -140,15 +150,15 @@ public partial class CharacterCtrl : MonoBehaviour
     //     SceneManager.LoadScene(GlobalRules.instance.StartSceneName);
     //     Destroy(this.transform.parent.parent.gameObject);
     // }
-    public IEnumerator AutoDestory()
-    {
-        while (true)
-        {
-            MenualCheckDestory();
-            //Debug.Log("AutoDestory");
-            yield return new WaitForSeconds(3f);
-        }
-    }
+    // public IEnumerator AutoDestory()
+    // {
+    //     while (true)
+    //     {
+    //         MenualCheckDestory();
+    //         //Debug.Log("AutoDestory");
+    //         yield return new WaitForSeconds(3f);
+    //     }
+    // }
 
 
 }

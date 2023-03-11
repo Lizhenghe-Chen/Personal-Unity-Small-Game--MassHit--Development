@@ -2,11 +2,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using UnityEngine.Animations;
+
 namespace UIElements
 {
     public class UIManager : GlobalUIFunctions
     {
+        public static UIManager _UIManager;
         public bool isPlayer = true;
         public Transform playerKernel;
         public Transform Player;
@@ -17,28 +18,7 @@ namespace UIElements
         [Header("Show Health")]
         public Image HealthState;
         public Color GoodHealthColor, NormalHealthColor, BadHealthColor;
-        public particleAttractorLinear kernelParticle;
-
-        public Image holdAim;
-        public Transform aimRay, HoldTarget, MainCamera;
-        public Camera mainCamera;
-        public LayerMask ShootRaycastIgnore;
-        public Transform Traget, shootTraget;
-        public Image targetSceenIcon;
-        public LayerMask HoldRaycastIgnore;
-        [Serializable]
-        public struct Range
-        {
-            public float min;
-            public float max;
-        }
-
-        public Range holdRange;
-        [SerializeField] Rigidbody holdingObject;
         [SerializeField] private float kernelValue, healthValue;
-        [SerializeField] private bool isHoldKeyPressing = false;
-
-        [SerializeField] PositionConstraint shootTargetpositionConstraint;
 
         private void OnValidate()
         {
@@ -46,39 +26,18 @@ namespace UIElements
         }
         void Start()
         {
+            _UIManager = this;
 
-            holdAim.enabled = false;
-            mainCamera = MainCamera.GetComponent<Camera>();
-            shootTargetpositionConstraint = shootTraget.GetComponent<PositionConstraint>();
         }
-
-        private void LateUpdate()
-        {
-            // screenBound = new Vector2(Screen.width, Screen.height);
-            if (!targetSceenIcon.gameObject.activeSelf) { return; }
-            if (!shootTargetpositionConstraint.GetSource(0).sourceTransform) { targetSceenIcon.gameObject.SetActive(false); return; }
-            ObjectToScreenPosition(mainCamera, shootTraget, targetSceenIcon, 50, 50);
-            // var screenPosition = mainCamera.WorldToScreenPoint(shootTraget.position);
-            // Debug.Log(screenPosition);
-            // //if (screenPosition.x <= 0 || screenPosition.x >= screenBound.x || screenPosition.y <= 0 || screenPosition.y >= screenBound.y) return;
-            // //targetSceenIcon.transform.position = screenPosition;
-            // if (screenPosition.z < 0)
-            // {
-            //     screenPosition.y = 0;
-            //     screenPosition.x = -screenPosition.x;
-            // }
-
-            // targetSceenIcon.transform.position = new Vector2(Mathf.Clamp(screenPosition.x, 50, screenBound.x - 50), Mathf.Clamp(screenPosition.y, 50, screenBound.y - 50));
-            //                                                                                                                                                                // Debug.Log(screenPosition);
-        }
-
-
-
         // Update is called once per frame
         void Update()
         {
-            if (isPlayer) { UpdateKernelStateBar(); UpdatePlayerHealthBar(); HoldObject(); }
-            HoldObjectCommand();
+            if (isPlayer)
+            {
+                UpdateKernelStateBar(); UpdatePlayerHealthBar();
+                //HoldObject();
+            }
+            // HoldObjectCommand();
 
             //Debug.Log(vcam.m_Lens.FieldOfView);
         }
@@ -103,195 +62,6 @@ namespace UIElements
 
         // }
 
-        private float originalDrag;
-        private Transform originalKernelParticleTarget;
-
-        public void HoldObjectCommand()
-        {
-
-            if (!CharacterCtrl._CharacterCtrl.catchObjAbility) { return; }
-            // if (!holdingObject) { holdAim.enabled = false; return; }
-            if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || PlayerBrain.shootEnergy <= 0)//set object free~
-            {
-                holdAim.enabled = false;
-                isHoldKeyPressing = holdAim.enabled;
-                holdAim.transform.position = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
-
-                if (holdingObject)
-                {
-                    holdingObject.drag = originalDrag;//change back it's drag
-                    kernelParticle.target = originalKernelParticleTarget;
-                    holdingObject = null;
-                }
-                return;
-            }
-            else if (Input.GetKeyDown(GlobalRules.instance.HoldObject))//middle mouse button
-            {
-
-                holdAim.enabled = true;
-                isHoldKeyPressing = holdAim.enabled;
-
-            }
-        }
-        public void SpectatorHoldObjectCommand()
-        {
-
-            if (Input.GetKeyDown(GlobalRules.instance.HoldObject))
-            {
-                holdAim.enabled = true;
-                isHoldKeyPressing = holdAim.enabled;
-
-            }
-
-            if (Input.GetKeyUp(GlobalRules.instance.HoldObject))
-            {
-                holdAim.enabled = false;
-                isHoldKeyPressing = holdAim.enabled;
-
-                if (holdingObject)
-                {
-                    holdingObject.drag = originalDrag;//change back it's drag
-                    holdingObject = null;
-                }
-
-            }
-        }
-        [SerializeField] float holdDistance = 0;
-
-
-        public void HoldObject()
-        {
-            if (!isHoldKeyPressing) { return; }
-            // Debug.Log(holdAim.rectTransform.position);
-            LockTarget();
-            // Does the ray intersect any objects excluding the player layer
-            if (holdingObject == null && Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(
-                holdAim.rectTransform.position.x / Screen.width,
-                holdAim.rectTransform.position.y / Screen.height, 0)),
-                out RaycastHit hit, Mathf.Infinity, ~HoldRaycastIgnore))
-            {
-                //draw ray from screen
-
-                // Debug.DrawRay(MainCamera.transform.position, MainCamera.transform.forward * 1000, Color.green, 2);
-                // Debug.Log(Vector3.Distance(Player.position, hit.transform.position));
-                if (hit.rigidbody && Vector3.Distance(Player.position, hit.transform.position) <= holdRange.max)
-                {
-                    holdAim.enabled = false;
-                    HoldTarget.position = hit.point;
-
-                    holdingObject = hit.collider.gameObject.GetComponent<Rigidbody>();
-
-                    originalDrag = holdingObject.drag;
-                    originalKernelParticleTarget = kernelParticle.target;
-
-                    holdingObject.drag = 5f;
-                    kernelParticle.target = holdingObject.transform;
-                    //holdingObject.isKinematic = false;
-                    // Debug.DrawRay(MainCamera.transform.position, MainCamera.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
-                    Debug.Log(hit.transform.tag);
-                }
-            }
-            //else
-            //{
-            //    //  Debug.DrawRay(MainCamera.transform.position, MainCamera.transform.forward * 1000, Color.red, 2);
-            //    //return;
-            //}
-            if (holdingObject)
-            {
-                HoldTarget.LookAt(MainCamera);
-                holdDistance = Vector3.Distance(Player.position, HoldTarget.position);
-                if (Input.GetKey(GlobalRules.instance.ExtendHoldObjectDist) && (holdDistance <= holdRange.max)) { HoldTarget.position += 5f * Time.deltaTime * MainCamera.forward.normalized; }
-                else if (Input.GetKey(GlobalRules.instance.CloseHoldObjectDist) && (holdDistance >= holdRange.min)) { HoldTarget.position -= 5f * Time.deltaTime * MainCamera.forward.normalized; }
-
-                if (Input.GetKey(GlobalRules.instance.MoveUp) && (holdDistance <= holdRange.max)) { HoldTarget.position += 5f * Time.deltaTime * Vector3.up; }
-                else if (Input.GetKey(GlobalRules.instance.MoveDown) && (HoldTarget.position.y - Player.position.y) > 0) { HoldTarget.position -= 5f * Time.deltaTime * Vector3.up; }
-
-                PlayerBrain.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
-
-                //HoldTarget.position = (MainCamera.forward.normalized * fowardback_holdoffset + Vector3.up * updown_holdOffset);
-                holdingObject.AddForce(GlobalRules.instance.holdForce * (HoldTarget.position - holdingObject.position));
-                //holdingObject.MovePosition((HoldTarget.position - holdingObject.position) * 50f * Time.deltaTime + holdingObject.position);
-
-            }
-        }
-        void LockTarget()
-        {
-            if (holdingObject)
-            {
-                SetConstrantTarget(holdingObject.transform);
-                //   Debug.LogWarning("holdingObject"); 
-                return;
-            }
-            if (Physics.Raycast(mainCamera.ViewportPointToRay(new Vector3(holdAim.rectTransform.position.x / Screen.width, holdAim.rectTransform.position.y / Screen.height, 0)), out RaycastHit shoot_hit, Mathf.Infinity, ~HoldRaycastIgnore))
-            {
-
-                if (!shoot_hit.rigidbody)
-                {
-                    AlignCameraView();
-                    return;
-                }
-                SetConstrantTarget(shoot_hit.transform);
-                //shootTraget.GetComponent<PositionConstraint>().enabled = true;
-                shootTraget.gameObject.SetActive(true);
-                targetSceenIcon.gameObject.SetActive(true);
-
-            }
-            else
-            {
-                AlignCameraView();
-            }
-        }
-        void AlignCameraView()
-        {
-            shootTraget.position = mainCamera.transform.position + 1000 * mainCamera.transform.forward;
-            targetSceenIcon.gameObject.SetActive(false);
-            shootTraget.gameObject.SetActive(false);
-        }
-        void SetConstrantTarget(Transform target)
-        {
-            var constraintSource = new ConstraintSource
-            {
-                // shootTraget.position = shoot_hit.point;
-                sourceTransform = target,
-                weight = 1
-            };
-            shootTargetpositionConstraint.SetSource(0, constraintSource);
-        }
-        public void SpectatorHoldObject()
-        {
-            if (!isHoldKeyPressing) { return; }
-            if (Input.GetKey(GlobalRules.instance.ExtendHoldObjectDist) && (holdDistance <= holdRange.max)) { holdDistance += Time.deltaTime * 5f; }
-            else if (Input.GetKey(GlobalRules.instance.CloseHoldObjectDist) && (holdDistance >= holdRange.min)) { holdDistance -= Time.deltaTime * 5f; }
-            // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(MainCamera.position, MainCamera.TransformDirection(Vector3.forward), out RaycastHit hit, holdRange.max, ~HoldRaycastIgnore))
-            {
-                if (hit.rigidbody && holdingObject == null)
-                {
-                    holdAim.enabled = false;
-                    HoldTarget.position = hit.point;
-                    HoldTarget.LookAt(MainCamera);
-                    holdDistance = Vector3.Distance(MainCamera.position, hit.point);
-                    holdingObject = hit.collider.gameObject.GetComponent<Rigidbody>();
-
-                    originalDrag = holdingObject.drag;
-                    holdingObject.drag = 5f;
-
-                }
-            }
-            else
-            {
-                Debug.DrawRay(MainCamera.transform.position, MainCamera.transform.TransformDirection(Vector3.forward) * holdRange.max, Color.red);
-            }
-            if (holdingObject)
-            {
-                PlayerBrain.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
-                //holdingObject.transform.position = Vector3.Lerp(holdingObject.transform.position, HoldTarget.position, Time.deltaTime * 1000f);
-                HoldTarget.position = ((MainCamera.forward).normalized * holdDistance + MainCamera.position);
-                holdingObject.AddForce(50f * holdingObject.mass * (HoldTarget.position - holdingObject.position));
-                //holdingObject.MovePosition((HoldTarget.position - holdingObject.position) * 50f * Time.deltaTime + holdingObject.position);
-
-            }
-        }
 
         public void UpdateKernelStateBar()
         {

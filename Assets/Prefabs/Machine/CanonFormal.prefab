@@ -370,7 +370,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2380254221206955049}
-  m_LocalRotation: {x: -0.04269542, y: 0.00000037416552, z: 0.000000015989734, w: 0.99908817}
+  m_LocalRotation: {x: -0.04269149, y: 0.00000037416558, z: 0.000000015988263, w: 0.99908835}
   m_LocalPosition: {x: 0, y: 0.40662718, z: 0.07390854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -800,7 +800,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &754261833581178493
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -817,7 +817,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &3795350104595646882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -838,9 +838,10 @@ MonoBehaviour:
   attackRange: 150
   FiringRate: 2
   bulletSpeed: 150
-  followSpeed: 10
-  noise: 10
+  followSpeed: 5
+  noise: 5
   ratgetTag: Respawn
+  bulletList: []
   flyingTime: 0
   distance: 0
   TargetRig: {fileID: 0}

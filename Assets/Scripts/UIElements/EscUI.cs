@@ -62,6 +62,12 @@ namespace UIElements
             }
 
         }
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            escCanvas.enabled = false;
+            InGameMenu();
+        }
+
         public void InGameMenu()
         {
 
@@ -105,7 +111,7 @@ namespace UIElements
             GlobalRules.PauseTime();
             GlobalRules.instance.normalTime = false;
             Debug.Log("SwitchBunble");
-            
+
             CancelInvoke();
 
             if (characterCtrl.enabled)

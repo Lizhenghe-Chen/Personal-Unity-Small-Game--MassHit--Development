@@ -51,7 +51,7 @@ public class AudioPeer : MonoBehaviour
         if (!characterCtrl.AudioTail) { return; }
         audioSource = GetComponent<AudioSource>();
         samples = new float[num_Samples];
-         Physics.IgnoreLayerCollision(GlobalRules.instance.IgnoreHoldObjectID, GlobalRules.instance.IgnoreHoldObjectID);
+        Physics.IgnoreLayerCollision(GlobalRules.instance.IgnoreHoldObjectID, GlobalRules.instance.IgnoreHoldObjectID);
         InstantiateCubes();
         // StartCoroutine(SimpleSnake());
     }
@@ -63,7 +63,7 @@ public class AudioPeer : MonoBehaviour
         if (!characterCtrl.AudioTail) { return; }
         samples = GetSpectrumAudioSource(samples);
         SimpleAudioVisualize();
-
+        if (showCircle) { SimpleCircle(); } else { SimpleFollowSnake(); }
         //AudioVisualizeRepeat();
         if (AuidioTestParent) { GetAverageSpectrum(); AudioVisualize(); }
         if (Input.GetKeyDown(KeyCode.T)) { showCircle = !showCircle; }
@@ -73,18 +73,18 @@ public class AudioPeer : MonoBehaviour
         //if (showCircle) { SimpleCircle(); }
         // Buffer();
     }
-    private void FixedUpdate()
-    {
-        if (showCircle) { SimpleCircle(); } else { SimpleFollowSnake(); }
-        //else
-        //{
-        //    SimpleSnake();
-        //}
-        //TEST = GetRhythm();
+    // private void FixedUpdate()
+    // {
+
+    //     //else
+    //     //{
+    //     //    SimpleSnake();
+    //     //}
+    //     //TEST = GetRhythm();
 
 
 
-    }
+    // }
 
     float[] GetSpectrumAudioSource(float[] samples)    //get spectrum audio source
     {
@@ -165,7 +165,7 @@ public class AudioPeer : MonoBehaviour
             range = samples[rangeCounter] * PlayerBrain.shootEnergy * rangeTimer;
             //if (rangeCounter > samples.Length / 3 && range < 0.5f) { range *= rangeTimer; }
             if (range >= 3) { range *= 0.01f; }
-           // if (range <= 0.1) { range *= 5; }
+            // if (range <= 0.1) { range *= 5; }
             range = Mathf.Clamp(range, 0.01f, 3f);
             //else if (range < 1) { range *= 10; }
             if (isVertical) { child.localScale = new Vector3(cubeScale, Mathf.Lerp(child.localScale.y, range, Time.deltaTime * buffer), cubeScale); }

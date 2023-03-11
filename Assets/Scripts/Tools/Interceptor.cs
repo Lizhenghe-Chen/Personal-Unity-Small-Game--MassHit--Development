@@ -59,8 +59,6 @@ public class Interceptor : MonoBehaviour
         distance = Vector3.Distance(transform.position, TargetObj.position);//get the current distance(insufficiently strict)
                                                                             //  distance += TargetRig.velocity.magnitude * Time.deltaTime + 0.5f * acceleration.magnitude * Mathf.Pow(Time.deltaTime, 2f);//add the distance with uniform linear motion during dt: dL1 = L + dt * v
         flyingTime = distance / bulletSpeed; //dt = Distance / vb
-        distance += TargetRig.velocity.magnitude * flyingTime + 0.5f * acceleration.magnitude * Mathf.Pow(flyingTime, 2f);//add the distance with uniform linear motion during dt: dL1 = L + dt * v
-        flyingTime = distance / bulletSpeed; //dt = Distance / vb
 
         PredictedObj.position = Vector3.Lerp(PredictedObj.position,//use Lerp to control cannon's follow speed
                (

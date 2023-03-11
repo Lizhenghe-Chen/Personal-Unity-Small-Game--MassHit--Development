@@ -27,6 +27,7 @@ namespace MFlight.Demo
         [Header("Physics")]
         [Range(0f, 80f)]
         [Tooltip("Force to push plane forwards with")] public float thrust = 40;
+        [Tooltip("Update the thrust value on screen")] public TMPro.TextMeshProUGUI thrustText;
         [Tooltip("Pitch, Yaw, Roll")] public Vector3 turnTorque = new Vector3(90f, 25f, 45f);
         [Tooltip("Multiplier for all forces")] public float forceMult = 1000f;
 
@@ -61,7 +62,7 @@ namespace MFlight.Demo
             if (controller == null)
                 Debug.LogError(name + ": Plane - Missing reference to MouseFlightController!");
         }
-           private void Update()
+        private void Update()
         {
             //  Player.position = transform.position;
             // When the player commands their own stick input, it should override what the
@@ -89,6 +90,7 @@ namespace MFlight.Demo
         {
             //clamp the thrust to a range of 0 to 80
             thrust = Mathf.Clamp(thrust, 0f, 80f);
+            thrustText.text = thrust.ToString("F0");
             thrust += keyboardPitch;
         }
         private void Controller(float keyboardRoll, float keyboardPitch)

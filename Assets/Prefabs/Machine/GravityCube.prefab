@@ -4914,5 +4914,5 @@ MonoBehaviour:
   hittedObjectMaterial: {fileID: 2100000, guid: 57757ea40ab5ae8458ecfa5ec66d8726,
     type: 2}
   takeActionHitterList:
-  - Player
+  - Respawn
   - Bullet

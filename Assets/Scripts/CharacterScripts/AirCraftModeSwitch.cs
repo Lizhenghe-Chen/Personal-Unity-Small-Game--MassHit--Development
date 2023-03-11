@@ -13,7 +13,7 @@ public class AirCraftModeSwitch : MonoBehaviour
         // StartCoroutine(LockPosition());
         Player.GetComponent<Rigidbody>().isKinematic = true;
         //Plane.forward = this.transform.parent.parent.GetComponent<Rigidbody>().velocity = Player.GetComponent<Rigidbody>().velocity;
-        Plane.forward = CharacterCtrl._CharacterCtrl.Camera.forward;
+        Plane.forward = CharacterCtrl._CharacterCtrl.Camera.transform.forward;
         PlayerBrain.GetComponent<PositionConstraint>().SetSource(0, new ConstraintSource() { sourceTransform = this.transform, weight = 1 });
         Plane.position = Player.position;
     }

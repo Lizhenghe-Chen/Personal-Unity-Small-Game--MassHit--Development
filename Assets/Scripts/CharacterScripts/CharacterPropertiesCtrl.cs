@@ -44,15 +44,15 @@ public partial class CharacterCtrl
     }
     void OnHealthRunOut()
     {
-        MaskAnimator.Play("Enter", 0, 0);
-        currentOutLookState = OutLookState.NORMAL;
+        MaskAnimator.Play("Leave", 0, 0);
+        MaskAnimator.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Game Over";
+        transform.parent.gameObject.SetActive(false);
+        //currentOutLookState = OutLookState.NORMAL;
         Debug.LogWarning("Player is dead");
-        transform.position = CheckPoint;
+        //transform.position = CheckPoint;
         rb.velocity = Vector3.zero;
-        SceneManager.LoadScene(GlobalUIFunctions.levelList.StartMenu.levelName);
-        //  PlayerHealth = 100;
-        // LoadScene(SceneManager.GetActiveScene().buildIndex);
-        // this.transform.position = new Vector3(0, 5, 0);
+        Invoke(nameof(DelayBackToStartMenu), 3);
+
     }
     /// <summary>
     /// This function is used to increase or decrease player's health
@@ -188,5 +188,9 @@ public partial class CharacterCtrl
             else { playerSkinList[i].SetActive(false); }
 
         }
+    }
+    private void DelayBackToStartMenu()
+    {
+        SceneManager.LoadScene(GlobalUIFunctions.levelList.StartMenu.levelName);
     }
 }

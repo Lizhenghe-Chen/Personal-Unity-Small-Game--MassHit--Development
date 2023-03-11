@@ -27,31 +27,36 @@ public class GunScript : MonoBehaviour
 
 
     [SerializeField] GameObject GreenAim, RedAim;
-
-    void OnEnable()
+    private void Start()
     {
-
-        Camera = Player.GetComponent<CharacterCtrl>().Camera.GetComponent<Camera>();
+        Camera = CharacterCtrl._CharacterCtrl.Camera;
         GreenAim = AimPoint.transform.Find("GreenAim").gameObject;
         RedAim = AimPoint.transform.Find("RedAim").gameObject;
         GreenAim.SetActive(false);
         RedAim.SetActive(false);
         // AimPoint.enabled = false;
     }
+    void OnEnable()
+    {
+
+
+
+    }
 
     // Update is called once per frame
     void Update()
     {
+        MovePlayerKernel();
         if (Player == null) { return; }
         PreShoot();
         // var position = new Vector3(Player.position.x + cameraOffset, Player.position.y, Player.position.z);
 
         // this.transform.position = Vector3.Lerp(this.transform.position, position, 1f * Time.deltaTime);
     }
-    private void FixedUpdate()
-    {
-        MovePlayerKernel();
-    }
+    // private void FixedUpdate()
+    // {
+
+    // }
     void Shoot()
     {
         if (Input.GetMouseButtonDown(0))

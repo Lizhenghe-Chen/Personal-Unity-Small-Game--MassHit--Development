@@ -30,6 +30,7 @@ namespace UIElements
         public void NextMissionText() { missionTextCrtl.NextMissionText(); }
         public void PreviousMissionText() { missionTextCrtl.PreviousMissionText(); }
         public void SetTotargetMissionText(int target) { missionTextCrtl.SetTotargetMissionText(target); }
+        //https://gamedev.stackexchange.com/questions/196915/what-does-write-defaults-in-the-animation-state-inspector-actually-do
         public void EnableAnimationCtrl() { MessionCtrlAnimator.enabled = true; }
         public void DisableAnimationCtrl() { MessionCtrlAnimator.enabled = false; }
         public void Disable_VirtualCamera1_Input() { virtualCamera1.m_XAxis.m_InputAxisName = ""; virtualCamera1.m_YAxis.m_InputAxisName = ""; }
