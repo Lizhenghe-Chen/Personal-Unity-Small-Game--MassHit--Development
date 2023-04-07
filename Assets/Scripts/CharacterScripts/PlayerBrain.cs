@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+/* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
 public class PlayerBrain : MonoBehaviour
 {
     public static PlayerBrain instance;
@@ -16,8 +22,6 @@ public class PlayerBrain : MonoBehaviour
     public Transform randomTransform;
     public float chargingRange;
     public float chargeSpeed = 0.01f;
-
-
 
     [Header("charge actions:")]
     public GameObject BuckyBallAtoms;

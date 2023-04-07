@@ -5,7 +5,10 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 namespace UIElements
 {
-    public class Splash : GlobalUIFunctions
+    /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+public class Splash : GlobalUIFunctions
     {
         public TMP_Text loadingText;
         public string playerName_;

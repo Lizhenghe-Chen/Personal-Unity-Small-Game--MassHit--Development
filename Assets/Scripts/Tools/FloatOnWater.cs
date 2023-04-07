@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Bitgem.VFX.StylisedWater
 {
-    public class FloatOnWater : MonoBehaviour
+    /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+public class FloatOnWater : MonoBehaviour
     {
         public WaterVolumeHelper WaterVolumeHelper;
         public float flotage;

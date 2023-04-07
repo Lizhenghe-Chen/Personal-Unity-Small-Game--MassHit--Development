@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 #endif
 
+/* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
 public class CharacterInputManager : MonoBehaviour
 {
     [Header("Character Input Values")]

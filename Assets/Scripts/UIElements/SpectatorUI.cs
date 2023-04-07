@@ -7,7 +7,10 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 namespace UIElements
 {
-    public class SpectatorUI : MonoBehaviour
+    /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+public class SpectatorUI : MonoBehaviour
     {
         public bool menuPause;
         public Slider TimeScaleSlider, focusDistanceSlider, FieldOfViewSlider, focalLengthSlider, aptureSlider;

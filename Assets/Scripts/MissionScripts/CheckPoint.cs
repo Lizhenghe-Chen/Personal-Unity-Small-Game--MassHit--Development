@@ -5,6 +5,9 @@ using TMPro;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 
+/* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
 public class CheckPoint : UIElements.GlobalUIFunctions
 {
     [Tooltip("False if wnat it to be the finnish point")]

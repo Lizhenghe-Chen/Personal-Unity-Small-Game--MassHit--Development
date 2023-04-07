@@ -2,7 +2,10 @@ using Cinemachine;
 using UnityEngine;
 namespace UIElements
 {
-    public class AnimationMessionCtrl : GlobalUIFunctions
+    /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+public class AnimationMessionCtrl : GlobalUIFunctions
     {
         public Animator MessionCtrlAnimator;
         public int MessionCtrlAnimatorIndex;

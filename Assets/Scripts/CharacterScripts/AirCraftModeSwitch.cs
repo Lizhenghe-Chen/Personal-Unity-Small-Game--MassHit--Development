@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+/* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
 public class AirCraftModeSwitch : MonoBehaviour
 {
     [Header("For PlayerBrain PositionConstraint target")][SerializeField] private Transform PlayerBrain;

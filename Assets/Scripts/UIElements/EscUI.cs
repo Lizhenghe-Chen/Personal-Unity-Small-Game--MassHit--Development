@@ -8,7 +8,10 @@ using System;
 
 namespace UIElements
 {
-    public class EscUI : GlobalUIFunctions
+    /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+public class EscUI : GlobalUIFunctions
     {
         public TMP_Dropdown levelDropdown, videoDropdown;
         public GameObject SwitchButton;

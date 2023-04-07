@@ -4,6 +4,9 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 //This File shoulbe attach to Camera
+/* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
 public class CameraDistMain : MonoBehaviour
 {
     [Header("Need Assign in Inspector\n")]

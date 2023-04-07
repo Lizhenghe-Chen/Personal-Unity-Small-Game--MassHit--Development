@@ -6,6 +6,9 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 //This File shoulbe attach to Camera
+/* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
 public class CameraDistSecond : MonoBehaviour
 {
     [Header("Clould be Modified in Inspector: \n")]

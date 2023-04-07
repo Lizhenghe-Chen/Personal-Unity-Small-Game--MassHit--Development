@@ -4,6 +4,9 @@ using UnityEditor.Rendering;
 using UnityEngine;
 //using ui
 using UnityEngine.UI;
+/* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
 public class GunScript : MonoBehaviour
 {
     [Header("Need Assign in Inspector")]

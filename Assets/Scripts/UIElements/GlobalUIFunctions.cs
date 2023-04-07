@@ -8,7 +8,10 @@ using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 namespace UIElements
 {
-    public class GlobalUIFunctions : MonoBehaviour
+    /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+public class GlobalUIFunctions : MonoBehaviour
     {
         [Header("Below Are From GlobalUIFunctions")]
         public static Animator MaskAnimator;

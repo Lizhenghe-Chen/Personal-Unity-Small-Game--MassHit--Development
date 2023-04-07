@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace UIElements
 {
-    public class Acknowledgements : GlobalUIFunctions
+    /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+public class Acknowledgements : GlobalUIFunctions
     {
 
         // Update is called once per frame

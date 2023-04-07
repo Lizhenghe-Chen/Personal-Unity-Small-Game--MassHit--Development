@@ -5,7 +5,10 @@ using System;
 
 namespace UIElements
 {
-    public class UIManager : GlobalUIFunctions
+    /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+public class UIManager : GlobalUIFunctions
     {
         public static UIManager _UIManager;
         public bool isPlayer = true;

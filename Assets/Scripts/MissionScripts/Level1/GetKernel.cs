@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.Localization.Components;
 namespace UIElements
 {
-    public class GetKernel : GlobalUIFunctions
+    /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+public class GetKernel : GlobalUIFunctions
     {
         [Header("GetKernelMission, Neeed Assign:")]
         public LocalizeStringEvent MissionTextEvent;

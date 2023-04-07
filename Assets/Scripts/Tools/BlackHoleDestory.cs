@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
 public class BlackHoleDestory : MonoBehaviour
 {
     private Vector3 objectDestory = new(0.2f, 0.2f, 0.2f);

@@ -9,7 +9,10 @@ using UnityEngine.UI;
 
 namespace UIElements
 {
-    public class MissionTextCrtl : GlobalUIFunctions
+    /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+public class MissionTextCrtl : GlobalUIFunctions
     {
         [Header("Mission Manager")]
         public int Mission_Text_Progress;

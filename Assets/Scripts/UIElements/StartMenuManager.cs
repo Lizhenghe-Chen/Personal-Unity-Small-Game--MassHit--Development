@@ -6,7 +6,10 @@ using TMPro;
 using UnityEngine.UI;
 namespace UIElements
 {
-    public class StartMenuManager : GlobalUIFunctions
+    /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
+* Please do not use these code directly without permission.
+*/
+public class StartMenuManager : GlobalUIFunctions
     {
         [Header("StartMenuManager")]
         public TMP_Dropdown videoDropdown;
