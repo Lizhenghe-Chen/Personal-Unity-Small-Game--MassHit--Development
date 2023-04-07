@@ -1,6 +1,12 @@
 # Personal Unity Small Game "Mass Hit" Development
- creating while learning
- 
+
+The player has to control a sphere of energy to explore.  
+The game interface supports multi-language switching, audio visualisation, sound effects, level system, camera system  
+The game environment includes audio visualisation, black holes, open maps, and various organs.  
+Skills available to the player include, but are not limited to: flying, swimming, rolling, sprinting, gravitational pickup, recharging shields, real-time character switching, puzzle solving, etc.  
+
+
+Translated with www.DeepL.com/Translator (free version)
  # [Download incomplete Game!](https://developer.cloud.unity3d.com/share/share.html?shareId=bkLmkXRAXY)
  
  Used Assets:
