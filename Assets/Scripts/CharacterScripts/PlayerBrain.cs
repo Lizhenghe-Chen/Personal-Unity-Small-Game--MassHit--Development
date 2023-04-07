@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class PlayerBrain : MonoBehaviour
 {
-
+    public static PlayerBrain instance;
+    public float shootEnergy = 100;
+    public bool is_Charging;
     [Tooltip("true if buckyball to rotate in Start Menu")] public bool inMenuRotate = false;
     public Transform brainPosition_Player, brainPosition_Plane;
     [Tooltip("For distance caculate")] public Transform PlayerKernel;
-    public static bool is_Charging;
+
     public float selfRotateSpeed = 1f;
     public Vector3 randomVector;
     public Transform randomTransform;
     public float chargingRange;
     public float chargeSpeed = 0.01f;
-    public static float shootEnergy = 100;
+
 
 
     [Header("charge actions:")]
@@ -23,6 +25,10 @@ public class PlayerBrain : MonoBehaviour
     // [SerializeField] SphereCollider myCollider;
     private int min = -90, max = 90;
 
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         // myCollider = GetComponent<SphereCollider>();

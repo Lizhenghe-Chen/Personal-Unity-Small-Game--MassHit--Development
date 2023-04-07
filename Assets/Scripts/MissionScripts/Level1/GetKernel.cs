@@ -15,7 +15,7 @@ namespace UIElements
         //public int CollectedKernelMissionTextIndex, CollectedKernelMissionText_UpperLimit, CollectedKernelMissionText_LowerLimit;
         private void Awake()
         {
-            PlayerBrain.shootEnergy = 0;
+           PlayerBrain.instance.shootEnergy = 0;
 
         }
         // Start is called before the first frame update

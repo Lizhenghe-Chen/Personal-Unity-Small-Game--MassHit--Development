@@ -67,10 +67,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Text
+  m_text: "Text \u6587\u672C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5755a1f1b2b91174c896581c092e5760, type: 2}
-  m_sharedMaterial: {fileID: 1000265280920754681, guid: 5755a1f1b2b91174c896581c092e5760,
+  m_fontAsset: {fileID: 11400000, guid: b6e38199cce310e408f6d4daa65ca310, type: 2}
+  m_sharedMaterial: {fileID: -7847531358784689674, guid: b6e38199cce310e408f6d4daa65ca310,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 29.3
   m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -377,7 +377,7 @@ MonoBehaviour:
           m_CallState: 2
 --- !u!95 &6563097514304144604
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -394,4 +394,5 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

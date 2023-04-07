@@ -116,7 +116,6 @@ namespace UIElements
 
             if (characterCtrl.enabled)
             {
-
                 characterCtrl.enabled = false;
                 PlayerBunbleHUD.SetActive(false);
                 if (MissionCanvas) { MissionCanvas.SetActive(false); }

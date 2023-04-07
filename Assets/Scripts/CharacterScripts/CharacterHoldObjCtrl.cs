@@ -56,7 +56,7 @@ public partial class CharacterCtrl : MonoBehaviour
 
         if (!CharacterCtrl._CharacterCtrl.catchObjAbility) { return; }
         // if (!holdingObject) { holdAim.enabled = false; return; }
-        if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || PlayerBrain.shootEnergy <= 0)//set object free~
+        if (Input.GetKeyUp(GlobalRules.instance.HoldObject) || PlayerBrain.instance.shootEnergy <= 0)//set object free~
         {
             holdAim.enabled = false;
             isHoldKeyPressing = holdAim.enabled;
@@ -150,7 +150,7 @@ public partial class CharacterCtrl : MonoBehaviour
             if (Input.GetKey(GlobalRules.instance.MoveUp) && (holdDistance <= holdRange.max)) { HoldTarget.position += 5f * Time.deltaTime * Vector3.up; }
             else if (Input.GetKey(GlobalRules.instance.MoveDown) && (HoldTarget.position.y - transform.position.y) > 0) { HoldTarget.position -= 5f * Time.deltaTime * Vector3.up; }
 
-            PlayerBrain.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
+            PlayerBrain.instance.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
 
             //HoldTarget.position = (Camera.forward.normalized * fowardback_holdoffset + Vector3.up * updown_holdOffset);
             holdingObject.AddForce(GlobalRules.instance.holdForce * (HoldTarget.position - holdingObject.position));
@@ -228,7 +228,7 @@ public partial class CharacterCtrl : MonoBehaviour
         }
         if (holdingObject)
         {
-            PlayerBrain.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
+            PlayerBrain.instance.shootEnergy -= Time.deltaTime * GlobalRules.instance.holdConsume;
             //holdingObject.transform.position = Vector3.Lerp(holdingObject.transform.position, HoldTarget.position, Time.deltaTime * 1000f);
             HoldTarget.position = ((Camera.transform.forward).normalized * holdDistance + Camera.transform.position);
             holdingObject.AddForce(50f * holdingObject.mass * (HoldTarget.position - holdingObject.position));

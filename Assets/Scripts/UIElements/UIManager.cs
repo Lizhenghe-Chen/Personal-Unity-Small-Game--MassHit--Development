@@ -22,7 +22,7 @@ namespace UIElements
 
         private void OnValidate()
         {
-            UpdateKernelStateBar();
+          //  UpdateKernelStateBar();
         }
         void Start()
         {
@@ -65,7 +65,7 @@ namespace UIElements
 
         public void UpdateKernelStateBar()
         {
-            KernelState.color = (UpdateImageFill(KernelState, PlayerBrain.shootEnergy, 100) >= 0.3) ? chargedColor : unchargedColor;
+            KernelState.color = (UpdateImageFill(KernelState, PlayerBrain.instance.shootEnergy, 100) >= 0.3) ? chargedColor : unchargedColor;
         }
         public void UpdatePlayerHealthBar()
         {

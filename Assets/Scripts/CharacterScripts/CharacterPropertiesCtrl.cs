@@ -120,14 +120,14 @@ public partial class CharacterCtrl
     }
     public void AircraftModeDetect()
     {
-        if (PlayerBrain.shootEnergy <= 25)
+        if (PlayerBrain.instance.shootEnergy <= 25)
         {
             currentOutLookState = OutLookState.NORMAL; return;
         }
         if ((IsDoubleClick(GlobalRules.instance.Jump) && !ableToJump))
         {
             SwitchAircraftMode();
-            PlayerBrain.shootEnergy += 1;
+           PlayerBrain.instance.shootEnergy += 1;
         }
     }
     public void SwitchAircraftMode()
@@ -152,7 +152,7 @@ public partial class CharacterCtrl
 
         // Material[] newMaterials = new Material[] { TransparentMaterial };
 
-        if (PlayerBrain.is_Charging)
+        if (PlayerBrain.instance.is_Charging)
         {
             playerMeshRenderer = GetComponent<MeshRenderer>();
 

@@ -61,7 +61,7 @@ public class GunScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            PlayerBrain.shootEnergy -= 25;
+           PlayerBrain.instance.shootEnergy -= 25;
             //  Instantiate(bullet, muzzle.position, muzzle.rotation).GetComponent<Rigidbody>().AddForce(muzzle.forward * bulletSpeed);
             var temp = Instantiate(bullet, transform.position, Quaternion.identity);
             //shoot bullet from screen center
@@ -87,7 +87,7 @@ public class GunScript : MonoBehaviour
             // if (isLookAt) { transform.LookAt(Camera.transform); } else { transform.forward = new(-Camera.transform.forward.x, 0, -Camera.transform.forward.z); }
             AimPoint.SetActive(true);
 
-            if (PlayerBrain.shootEnergy > 25)
+            if (PlayerBrain.instance.shootEnergy > 25)
             {
                 //BuckyBall.selfRotateSpeed = 10f;
                 GreenAim.SetActive(true);

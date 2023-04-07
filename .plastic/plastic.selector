@@ -1,4 +1,4 @@
-repository "The Mass Hit@LizhengheChen@cloud"
+repository "The Mass Hit@DoggyChen@cloud"
   path "/"
     br "/main"
     co "/main"

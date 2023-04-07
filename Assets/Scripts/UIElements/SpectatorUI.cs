@@ -22,7 +22,7 @@ namespace UIElements
         private void Awake()
         {
 
-            this.transform.parent.parent.gameObject.SetActive(false);
+          //  this.transform.parent.parent.gameObject.SetActive(false);
         }
         void Start()
         {//modify the sensor size of the virtual camera to match the sensor size of the camera

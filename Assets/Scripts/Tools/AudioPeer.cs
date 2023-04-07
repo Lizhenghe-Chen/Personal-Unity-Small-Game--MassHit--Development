@@ -162,7 +162,7 @@ public class AudioPeer : MonoBehaviour
         foreach (Transform child in _cubesSamples)
         {
             rangeCounter = SimpleAudioVisualizeCounter + begainSampleIndex;
-            range = samples[rangeCounter] * PlayerBrain.shootEnergy * rangeTimer;
+            range = samples[rangeCounter] *PlayerBrain.instance.shootEnergy * rangeTimer;
             //if (rangeCounter > samples.Length / 3 && range < 0.5f) { range *= rangeTimer; }
             if (range >= 3) { range *= 0.01f; }
             // if (range <= 0.1) { range *= 5; }
@@ -180,7 +180,7 @@ public class AudioPeer : MonoBehaviour
         foreach (Transform child in _cubesSamples)
         {
             if (counter >= averageSamples.Length) { counter = 3; }
-            range = averageSamples[counter] * multiplier * PlayerBrain.shootEnergy;
+            range = averageSamples[counter] * multiplier *PlayerBrain.instance.shootEnergy;
             if (isVertical) { child.localScale = new Vector3(cubeScale, Mathf.Lerp(child.localScale.y, range, Time.deltaTime * buffer), cubeScale); }
             else { child.localScale = new Vector3(cubeScale, cubeScale, Mathf.Lerp(child.localScale.z, range, Time.deltaTime * buffer)); }
             counter++;

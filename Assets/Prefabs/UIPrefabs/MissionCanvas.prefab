@@ -197,8 +197,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Begining...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5755a1f1b2b91174c896581c092e5760, type: 2}
-  m_sharedMaterial: {fileID: 1000265280920754681, guid: 5755a1f1b2b91174c896581c092e5760,
+  m_fontAsset: {fileID: 11400000, guid: b6e38199cce310e408f6d4daa65ca310, type: 2}
+  m_sharedMaterial: {fileID: -7192024257014940819, guid: b6e38199cce310e408f6d4daa65ca310,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -403,7 +403,7 @@ AudioSource:
     m_RotationOrder: 4
 --- !u!95 &6781111371143125456
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -420,7 +420,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6781111371773255440
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,6 +666,21 @@ PrefabInstance:
       propertyPath: m_text
       value: Press<color=#00FFFF> "Q" </color>Back
       objectReference: {fileID: 0}
+    - target: {fileID: 7285107197029904143, guid: 603b147551f616b49828fd7d7468fddf,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 29.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7285107197029904143, guid: 603b147551f616b49828fd7d7468fddf,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7285107197029904143, guid: 603b147551f616b49828fd7d7468fddf,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 9054975661461604725, guid: 603b147551f616b49828fd7d7468fddf,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -902,6 +918,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Press<color=#00FFFF> "E" </color>Next
+      objectReference: {fileID: 0}
+    - target: {fileID: 7285107197029904143, guid: 603b147551f616b49828fd7d7468fddf,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7285107197029904143, guid: 603b147551f616b49828fd7d7468fddf,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9054975661461604725, guid: 603b147551f616b49828fd7d7468fddf,
         type: 3}
