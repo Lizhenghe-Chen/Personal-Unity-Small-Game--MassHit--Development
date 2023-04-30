@@ -5177,8 +5177,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: BunnyChen Laboratory
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5755a1f1b2b91174c896581c092e5760, type: 2}
-  m_sharedMaterial: {fileID: 1000265280920754681, guid: 5755a1f1b2b91174c896581c092e5760,
+  m_fontAsset: {fileID: 11400000, guid: b6e38199cce310e408f6d4daa65ca310, type: 2}
+  m_sharedMaterial: {fileID: -7847531358784689674, guid: b6e38199cce310e408f6d4daa65ca310,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -13219,6 +13219,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &6906360167915424233
 MonoBehaviour:
   m_ObjectHideFlags: 0

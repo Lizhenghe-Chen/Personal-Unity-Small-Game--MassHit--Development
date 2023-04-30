@@ -81,7 +81,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57757ea40ab5ae8458ecfa5ec66d8726, type: 2}
+  - {fileID: 2100000, guid: 1626b1a239045c44eac91f493df53a50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -139,6 +139,7 @@ MonoBehaviour:
   scaleOfTime: 0.01
   ignorePlayerColletion: 1
   isPlayerBullet: 1
+  playerTagName: 
 --- !u!135 &4729638353243057881
 SphereCollider:
   m_ObjectHideFlags: 0

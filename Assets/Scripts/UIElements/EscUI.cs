@@ -11,7 +11,7 @@ namespace UIElements
     /* Copyright (c) [2023] [Lizhneghe.Chen https://github.com/Lizhenghe-Chen]
 * Please do not use these code directly without permission.
 */
-public class EscUI : GlobalUIFunctions
+    public class EscUI : GlobalUIFunctions
     {
         public TMP_Dropdown levelDropdown, videoDropdown;
         public GameObject SwitchButton;
@@ -65,11 +65,11 @@ public class EscUI : GlobalUIFunctions
             }
 
         }
-        private void OnApplicationFocus(bool hasFocus)
-        {
-            escCanvas.enabled = false;
-            InGameMenu();
-        }
+        // private void OnApplicationFocus(bool hasFocus)
+        // {
+        //     escCanvas.enabled = false;
+        //     InGameMenu();
+        // }
 
         public void InGameMenu()
         {

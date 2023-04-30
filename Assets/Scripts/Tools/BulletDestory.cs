@@ -44,9 +44,10 @@ public class BulletDestory : MonoBehaviour
 
         if (isPlayerBullet)
         {
+            Debug.Log(other.gameObject.name);
             SetHitParticle(playerHitParticleSystem, other, 0.1f);
-            Time.timeScale = scaleOfTime;
-            Time.fixedDeltaTime = Time.timeScale * 0.02f;
+            // Time.timeScale = scaleOfTime;
+            // Time.fixedDeltaTime = Time.timeScale * 0.02f;
             Destroy(this.gameObject, 1f);
         }
         else

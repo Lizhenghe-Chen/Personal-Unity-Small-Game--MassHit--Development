@@ -91,11 +91,21 @@ public class Interceptor : MonoBehaviour
     void ShootBullet()
     {
         if (!TargetObj) { return; }
-        cannonAnimation.SetFloat("animationSpeed", FiringRate);
+
         var temp = Instantiate(bullet, FirePoint.position, Quaternion.identity);
         temp.GetComponent<Rigidbody>().velocity = FirePoint.forward * bulletSpeed;
+        Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        //change the bullet color
+        temp.GetComponent<Renderer>().material.color = color;
+        //change the bullet emission color
+        temp.GetComponent<Renderer>().material.SetColor("_EmissionColor", color);
+        //change the bullet light color
+        temp.GetComponentInChildren<Light>().color = color;
+        //chage the bullet trail reder color
+        temp.GetComponentInChildren<TrailRenderer>().startColor = color;
+        //    temp.GetComponentInChildren<TrailRenderer>().endColor = color;
         bulletList.Add(temp.transform);
-        CheckBullet();
+        CheckBullet(); cannonAnimation.SetFloat("animationSpeed", FiringRate);
     }
     void PlayCannonFire()
     {
