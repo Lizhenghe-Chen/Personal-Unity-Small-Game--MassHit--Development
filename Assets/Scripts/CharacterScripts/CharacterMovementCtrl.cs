@@ -49,10 +49,11 @@ public partial class CharacterCtrl
         if (PlayerBrain.instance.shootEnergy <= 0 || ableToJump) { return; }
         //  Debug.Log("GiveForce");
         //var force = (Input.GetKey(GlobalRules.instance.SpeedUp) ? sliteForce * 2 : sliteForce);
-        // rb.AddForce(force * verticalInput * Camera.transform.forward);
-        // rb.AddForce(force * horizontalInput * Camera.transform.right);
+        
 
         var force = _input.sprint ? sliteForce * 2 : sliteForce;
+        rb.AddForce(force * verticalInput * Camera.transform.forward);
+        rb.AddForce(force * horizontalInput * Camera.transform.right);
         if (Input.GetKey(GlobalRules.instance.MoveUp))
         {
             rb.AddForce(Vector3.up);

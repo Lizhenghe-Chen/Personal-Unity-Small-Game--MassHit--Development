@@ -139,7 +139,7 @@ MonoBehaviour:
   scaleOfTime: 0.01
   ignorePlayerColletion: 1
   isPlayerBullet: 1
-  playerTagName: 
+  playerTagName: Player
 --- !u!135 &4729638353243057881
 SphereCollider:
   m_ObjectHideFlags: 0

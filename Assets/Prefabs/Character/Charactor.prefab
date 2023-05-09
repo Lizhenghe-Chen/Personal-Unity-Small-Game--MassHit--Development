@@ -6901,8 +6901,8 @@ MonoBehaviour:
     GateFit: 1
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
-    m_BlendHint: 2
-    m_InheritPosition: 1
+    m_BlendHint: 1
+    m_InheritPosition: 0
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
@@ -7710,7 +7710,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 440704e3a4605f541b10ea3a1b55ba23, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -19758,7 +19758,7 @@ MonoBehaviour:
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 2
-    m_InheritPosition: 0
+    m_InheritPosition: 1
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
